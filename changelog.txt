@@ -1,3 +1,9 @@
+= 5.0.10 =
+* Additional type check on tickets to prevent edge case crash in processing sold out data ( Pro only)
+
+= 5.0.9 =
+* minor tweak to short_date layout ( Pro only)
+
 = 5.0.8 =
 * fix card layout always going to ticket modal even when set to false
 

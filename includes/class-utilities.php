@@ -112,7 +112,7 @@ class Utilities
      *
      * @param $args template $data->args
      *
-     * @return object  containing ->text ->availability_class ->class
+     * @returUnsupported declare 'strict_typen object  containing ->text ->availability_class ->class
      * @api
      */
     public function get_cta( $args )
