@@ -2,7 +2,7 @@
 Contributors: fullworks
 Tags: eventbrite, widget, events, eventbrite widget, eventbrite shortcode
 Tested up to: 6.1
-Stable tag: 5.0.10
+Stable tag: 5.0.11
 Type: freemium
 
 Display your upcoming Eventbrite events quickly and easily.
@@ -172,10 +172,12 @@ This plugin does not collect, process or send any website visitor personal data 
 == Upgrade Notice ==
 
 == Changelog ==
+= 5.0.11 =
+* Extra checking to avoid double activations
+* Dont load Action Scheduler unless required ( Pro only )
+
 = 5.0.10 =
 * Additional type check on tickets to prevent edge case crash in processing sold out data ( Pro only)
 
-= 5.0.9 =
-* minor tweak to short_date layout ( Pro only)
 
 [Full Change History](https://plugins.trac.wordpress.org/browser/widget-for-eventbrite-api/trunk/changelog.txt)

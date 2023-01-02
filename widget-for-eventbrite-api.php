@@ -6,7 +6,7 @@
  * Plugin Name:       Display Eventbrite Events
  * Plugin URI:        https://fullworksplugins.com/products/widget-for-eventbrite/
  * Description:       Easily display Eventbrite events on your WordPress site
- * Version:           5.0.10
+ * Version:           5.0.11
  * Requires at least: 4.6
  * Requires PHP:      5.6
  * Author:            Fullworks
@@ -42,7 +42,7 @@ if ( !function_exists( 'WidgetForEventbriteAPI\\run_wfea' ) ) {
     define( 'WIDGET_FOR_EVENTBRITE_API_PLUGIN_NAME', basename( WIDGET_FOR_EVENTBRITE_API_PLUGIN_DIR ) );
     define( 'WIDGET_FOR_EVENTBRITE_API_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
     define( 'WIDGET_FOR_EVENTBRITE_API_PLUGINS_TOP_DIR', plugin_dir_path( __DIR__ ) );
-    define( 'WIDGET_FOR_EVENTBRITE_PLUGIN_VERSION', '5.0.10' );
+    define( 'WIDGET_FOR_EVENTBRITE_PLUGIN_VERSION', '5.0.11' );
     // Include the autoloader, so we can dynamically include the classes.
     require_once WIDGET_FOR_EVENTBRITE_API_PLUGIN_DIR . 'includes/autoloader.php';
     // include legacy functions for backwards compatability
@@ -88,6 +88,12 @@ if ( !function_exists( 'WidgetForEventbriteAPI\\run_wfea' ) ) {
     run_freemius();
 } else {
     global  $wfea_fs ;
-    $wfea_fs->set_basename( true, __FILE__ );
+    
+    if ( !$wfea_fs->is_premium() ) {
+        $wfea_fs->set_basename( true, __FILE__ );
+    } else {
+        die( esc_html__( 'You already have a pro version of Display Eventbrite Events (Premium) installed, please check versions and delete one of them. The correct one should be in the folder wp-content/freemius-premium - this one you are trying is in folder wp-content/plugins/', 'display-eventbrite-events' ) . esc_html( basename( plugin_dir_path( __FILE__ ) ) ) );
+    }
+    
     return;
 }

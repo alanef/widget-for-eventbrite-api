@@ -1,4 +1,4 @@
-# Copyright (C) 2022 widget-for-eventbrite-api
+# Copyright (C) 2023 widget-for-eventbrite-api
 # This file is distributed under the same license as the widget-for-eventbrite-api package.
 msgid ""
 msgstr ""
@@ -6,7 +6,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-11-30 11:48+0000\n"
+"POT-Creation-Date: 2023-01-02 21:21+0000\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -320,53 +320,53 @@ msgstr ""
 msgid "[Display Eventbrite Plugin] Admin Notice! ( this shows to admins only ): "
 msgstr ""
 
-#: src/frontend/class-frontend.php:511, src/includes/class-utilities.php:1383
+#: src/frontend/class-frontend.php:514, src/includes/class-utilities.php:1383
 msgid "Free"
 msgstr ""
 
-#: src/frontend/class-frontend.php:568
+#: src/frontend/class-frontend.php:571
 msgid "Register »"
 msgstr ""
 
-#: src/frontend/class-frontend.php:580
+#: src/frontend/class-frontend.php:583
 msgid "Read More »"
 msgstr ""
 
-#: src/frontend/class-frontend.php:606, src/includes/class-eventbrite-api-widget.php:214, src/templates__free/parts/not_found__free.php:7
+#: src/frontend/class-frontend.php:609, src/includes/class-eventbrite-api-widget.php:217, src/templates__free/parts/not_found__free.php:7
 msgid "No Events Found"
 msgstr ""
 
-#: src/frontend/class-frontend.php:638
+#: src/frontend/class-frontend.php:641
 msgid "Min. Age: "
 msgstr ""
 
 #. translators: %1$s time (e.g.Show starts: 19:30)
-#: src/frontend/class-frontend.php:640
+#: src/frontend/class-frontend.php:643
 msgid "Show: %s"
 msgstr ""
 
 #. translators: %1$s time (e.g. Doors open: 18:30) %2$s time (e.g.Show starts: 19:30)
-#: src/frontend/class-frontend.php:643
+#: src/frontend/class-frontend.php:646
 msgid "Doors: %1$s | Show: %2$s"
 msgstr ""
 
-#: src/frontend/class-frontend.php:663, src/includes/class-eventbrite-api-widget.php:242
+#: src/frontend/class-frontend.php:666, src/includes/class-eventbrite-api-widget.php:245
 msgid "Search events"
 msgstr ""
 
-#: src/frontend/class-frontend.php:664, src/includes/class-eventbrite-api-widget.php:243
+#: src/frontend/class-frontend.php:667, src/includes/class-eventbrite-api-widget.php:246
 msgid "Search"
 msgstr ""
 
-#: src/frontend/class-frontend.php:689
+#: src/frontend/class-frontend.php:692
 msgid "--- DEBUG OUTPUT ---"
 msgstr ""
 
-#: src/frontend/class-frontend.php:699
+#: src/frontend/class-frontend.php:702
 msgid "[Display Eventbrite Plugin] Selected attribute: ["
 msgstr ""
 
-#: src/frontend/class-frontend.php:701
+#: src/frontend/class-frontend.php:704
 msgid "] is not valid - maybe a typo or maybe not included in your plan, refer to documentation"
 msgstr ""
 
@@ -374,147 +374,147 @@ msgstr ""
 msgid "System error - autoloader failed"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:85
+#: src/includes/class-eventbrite-api-widget.php:87
 msgid "Display Eventbrite Plugin Admin Notice! ( this shows to admins only ): "
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:175
+#: src/includes/class-eventbrite-api-widget.php:178
 msgid "Upcoming Events"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:182
+#: src/includes/class-eventbrite-api-widget.php:185
 msgid "Read More &raquo;"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:184
+#: src/includes/class-eventbrite-api-widget.php:187
 msgid "Book Now &raquo;"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:344
+#: src/includes/class-eventbrite-api-widget.php:347
 msgid "Upgrade to Pro. <a href=\"%1$s\">FREE 14 day trial.</a> Lots of great features"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:336
+#: src/includes/class-eventbrite-api-widget.php:339
 msgid "You are in the Free trial - <a href=\"%1$s\">Upgrade Now!</a> to keep benefits"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:355
+#: src/includes/class-eventbrite-api-widget.php:358
 msgid "Title"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:364
+#: src/includes/class-eventbrite-api-widget.php:367
 msgid "Title URL"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:373
+#: src/includes/class-eventbrite-api-widget.php:376
 msgid "CSS ID"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:382
+#: src/includes/class-eventbrite-api-widget.php:385
 msgid "CSS Class"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:391
+#: src/includes/class-eventbrite-api-widget.php:394
 msgid "HTML or text before the recent posts"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:401
+#: src/includes/class-eventbrite-api-widget.php:404
 msgid "HTML or text after the recent posts"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:414
+#: src/includes/class-eventbrite-api-widget.php:417
 msgid "Display Book Now Button"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:424
+#: src/includes/class-eventbrite-api-widget.php:427
 msgid "Book Now button goes straight Eventbrite page ticket modal"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:433
+#: src/includes/class-eventbrite-api-widget.php:436
 msgid "Book Now Text"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:451
+#: src/includes/class-eventbrite-api-widget.php:454
 msgid "Ascending Start Date"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:460
+#: src/includes/class-eventbrite-api-widget.php:463
 msgid "Descending Start Date"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:469
+#: src/includes/class-eventbrite-api-widget.php:472
 msgid "Show live events"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:477
+#: src/includes/class-eventbrite-api-widget.php:480
 msgid "Show ended events"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:485
+#: src/includes/class-eventbrite-api-widget.php:488
 msgid "Show started events"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:494
+#: src/includes/class-eventbrite-api-widget.php:497
 msgid "Also display private events"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:502
+#: src/includes/class-eventbrite-api-widget.php:505
 msgid "Show Eventbrite checkout in an onsite popup ( requires SSL)"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:514
+#: src/includes/class-eventbrite-api-widget.php:517
 msgid "Open Eventbrite in a new tab"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:524
+#: src/includes/class-eventbrite-api-widget.php:527
 msgid "Display Date / Time"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:531
+#: src/includes/class-eventbrite-api-widget.php:534
 msgid "Number of posts to show"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:546
+#: src/includes/class-eventbrite-api-widget.php:549
 msgid "Display Thumbnail"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:552
+#: src/includes/class-eventbrite-api-widget.php:555
 msgid "Thumbnail (width,align)"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:560
+#: src/includes/class-eventbrite-api-widget.php:563
 msgid "Left"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:561
+#: src/includes/class-eventbrite-api-widget.php:564
 msgid "Right"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:562
+#: src/includes/class-eventbrite-api-widget.php:565
 msgid "Center"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:568
+#: src/includes/class-eventbrite-api-widget.php:571
 msgid "Default Thumbnail"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:573
+#: src/includes/class-eventbrite-api-widget.php:576
 msgid "Leave it blank to disable."
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:583
+#: src/includes/class-eventbrite-api-widget.php:586
 msgid "Display Event Description"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:589
+#: src/includes/class-eventbrite-api-widget.php:592
 msgid "Description Length"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:602
+#: src/includes/class-eventbrite-api-widget.php:605
 msgid "Display Readmore"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:608
+#: src/includes/class-eventbrite-api-widget.php:611
 msgid "Readmore Text"
 msgstr ""
 
