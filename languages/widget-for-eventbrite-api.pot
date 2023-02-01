@@ -6,13 +6,17 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-01-02 21:21+0000\n"
+"POT-Creation-Date: 2023-02-01 12:31+0000\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/widget-for-eventbrite-api.php:126
+msgid "Manage Plugins Here"
+msgstr ""
 
 #: src/admin/class-admin-pages.php:90, src/admin/class-admin-setup-wizard.php:97
 msgid "Are you sure want to do this?"
@@ -256,51 +260,51 @@ msgstr ""
 msgid "go to settings"
 msgstr ""
 
-#: src/admin/class-admin.php:72
+#: src/admin/class-admin.php:70
 msgid "Not Connected (try again)"
 msgstr ""
 
-#: src/admin/class-admin.php:73
+#: src/admin/class-admin.php:71
 msgid "Connected! Let's go"
 msgstr ""
 
-#: src/admin/class-admin.php:74
+#: src/admin/class-admin.php:72
 msgid "Connecting....."
 msgstr ""
 
-#: src/admin/class-admin.php:75
+#: src/admin/class-admin.php:73
 msgid "go to other settings"
 msgstr ""
 
-#: src/admin/class-admin.php:77
+#: src/admin/class-admin.php:75
 msgid "Your Organizations"
 msgstr ""
 
-#: src/admin/class-admin.php:78
+#: src/admin/class-admin.php:76
 msgid "Start Displaying Events"
 msgstr ""
 
-#: src/admin/class-admin.php:79
+#: src/admin/class-admin.php:77
 msgid "Create a page (or post) and use your favorite editor / page builder to add this shortcode [wfea] and you have started."
 msgstr ""
 
-#: src/admin/class-admin.php:80
+#: src/admin/class-admin.php:78
 msgid "Then start adjusting it for your needs, the best way is to visit our dynamic shortcode builder."
 msgstr ""
 
-#: src/admin/class-admin.php:171
-msgid "Display Eventbrite Plugin says: your database 'max_allowed_packet' is very low at %sMB and may cause issues, consider increasing this, see %sthis article%s."
+#: src/admin/class-admin.php:157
+msgid "Display Eventbrite Plugin says: your database 'max_allowed_packet' is very low at %1$sMB and may cause issues, consider increasing this, see %2$sthis article%3$s."
 msgstr ""
 
-#: src/admin/class-admin.php:209
+#: src/admin/class-admin.php:219
 msgid "<p>max allowed packet can impact whether the database can read large stored elements. Current setting %sM</p>"
 msgstr ""
 
-#: src/admin/class-admin.php:217
+#: src/admin/class-admin.php:227
 msgid "<p>max allowed packet is not very big, this can impact all sorts of things, including the number of events the plugin can handle. Current setting %sM</p>"
 msgstr ""
 
-#: src/admin/class-admin.php:229
+#: src/admin/class-admin.php:239
 msgid "<p>max allowed packet is very small, the Display Eventbrite plugin may not be able to handle many events, other WP features may also have issues. Current setting %sM</p>"
 msgstr ""
 

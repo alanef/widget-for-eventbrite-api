@@ -86,17 +86,17 @@ class Admin
         $version_history = get_option( 'widget-for-eventbrite-api-version' );
         
         if ( false === $version_history ) {
-            add_option( 'widget-for-eventbrite-api-version', [
-                $this->version => [
+            add_option( 'widget-for-eventbrite-api-version', array(
+                $this->version => array(
                 'time' => time(),
-            ],
-            ] );
+            ),
+            ) );
         } else {
             
             if ( !isset( $version_history[$this->version] ) ) {
-                $version_history[$this->version] = [
+                $version_history[$this->version] = array(
                     'time' => time(),
-                ];
+                );
                 update_option( 'widget-for-eventbrite-api-version', $version_history );
             }
         
@@ -123,7 +123,7 @@ class Admin
         }
         $um = get_user_meta( $user_id, 'wfea_dismissed_notices', true );
         if ( !is_array( $um ) ) {
-            $um = [];
+            $um = array();
         }
         $um[sanitize_text_field( $_POST['id'] )] = true;
         update_user_meta( $user_id, 'wfea_dismissed_notices', $um );
@@ -132,20 +132,7 @@ class Admin
     
     public function display_admin_notice()
     {
-        // Don't display notices to users that can't do anything about it.
-        if ( !current_user_can( 'install_plugins' ) ) {
-            return;
-        }
-        // Notices are only displayed on the dashboard, plugins, tools, and settings admin pages.
-        $page = get_current_screen()->base;
-        $display_on_pages = array(
-            'dashboard',
-            'plugins',
-            'tools',
-            'options-general',
-            'settings_page_widget-for-eventbrite-api-settings'
-        );
-        if ( !in_array( $page, $display_on_pages ) ) {
+        if ( !$this->can_display_admin_notice() ) {
             return;
         }
         $user_id = get_current_user_id();
@@ -161,7 +148,7 @@ class Admin
                 
                 if ( $size < 4 ) {
                     $notice = sprintf(
-                        esc_html__( 'Display Eventbrite Plugin says: your database \'max_allowed_packet\' is very low at %sMB and may cause issues, consider increasing this, see %sthis article%s.', 'widget-for-eventbrite-api' ),
+                        esc_html__( 'Display Eventbrite Plugin says: your database \'max_allowed_packet\' is very low at %1$sMB and may cause issues, consider increasing this, see %2$sthis article%3$s.', 'widget-for-eventbrite-api' ),
                         $size,
                         '<a href="https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/troubleshooting/database-limits-too-small/" target="_blank">',
                         '</a>'
@@ -173,6 +160,30 @@ class Admin
         
         }
     
+    }
+    
+    public static function can_display_admin_notice()
+    {
+        // Don't display notices to users that can't do anything about it.
+        if ( !function_exists( 'wp_get_current_user' ) ) {
+            include ABSPATH . 'wp-includes/pluggable.php';
+        }
+        if ( !current_user_can( 'install_plugins' ) ) {
+            return false;
+        }
+        // Notices are only displayed on the dashboard, plugins, tools, and settings admin pages.
+        $page = get_current_screen()->base;
+        $display_on_pages = array(
+            'dashboard',
+            'plugins',
+            'tools',
+            'options-general',
+            'settings_page_widget-for-eventbrite-api-settings'
+        );
+        if ( !in_array( $page, $display_on_pages ) ) {
+            return false;
+        }
+        return true;
     }
     
     public function site_status_tests( $tests )
