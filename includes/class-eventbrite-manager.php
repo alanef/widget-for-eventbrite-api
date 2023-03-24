@@ -255,11 +255,11 @@ class Eventbrite_Manager
      */
     private function call( $endpoint, $query_params = array(), $object_id = null )
     {
+        global  $wfea_fs ;
         $endpoint_map = array(
             'user_owned_events' => 'organizations/' . $object_id . '/events',
             'organizations'     => 'users/me/organizations',
             'description'       => 'events/' . $object_id . '/description',
-            'performances'      => 'events/' . $object_id . '/performances',
             'organizers'        => 'organizers/' . $object_id,
         );
         $endpoint_base = trailingslashit( self::API_BASE . $endpoint_map[$endpoint] );

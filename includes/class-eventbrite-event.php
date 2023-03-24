@@ -19,6 +19,13 @@ class Eventbrite_Event {
 	public $post_title; // name->text
 
 	/**
+	 * The post type.
+	 *
+	 * @var string
+	 */
+	public $post_type = 'wfea'; // type->text
+
+	/**
 	 * The event's content.
 	 *
 	 * @var string

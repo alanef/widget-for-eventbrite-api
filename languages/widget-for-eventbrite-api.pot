@@ -6,7 +6,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-02-01 12:31+0000\n"
+"POT-Creation-Date: 2023-03-24 12:07+0000\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/widget-for-eventbrite-api.php:126
+#: src/widget-for-eventbrite-api.php:127
 msgid "Manage Plugins Here"
 msgstr ""
 
@@ -308,69 +308,69 @@ msgstr ""
 msgid "<p>max allowed packet is very small, the Display Eventbrite plugin may not be able to handle many events, other WP features may also have issues. Current setting %sM</p>"
 msgstr ""
 
-#: src/frontend/class-frontend.php:286
-msgid "*** Invalid regex used in your shortcode filter_title option *** "
-msgstr ""
-
-#: src/frontend/class-frontend.php:298
-msgid "*** Invalid regex used in your shortcode filter_location option *** "
-msgstr ""
-
-#: src/frontend/class-frontend.php:336
-msgid "*** Invalid Regular Expression (regex) used in your shortcode search option *** "
-msgstr ""
-
-#: src/frontend/class-frontend.php:452
-msgid "[Display Eventbrite Plugin] Admin Notice! ( this shows to admins only ): "
-msgstr ""
-
-#: src/frontend/class-frontend.php:514, src/includes/class-utilities.php:1383
-msgid "Free"
-msgstr ""
-
-#: src/frontend/class-frontend.php:571
+#: src/frontend/class-frontend.php:60
 msgid "Register »"
 msgstr ""
 
-#: src/frontend/class-frontend.php:583
+#: src/frontend/class-frontend.php:72
 msgid "Read More »"
 msgstr ""
 
-#: src/frontend/class-frontend.php:609, src/includes/class-eventbrite-api-widget.php:217, src/templates__free/parts/not_found__free.php:7
+#: src/frontend/class-frontend.php:98, src/includes/class-eventbrite-api-widget.php:217, src/templates__free/parts/not_found__free.php:7
 msgid "No Events Found"
 msgstr ""
 
-#: src/frontend/class-frontend.php:641
+#: src/frontend/class-frontend.php:132
 msgid "Min. Age: "
 msgstr ""
 
 #. translators: %1$s time (e.g.Show starts: 19:30)
-#: src/frontend/class-frontend.php:643
+#: src/frontend/class-frontend.php:134
 msgid "Show: %s"
 msgstr ""
 
 #. translators: %1$s time (e.g. Doors open: 18:30) %2$s time (e.g.Show starts: 19:30)
-#: src/frontend/class-frontend.php:646
+#: src/frontend/class-frontend.php:137
 msgid "Doors: %1$s | Show: %2$s"
 msgstr ""
 
-#: src/frontend/class-frontend.php:666, src/includes/class-eventbrite-api-widget.php:245
+#: src/frontend/class-frontend.php:157, src/includes/class-eventbrite-api-widget.php:245
 msgid "Search events"
 msgstr ""
 
-#: src/frontend/class-frontend.php:667, src/includes/class-eventbrite-api-widget.php:246
+#: src/frontend/class-frontend.php:158, src/includes/class-eventbrite-api-widget.php:246
 msgid "Search"
 msgstr ""
 
-#: src/frontend/class-frontend.php:692
+#: src/frontend/class-frontend.php:407
+msgid "*** Invalid regex used in your shortcode filter_title option *** "
+msgstr ""
+
+#: src/frontend/class-frontend.php:419
+msgid "*** Invalid regex used in your shortcode filter_location option *** "
+msgstr ""
+
+#: src/frontend/class-frontend.php:457
+msgid "*** Invalid Regular Expression (regex) used in your shortcode search option *** "
+msgstr ""
+
+#: src/frontend/class-frontend.php:579
+msgid "[Display Eventbrite Plugin] Admin Notice! ( this shows to admins only ): "
+msgstr ""
+
+#: src/frontend/class-frontend.php:641, src/includes/class-utilities.php:1383
+msgid "Free"
+msgstr ""
+
+#: src/frontend/class-frontend.php:914
 msgid "--- DEBUG OUTPUT ---"
 msgstr ""
 
-#: src/frontend/class-frontend.php:702
+#: src/frontend/class-frontend.php:924
 msgid "[Display Eventbrite Plugin] Selected attribute: ["
 msgstr ""
 
-#: src/frontend/class-frontend.php:704
+#: src/frontend/class-frontend.php:926
 msgid "] is not valid - maybe a typo or maybe not included in your plan, refer to documentation"
 msgstr ""
 

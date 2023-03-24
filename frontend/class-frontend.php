@@ -42,6 +42,40 @@ class FrontEnd
         $this->freemius = $wfea_fs;
     }
     
+    public static function default_args()
+    {
+        /**
+         * @var \Freemius $wfea_fs Object for freemius.
+         */
+        global  $wfea_fs ;
+        $defaults = array(
+            'booknow'        => 'true',
+            'booknow_text'   => esc_html__( 'Register »', 'widget-for-eventbrite-api' ),
+            'cssid'          => '',
+            'css_class'      => '',
+            'date'           => 'true',
+            'debug'          => 'false',
+            'excerpt'        => 'true',
+            'layout'         => 'widget',
+            'length'         => 50,
+            'limit'          => 5,
+            'newtab'         => 'false',
+            'order_by'       => '',
+            'readmore'       => 'true',
+            'readmore_text'  => esc_html__( 'Read More »', 'widget-for-eventbrite-api' ),
+            'status'         => 'live',
+            'thumb'          => 'true',
+            'thumb_align'    => 'eaw-aligncenter',
+            'thumb_default'  => 'https://dummyimage.com/600x400/f0f0f0/ccc',
+            'thumb_original' => 'false',
+            'thumb_width'    => 300,
+            'tickets'        => 'false',
+            'widgetwrap'     => 'true',
+        );
+        // Allow plugins/themes developer to filter the default arguments.
+        return apply_filters( 'eawp_shortcode_default_args', $defaults );
+    }
+    
     public static function get_cal_locale()
     {
         $locale = str_replace( '_', '-', strtolower( get_locale() ) );
@@ -186,78 +220,6 @@ class FrontEnd
         return $html;
     }
     
-    public static function default_args()
-    {
-        /**
-         * @var \Freemius $wfea_fs Object for freemius.
-         */
-        global  $wfea_fs ;
-        $defaults = array(
-            'booknow'        => 'true',
-            'booknow_text'   => esc_html__( 'Register »', 'widget-for-eventbrite-api' ),
-            'cssid'          => '',
-            'css_class'      => '',
-            'date'           => 'true',
-            'debug'          => 'false',
-            'excerpt'        => 'true',
-            'layout'         => 'widget',
-            'length'         => 50,
-            'limit'          => 5,
-            'newtab'         => 'false',
-            'order_by'       => '',
-            'readmore'       => 'true',
-            'readmore_text'  => esc_html__( 'Read More »', 'widget-for-eventbrite-api' ),
-            'status'         => 'live',
-            'thumb'          => 'true',
-            'thumb_align'    => 'eaw-aligncenter',
-            'thumb_default'  => 'https://dummyimage.com/600x400/f0f0f0/ccc',
-            'thumb_original' => 'false',
-            'thumb_width'    => 300,
-            'tickets'        => 'false',
-            'widgetwrap'     => 'true',
-        );
-        // Allow plugins/themes developer to filter the default arguments.
-        return apply_filters( 'eawp_shortcode_default_args', $defaults );
-    }
-    
-    private function shortcode_bool( $att )
-    {
-        
-        if ( 'true' === $att ) {
-            $att = true;
-        } else {
-            $att = false;
-        }
-        
-        return (bool) $att;
-    }
-    
-    private function get_debug_output( $events )
-    {
-        return '<h2>' . esc_html__( '--- DEBUG OUTPUT ---', 'widget-for-eventbrite-api' ) . '</h2><pre>' . print_r( $events->api_results, true ) . '</pre>';
-    }
-    
-    private function check_valid_att( $atts )
-    {
-        if ( !is_array( $atts ) ) {
-            return;
-        }
-        $defaults = self::default_args();
-        foreach ( $atts as $att => $value ) {
-            
-            if ( !isset( $defaults[$att] ) ) {
-                $message = esc_html__( '[Display Eventbrite Plugin] Selected attribute: [', 'widget-for-eventbrite-api' ) . esc_attr( $att ) . esc_html__( '] is not valid - maybe a typo or maybe not included in your plan, refer to documentation', 'widget-for-eventbrite-api' );
-                
-                if ( isset( $atts['debug'] ) && $atts['debug'] ) {
-                    echo  '<div class="error">' . $message . '</div>' ;
-                    trigger_error( $message, E_USER_NOTICE );
-                }
-            
-            }
-        
-        }
-    }
-    
     /**
      * Register the JavaScript for the public-facing side of the site.
      *
@@ -315,6 +277,44 @@ class FrontEnd
             45,
             true
         );
+    }
+    
+    private function shortcode_bool( $att )
+    {
+        
+        if ( 'true' === $att ) {
+            $att = true;
+        } else {
+            $att = false;
+        }
+        
+        return (bool) $att;
+    }
+    
+    private function get_debug_output( $events )
+    {
+        return '<h2>' . esc_html__( '--- DEBUG OUTPUT ---', 'widget-for-eventbrite-api' ) . '</h2><pre>' . print_r( $events->api_results, true ) . '</pre>';
+    }
+    
+    private function check_valid_att( $atts )
+    {
+        if ( !is_array( $atts ) ) {
+            return;
+        }
+        $defaults = self::default_args();
+        foreach ( $atts as $att => $value ) {
+            
+            if ( !isset( $defaults[$att] ) ) {
+                $message = esc_html__( '[Display Eventbrite Plugin] Selected attribute: [', 'widget-for-eventbrite-api' ) . esc_attr( $att ) . esc_html__( '] is not valid - maybe a typo or maybe not included in your plan, refer to documentation', 'widget-for-eventbrite-api' );
+                
+                if ( isset( $atts['debug'] ) && $atts['debug'] ) {
+                    echo  '<div class="error">' . $message . '</div>' ;
+                    trigger_error( $message, E_USER_NOTICE );
+                }
+            
+            }
+        
+        }
     }
 
 }

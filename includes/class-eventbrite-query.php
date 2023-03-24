@@ -30,6 +30,21 @@ class Eventbrite_Query extends WP_Query
         $this->query( $query );
     }
     
+    public function get_merge_event_tags( $event_ids, $token )
+    {
+        $results = Eventbrite_Manager::$instance->get_destination_events__premium_only( $event_ids, $token );
+        if ( !is_wp_error( $results ) ) {
+            // match ID in $this->api_results->events to ID in $results->events
+            foreach ( $results->events as $destination_event ) {
+                foreach ( $this->api_results->events as $key => $event ) {
+                    if ( $event->ID == $destination_event->id ) {
+                        $this->api_results->events[$key]->tags = $destination_event->tags;
+                    }
+                }
+            }
+        }
+    }
+    
     /**
      * Handle any query args that come from the requested URL.
      *

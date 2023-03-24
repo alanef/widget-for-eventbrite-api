@@ -1,3 +1,12 @@
+= 5.1.3 =
+* add option in cal_list to add except to entry ( Pro only )
+
+= 5.1.2 =
+* add ability to show tags in data even when not filtering onm tags ( Pro only )
+
+= 5.1.1 =
+* add filter for tags ( Pro only )
+
 = 5.0.13 =
 * add support of date and excerpt options to short_date layout ( Pro only )
 
