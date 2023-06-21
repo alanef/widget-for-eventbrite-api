@@ -169,18 +169,18 @@ class Admin_Settings extends Admin_Pages
     public function demo_meta_box()
     {
         ?>
-        <div id="demopost" class="submitbox">
+		<div id="demopost" class="submitbox">
 
-            <div id="major-demo-actions">
+			<div id="major-demo-actions">
 
-                <div id="demo-action">
+				<div id="demo-action">
 					<?php 
         $this->display_demo_button();
         ?>
-                </div>
+				</div>
 
-            </div>
-        </div>
+			</div>
+		</div>
 
 		<?php 
     }
@@ -197,8 +197,22 @@ class Admin_Settings extends Admin_Pages
             // always set checkboxes of they dont exist
         }
         
-        $settings['cache_clear'] = 0;
+        
+        if ( !isset( $settings['cache_duration'] ) ) {
+            $settings['cache_duration'] = 86400;
+            // always set if they dont exist
+        }
+        
+        
+        if ( !isset( $settings['cache_clear'] ) ) {
+            $settings['cache_clear'] = 0;
+            // always set if they dont exist
+        }
+        
         $settings['background_api'] = 0;
+        if ( 1 == $settings['cache_clear'] ) {
+            list( $display_eventbrite, $settings ) = $this->clear_cache( $settings );
+        }
         if ( isset( $settings['cache_duration'] ) ) {
             $settings['cache_duration'] = (int) $settings['cache_duration'];
         }
@@ -218,10 +232,9 @@ class Admin_Settings extends Admin_Pages
             } elseif ( $settings['key'] != $options['key'] ) {
                 // not empty and changed
                 // flush transients
-                $eventbrite_manager = new Eventbrite_Manager();
-                $eventbrite_manager->flush_transients( 'eventbrite' );
+                list( $display_eventbrite, $settings ) = $this->clear_cache( $settings );
                 // test the new key
-                $organizations = $eventbrite_manager->request(
+                $organizations = $display_eventbrite->request(
                     'organizations',
                     array(
                     'token' => $settings['key'],
@@ -282,14 +295,14 @@ class Admin_Settings extends Admin_Pages
 			<ul style="list-style-type:disc;list-style-position: inside;">
 			    <li>14 day free trial</li>
 			    <li>Keep visitors on your site, with integrated checkout popup</li>
+			    <li>Show the full event details in a popup too</li>
 				<li>Let your users see your events on full pages and post</li>
-				<li>Show your events off on layouts including styles for Divi, Genesis and WP default themes</li>
+				<li>Show your events off on many different layouts</li>
 				<li>Need a calendar layout? We have one of those</li>
 				<li>Like a grid layout? We have one of those too</li>
 				<li>Full page? of course - why not browse the <a href="https://fullworksplugins.com/products/widget-for-eventbrite/eventbrite-shortcode-demo/" target="_blank">demo shortcode builder page</a> to see powerful options</li>
 				<li>Want to show off invite only events? the pro version can</li>
 				<li>Do you have lots of events and would like to filter them down? The shortcode has sophisticated filters</li>
-				<li>Need to see your events during development or quickly? The pro version has cache management</li>
 			</ul>
 			</p>
 			', 'widget-for-eventbrite-api' ), $this->freemius->get_trial_url() );
@@ -298,9 +311,6 @@ class Admin_Settings extends Admin_Pages
     
     public function meta_box_2()
     {
-        $infomsg = esc_html__( 'These features are only available on the pro plan or trial', 'widget-for-eventbrite-api' );
-        $disabled = ' disabled="disabled" ';
-        echo  $infomsg ;
         $options = get_option( 'widget-for-eventbrite-api-settings' );
         if ( !isset( $options['cache_clear'] ) ) {
             $options['cache_clear'] = 0;
@@ -320,22 +330,57 @@ class Admin_Settings extends Admin_Pages
             array( 60, esc_html__( 'No Cache - use for development & testing only ', 'widget-for-eventbrite-api' ) )
         );
         ?>
-        <table class="form-table">
-            <tbody>
-            <tr valign="top">
-                <th scope="row"><?php 
+		<table class="form-table">
+			<tbody>
+			<tr valign="top">
+				<th scope="row"><?php 
+        _e( 'Clear Cache', 'widget-for-eventbrite-api' );
+        ?></th>
+				<td>
+					<label for="widget-for-eventbrite-api-settings[cache_clear]"><input
+							type="checkbox"
+							name="widget-for-eventbrite-api-settings[cache_clear]"
+							id="widget-for-eventbrite-api-settings[cache_clear]"
+							value="1"
+							<?php 
+        checked( '1', $options['cache_clear'] );
+        ?>>
+						<?php 
+        _e( 'Tick and [save] to clear', 'widget-for-eventbrite-api' );
+        ?></label>
+					<p>
+                        <span
+	                        class="description"><?php 
+        esc_html_e( 'Clear the cache now, use for testing or if you have published or changed events and you want to refresh now', 'widget-for-eventbrite-api' );
+        ?></span>
+					</p>
+					<?php 
+        ?>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<p>
+						<?php 
+        $infomsg = esc_html__( 'The following features are only available on the pro plan or trial', 'widget-for-eventbrite-api' );
+        $disabled = ' disabled="disabled" ';
+        echo  $infomsg ;
+        ?></p>
+			</tr>
+			<tr valign="top" class="alternate">
+				<th scope="row"><?php 
         _e( 'Cache Duration', 'widget-for-eventbrite-api' );
         ?></th>
-                <td>
-                    <select <?php 
+				<td>
+					<select <?php 
         echo  $disabled ;
         ?> name="widget-for-eventbrite-api-settings[cache_duration]"
-                                                     id="widget-for-eventbrite-api-settings[cache_duration]"
-                                                     class="small-text">
+					                                 id="widget-for-eventbrite-api-settings[cache_duration]"
+					                                 class="small-text">
 						<?php 
         foreach ( $units as $unit ) {
             ?>
-                            <option value="<?php 
+							<option value="<?php 
             echo  $unit[0] ;
             ?>"
 								<?php 
@@ -346,70 +391,45 @@ class Admin_Settings extends Admin_Pages
 						<?php 
         }
         ?>
-                    </select>
-                    <p>
-                        <span class="description"><?php 
+					</select>
+					<p>
+                        <span
+	                        class="description"><?php 
         printf( esc_html__( 'Set the cache period for the Eventbrite API. Read %1$sthis article%2$s before changing the default of once per day', 'widget-for-eventbrite-api' ), '<a href="https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/usage/understanding-the-cache/" target="_blank">', '</a>' );
         ?></span>
-                    </p>
-                </td>
-            </tr>
-            <tr valign="top" class="alternate">
-                <th scope="row"><?php 
-        _e( 'Clear Cache', 'widget-for-eventbrite-api' );
-        ?></th>
-                <td>
-                    <label for="widget-for-eventbrite-api-settings[cache_clear]"><input <?php 
-        echo  $disabled ;
-        ?>
-                                type="checkbox"
-                                name="widget-for-eventbrite-api-settings[cache_clear]"
-                                id="widget-for-eventbrite-api-settings[cache_clear]"
-                                value="1"
-							<?php 
-        checked( '1', $options['cache_clear'] );
-        ?>>
-						<?php 
-        _e( 'Tick and save to clear', 'widget-for-eventbrite-api' );
-        ?></label>
-                    <p>
-                        <span class="description"><?php 
-        esc_html_e( 'Clear the cache now, use for testing or if you change the cache period to reset right now', 'widget-for-eventbrite-api' );
-        ?></span>
-                    </p>
-					<?php 
-        ?>
-                </td>
-            </tr>
-            <tr valign="top">
-                <th scope="row"><?php 
+					</p>
+				</td>
+			</tr>
+			<tr valign="top">
+				<th scope="row"><?php 
         _e( 'Background API Processing', 'widget-for-eventbrite-api' );
         ?></th>
-                <td>
-                    <label for="widget-for-eventbrite-api-settings[background_api]"><input <?php 
+				<td>
+					<label for="widget-for-eventbrite-api-settings[background_api]"><input <?php 
         echo  $disabled ;
         ?>
-                                type="checkbox"
-                                name="widget-for-eventbrite-api-settings[background_api]"
-                                id="widget-for-eventbrite-api-settings[background_api]"
-                                value="1"
+							type="checkbox"
+							name="widget-for-eventbrite-api-settings[background_api]"
+							id="widget-for-eventbrite-api-settings[background_api]"
+							value="1"
 							<?php 
         checked( '1', $options['background_api'] );
         ?>>
 						<?php 
         _e( 'Leave ticked for background processing', 'widget-for-eventbrite-api' );
         ?></label>
-                    <p>
-                        <span class="description"><?php 
+					<p>
+                        <span
+	                        class="description"><?php 
         _e( 'Background API processing is useful when you have many hundreds of events or using advanced pro features like long description that create many API calls', 'widget-for-eventbrite-api' );
         ?></span>
-                    </p>
-                </td>
-            </tr>
+					</p>
+				</td>
+			</tr>
 
 
-            </tbody>
-        </table>
+			</tbody>
+		</table>
 		<?php 
     }
     
@@ -447,33 +467,34 @@ Additional shortcode options are available in the  paid for version<br><br>
             'key' => '',
         ) );
         ?>
-        <table class="form-table">
-            <tbody>
-            <tr valign="top">
-                <th scope="row"><?php 
+		<table class="form-table">
+			<tbody>
+			<tr valign="top">
+				<th scope="row"><?php 
         esc_html_e( 'Your API Key - Private Token', 'widget-for-eventbrite-api' );
         ?></th>
-                <td>
-                    <input type="password" name="widget-for-eventbrite-api-settings[key]"
-                           id="widget-for-eventbrite-api-settings-api-key"
-                           class="regular-text required"
-                           required
-                           value="<?php 
+				<td>
+					<input type="password" name="widget-for-eventbrite-api-settings[key]"
+					       id="widget-for-eventbrite-api-settings-api-key"
+					       class="regular-text required"
+					       required
+					       value="<?php 
         echo  esc_attr( $options['key'] ) ;
         ?>"
-                    >
-                    <p class="api-key-status"></p>
-                    <p class="api-key-result"></p>
-                    <p>
-                        <span class="description"><?php 
+					>
+					<p class="api-key-status"></p>
+					<p class="api-key-result"></p>
+					<p>
+                        <span
+	                        class="description"><?php 
         _e( 'The key is required to connect to Eventbrite - <a href="https://www.eventbrite.co.uk/platform/api-keys/" target="_blank">Click here to get your free API Key from Eventbrite</a>', 'widget-for-eventbrite-api' );
         ?></span>
-                    </p>
-                </td>
-            </tr>
+					</p>
+				</td>
+			</tr>
 
-            </tbody>
-        </table>
+			</tbody>
+		</table>
 		<?php 
     }
     
@@ -484,30 +505,31 @@ Additional shortcode options are available in the  paid for version<br><br>
             $options['plugin-css'] = 1;
         }
         ?>
-        <table class="form-table">
-            <tbody>
-            <tr valign="top">
-                <th scope="row"><?php 
+		<table class="form-table">
+			<tbody>
+			<tr valign="top">
+				<th scope="row"><?php 
         _e( 'Output Default CSS', 'widget-for-eventbrite-api' );
         ?></th>
-                <td>
-                    <label for="widget-for-eventbrite-api-settings[plugin-css]"><input type="checkbox"
-                                                                                       name="widget-for-eventbrite-api-settings[plugin-css]"
-                                                                                       id="widget-for-eventbrite-api-settings[plugin-css]"
-                                                                                       value="1"
+				<td>
+					<label for="widget-for-eventbrite-api-settings[plugin-css]"><input type="checkbox"
+					                                                                   name="widget-for-eventbrite-api-settings[plugin-css]"
+					                                                                   id="widget-for-eventbrite-api-settings[plugin-css]"
+					                                                                   value="1"
 							<?php 
         checked( '1', $options['plugin-css'] );
         ?>>
 						<?php 
         _e( 'Enable this option to output the default CSS. Disable it if you plan to create your own CSS in a child theme or customizer additional CSS.', 'the-webinar-toolkit' );
         ?>
-                    </label>
+					</label>
 					<?php 
         
         if ( !$this->freemius->can_use_premium_code() ) {
             ?>
-                        <p>
-                        <span class="description"><?php 
+						<p>
+                        <span
+	                        class="description"><?php 
             esc_html_e( 'Need help with styling to your theme? Upgrade to a premium plan to request personal CSS support', 'widget-for-eventbrite-api' );
             ?>
                             <a class="button-secondary"
@@ -515,15 +537,15 @@ Additional shortcode options are available in the  paid for version<br><br>
             esc_html_e( 'Upgrade now', 'widget-for-eventbrite-api' );
             ?></a>
                         </span>
-                        </p>
+						</p>
 					<?php 
         }
         
         ?>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+				</td>
+			</tr>
+			</tbody>
+		</table>
 
 		<?php 
     }
@@ -534,10 +556,11 @@ Additional shortcode options are available in the  paid for version<br><br>
         $layout = 'widget';
         $options = get_option( 'widget-for-eventbrite-api-settings' );
         ?>
-        <button class="button button-primary" onclick="wfea_demo_form()"><?php 
+		<button class="button button-primary"
+		        onclick="wfea_demo_form()"><?php 
         esc_html_e( 'Go to Shortcode Builder', 'widget-for-eventbrite-api' );
         ?></button>
-        <script>
+		<script>
             function wfea_demo_form() {
                 document.body.innerHTML += '<form id="dynForm" action="https://fullworksplugins.com/products/widget-for-eventbrite/eventbrite-shortcode-demo" method="post" target="_blank"><input type="hidden" name="layout" value="<?php 
         echo  esc_attr( $layout ) ;
@@ -548,7 +571,147 @@ Additional shortcode options are available in the  paid for version<br><br>
         ?>"><input type="hidden" name="useapi" value="Own API Private Token"></form>';
                 document.getElementById("dynForm").submit();
             }
-        </script><?php 
+		</script><?php 
+    }
+    
+    /**
+     * @param $settings
+     *
+     * @return array
+     */
+    public function clear_cache( $settings )
+    {
+        $eventbrite_manager = new Eventbrite_Manager();
+        $eventbrite_manager->flush_transients( 'eventbrite' );
+        $settings['cache_clear'] = 0;
+        add_settings_error(
+            'wfea-cache',
+            esc_attr( 'cache_cleared' ),
+            esc_html__( 'The Plugin Cache has been reset - If you have a CDN or Host Cache or Caching Plugin you may need to clear those caches manually', 'widget-for-eventbrite-api' ),
+            'updated'
+        );
+        
+        if ( function_exists( 'w3tc_flush_all' ) ) {
+            w3tc_flush_all();
+            add_settings_error(
+                'wfea-cache',
+                esc_attr( 'w3tc_pgcache_flush' ),
+                esc_html__( 'W3 Total Cache has been cleared.', 'your-plugin-domain' ),
+                'updated'
+            );
+        }
+        
+        
+        if ( function_exists( 'wp_cache_clear_cache' ) ) {
+            wp_cache_clear_cache();
+            add_settings_error(
+                'wfea-cache',
+                esc_attr( 'wp_cache_clear_cache' ),
+                esc_html__( 'WP Super Cache has been cleared.', 'your-plugin-domain' ),
+                'updated'
+            );
+        }
+        
+        
+        if ( function_exists( 'rocket_clean_domain' ) ) {
+            rocket_clean_domain();
+            add_settings_error(
+                'wfea-cache',
+                esc_attr( 'rocket_clean_domain' ),
+                esc_html__( 'WP Rocket has been cleared.', 'your-plugin-domain' ),
+                'updated'
+            );
+        }
+        
+        
+        if ( has_action( 'cachify_flush_cache' ) ) {
+            do_action( 'cachify_flush_cache' );
+            add_settings_error(
+                'wfea-cache',
+                esc_attr( 'cachify_flush_cache' ),
+                esc_html__( 'Cachify has been cleared.', 'your-plugin-domain' ),
+                'updated'
+            );
+        }
+        
+        
+        if ( has_action( 'litespeed_purge_all' ) ) {
+            do_action( 'litespeed_purge_all' );
+            add_settings_error(
+                'wfea-cache',
+                esc_attr( 'litespeed_purge_all' ),
+                esc_html__( 'LiteSpeed Cache has been cleared.', 'your-plugin-domain' ),
+                'updated'
+            );
+        }
+        
+        
+        if ( has_action( 'wpfc_clear_all_cache' ) ) {
+            do_action( 'wpfc_clear_all_cache' );
+            add_settings_error(
+                'wfea-cache',
+                esc_attr( 'wpfc_clear_cache' ),
+                esc_html__( 'WP Fastest Cache has been cleared.', 'your-plugin-domain' ),
+                'updated'
+            );
+        }
+        
+        
+        if ( class_exists( 'WP_Optimize' ) ) {
+            \WP_Optimize()->get_page_cache()->purge();
+            add_settings_error(
+                'wfea-cache',
+                esc_attr( 'wp_optimize_clear_cache' ),
+                esc_html__( 'WP-Optimize cache has been cleared.', 'your-plugin-domain' ),
+                'updated'
+            );
+        }
+        
+        
+        if ( has_action( 'cache_enabler_clear_site_cache' ) ) {
+            do_action( 'cache_enabler_clear_site_cache' );
+            add_settings_error(
+                'wfea-cache',
+                esc_attr( 'cache_enabler_clear_site_cache' ),
+                esc_html__( 'Cache Enabler cache has been cleared.', 'your-plugin-domain' ),
+                'updated'
+            );
+        }
+        
+        
+        if ( has_action( 'breeze_clear_all_cache' ) ) {
+            do_action( 'breeze_clear_all_cache' );
+            add_settings_error(
+                'wfea-cache',
+                esc_attr( 'breeze_clear_cache' ),
+                esc_html__( 'Breeze cache has been cleared.', 'your-plugin-domain' ),
+                'updated'
+            );
+        }
+        
+        
+        if ( class_exists( '\\comet_cache' ) ) {
+            \comet_cache::clear();
+            add_settings_error(
+                'wfea-cache',
+                esc_attr( 'comet_cache_clear' ),
+                esc_html__( 'Comet Cache has been cleared.', 'your-plugin-domain' ),
+                'updated'
+            );
+        }
+        
+        
+        if ( function_exists( 'sg_cachepress_purge_cache' ) ) {
+            sg_cachepress_purge_cache();
+            add_settings_error(
+                'wfea-cache',
+                esc_attr( 'sg_cachepress_purge_cache' ),
+                esc_html__( 'SiteGround Optimizer cache has been cleared.', 'your-plugin-domain' ),
+                'updated'
+            );
+        }
+        
+        return array( $eventbrite_manager, $settings );
     }
 
 }

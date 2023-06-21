@@ -424,6 +424,7 @@ class Eventbrite_Manager
         // Loop through all registered transients, deleting each one.
         foreach ( $transients as $transient ) {
             delete_transient( $transient );
+            delete_transient( $transient . ' _bak' );
         }
         // Reset the list of registered transients.
         delete_option( 'wfea_transients' );

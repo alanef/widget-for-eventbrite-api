@@ -64,7 +64,7 @@ class Admin
         $data = array(
             'ajaxurl'             => admin_url( 'admin-ajax.php' ),
             'StringInvalidAPI'    => esc_html__( 'Not Connected (try again)', 'widget-for-eventbrite-api' ),
-            'StringConnected'     => esc_html__( 'Connected! Let\'s go', 'widget-for-eventbrite-api' ),
+            'StringConnected'     => esc_html__( 'Connected! Let\'s go : make sure you have [Saved] ->', 'widget-for-eventbrite-api' ),
             'StringConnecting'    => esc_html__( 'Connecting.....', 'widget-for-eventbrite-api' ),
             'StringGoToSettings'  => esc_html__( 'go to other settings', 'widget-for-eventbrite-api' ),
             'URLSettings'         => admin_url( 'options-general.php?page=widget-for-eventbrite-api-settings' ),

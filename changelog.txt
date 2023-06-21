@@ -1,3 +1,29 @@
+= 5.2.3 =
+* Fix  Batch setting ( Pro only )
+* Fix issues with 11th tag missing ( Pro only )
+
+= 5.2.2 =
+* Remove warning in PHP 7.x
+
+= 5.2.1 =
+* Fix cache clear on settings page
+* Change timer reset in slideshow ( Pro only )
+* Add srcset to images when thumb_original used for better mobile performance ( Pro only )
+
+= 5.2.0 =
+* Add full description popup to all themes except calendars ( Pro only )
+* Allow cache clear in free version
+* Clear all major WP cache plugins on settings cache clear / API key change
+
+= 5.1.6 =
+* Add end date / time option to short_date ( Pro only )
+
+= 5.1.5 =
+* Improve mobile CSS for cal_list and also date processing when listing only historic events ( Pro only )
+
+= 5.1.4 =
+* add filters to allow advanced customisation of calendar layouts ( Pro only )
+
 = 5.1.3 =
 * add option in cal_list to add except to entry ( Pro only )
 

@@ -12,9 +12,10 @@ if ( $data->utilities->get_element( 'excerpt', $data->args ) ) {
 			    esc_url( $data->utilities->get_event_eb_url() ),
 			    wp_kses_post( $data->utilities->get_element( 'readmore_text', $data->args ) ),
 			    ( $data->utilities->get_element( 'newtab', $data->args ) ) ? 'target="_blank"' : '',
-			    ( empty( $data->utilities->get_element( 'aria_label_readmore', $data->args ) ) ) ? esc_attr( $data->utilities->get_element( 'booknow_text', $data->args ) ) . ' ' . __( 'on Eventbrite for', 'widget-for-eventbrite-api' ) . ' ' . esc_attr( get_the_title() ) : esc_attr( $data->utilities->get_element( 'aria_label_readmore', $data->args ) )
+			    ( empty( $data->utilities->get_element( 'aria_label_readmore', $data->args ) ) ) ? esc_attr( $data->utilities->get_element( 'readmore_text', $data->args ) ) . ' ' . __( 'on Eventbrite for', 'widget-for-eventbrite-api' ) . ' ' . esc_attr( get_the_title() ) : esc_attr( $data->utilities->get_element( 'aria_label_readmore', $data->args ) )
 		    );
 	    }
+	    $data->template_loader->get_template_part( 'full_modal_details_button' );
 	    ?>
     </div>
 	<?php

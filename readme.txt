@@ -2,7 +2,7 @@
 Contributors: fullworks
 Tags: eventbrite, widget, events, eventbrite widget, eventbrite shortcode
 Tested up to: 6.2
-Stable tag: 5.1.3
+Stable tag: 5.2.3
 Type: freemium
 
 Display your upcoming Eventbrite events quickly and easily.
@@ -172,27 +172,24 @@ This plugin does not collect, process or send any website visitor personal data 
 == Upgrade Notice ==
 
 == Changelog ==
-= 5.1.3 =
-* add option in cal_list to add except to entry ( Pro only )
+= 5.2.3 =
+* Fix  Batch setting ( Pro only )
+* Fix issues with 11th tag missing ( Pro only )
 
-= 5.1.2 =
-* add ability to show tags in data even when not filtering onm tags ( Pro only )
+= 5.2.2 =
+* Remove warning in PHP 7.x
 
-= 5.1.1 =
-* add filter for tags ( Pro only )
+= 5.2.1 =
+* Fix cache clear on settings page
+* Change timer reset in slideshow ( Pro only )
+* Add srcset to images when thumb_original used for better mobile performance ( Pro only )
 
-= 5.0.13 =
-* add support of date and excerpt options to short_date layout ( Pro only )
+= 5.2.0 =
+* Add full description popup to all themes except calendars ( Pro only )
+* Allow cache clear in free version
+* Clear all major WP cache plugins on settings cache clear / API key change
 
-= 5.0.12
-* Change double actvation to admin notice rather than die
 
-= 5.0.11 =
-* Extra checking to avoid double activations
-* Dont load Action Scheduler unless required ( Pro only )
-
-= 5.0.10 =
-* Additional type check on tickets to prevent edge case crash in processing sold out data ( Pro only)
 
 
 [Full Change History](https://plugins.trac.wordpress.org/browser/widget-for-eventbrite-api/trunk/changelog.txt)

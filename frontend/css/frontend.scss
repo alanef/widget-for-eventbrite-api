@@ -187,6 +187,21 @@ section.wfea.rows {
     }
   }
 }
+.wfea button.wfea-modal-view-details {
+  margin: 0;
+  padding:0;
+  border: none;
+  background: transparent;
+  color:inherit;
+  font-weight: inherit;
+  float: right;
+  text-decoration: underline;
+  text-align: right;
+}
+.wfea button.wfea-modal-view-details:hover {
+  background: transparent;
+  text-decoration: none;
+}
 /* </fs_premium_only> */
 
 @import 'layouts/layout_widget__free';

@@ -80,22 +80,24 @@ $brand_darkgrey: #2E3744;
     }
   }
 }
-.api-key-status {
-  background: green;
-  padding: 7px 40px;
-  color: white;
-  border: 2px solid black;
-  display: none;
-  margin-left: 28px;
-
-  &.error {
-    background: red;
-    display: inline;
-  }
-
-  &.connected {
+.settings_page_widget-for-eventbrite-api-settings {
+  .api-key-status {
     background: green;
-    display: inline;
+    padding: 7px 40px;
+    color: white;
+    border: 2px solid black;
+    display: none;
+    margin-top: 1em;
+
+    &.error {
+      background: red;
+      display: block;
+    }
+
+    &.connected {
+      background: green;
+      display: block;
+    }
   }
 }
 
