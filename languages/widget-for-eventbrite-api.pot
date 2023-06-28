@@ -6,7 +6,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-06-21 19:43+0000\n"
+"POT-Creation-Date: 2023-06-28 19:22+0000\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/widget-for-eventbrite-api.php:127
+#: src/widget-for-eventbrite-api.php:123
 msgid "Manage Plugins Here"
 msgstr ""
 
@@ -38,35 +38,55 @@ msgstr ""
 msgid "Display Eventbrite Events Settings"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:90
+#: src/admin/class-admin-settings.php:91
 msgid "Information"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:98
+#: src/admin/class-admin-settings.php:99
 msgid "Eventbrite API Key"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:106
+#: src/admin/class-admin-settings.php:107
 msgid "Manage Cache"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:114
+#: src/admin/class-admin-settings.php:120
+msgid "Webhook Notifications ( optional )"
+msgstr ""
+
+#: src/admin/class-admin-settings.php:128
 msgid "Style Settings"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:122
+#: src/admin/class-admin-settings.php:136
 msgid "Shortcode Syntax"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:131
+#: src/admin/class-admin-settings.php:145
 msgid "Shortcode Builder"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:226
+#: src/admin/class-admin-settings.php:240
 msgid " : instructions on how to find your key are <a href=\"https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/installation-display-eventbrite-events-in-wordpress/connect-to-eventbrite/\" target=\"_blank\">here</a> (note a change of Eventbrite password requires a new key)"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:266
+#: src/admin/class-admin-settings.php:316
+msgid "Your Webhook ID"
+msgstr ""
+
+#: src/admin/class-admin-settings.php:326
+msgid "After you have created a WebHook, go to details and there will be and ID number after the words  Manage Webhook, use that number here"
+msgstr ""
+
+#: src/admin/class-admin-settings.php:360
+msgid "Upgrade to a premium plan to enable WebHook handling"
+msgstr ""
+
+#: src/admin/class-admin-settings.php:362, src/admin/class-admin-settings.php:638
+msgid "Upgrade now"
+msgstr ""
+
+#: src/admin/class-admin-settings.php:375
 msgid ""
 "<p>Welcome. To use this plugin add the widget to your website</p><p>For more detailed setup instructions visit <a target= \"_blank\" href=\"https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/installation-display-eventbrite-events-in-wordpress/\" >the knowledgebase.</a></p>\n"
 "            <p>Support for the <strong>free</strong> version is provided <a class=\"button-secondary\" href=\"https://wordpress.org/support/plugin/widget-for-eventbrite-api\" target=\"_blank\">here on WordPress.org.</a></p>\n"
@@ -88,86 +108,86 @@ msgid ""
 "			"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:289
+#: src/admin/class-admin-settings.php:398
 msgid ""
 "Welcome to the premium version of this plugin %1$s. <p>To use this plugin add the widget to your website or use the shortcode in your pages or posts</p><p><a target= \"_blank\" href=\"https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/installation-display-eventbrite-events-in-wordpress/\" >detailed setup and usage instructions</a></p>\n"
 "            <p>To contact us for support or other reasons  please use <a href=\"/wp-admin/options-general.php?page=widget-for-eventbrite-api-settings-contact\"\">this page</a></p>\n"
 "			"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:314
+#: src/admin/class-admin-settings.php:423
 msgid "1 Week"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:318
+#: src/admin/class-admin-settings.php:427
 msgid "2 Days"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:322
+#: src/admin/class-admin-settings.php:431
 msgid "1 Day - recommended"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:326
+#: src/admin/class-admin-settings.php:435
 msgid "12 hours"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:330
+#: src/admin/class-admin-settings.php:439
 msgid "4 hours"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:334
+#: src/admin/class-admin-settings.php:443
 msgid "1 hour "
 msgstr ""
 
-#: src/admin/class-admin-settings.php:338
+#: src/admin/class-admin-settings.php:447
 msgid "30 Minutes"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:342
+#: src/admin/class-admin-settings.php:451
 msgid "15 Minutes - use on low volume sites only"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:346
+#: src/admin/class-admin-settings.php:455
 msgid "No Cache - use for development & testing only "
 msgstr ""
 
-#: src/admin/class-admin-settings.php:353
+#: src/admin/class-admin-settings.php:462
 msgid "Clear Cache"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:361
+#: src/admin/class-admin-settings.php:470
 msgid "Tick and [save] to clear"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:364
+#: src/admin/class-admin-settings.php:473
 msgid "Clear the cache now, use for testing or if you have published or changed events and you want to refresh now"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:383
+#: src/admin/class-admin-settings.php:492
 msgid "The following features are only available on the pro plan or trial"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:395
+#: src/admin/class-admin-settings.php:504
 msgid "Cache Duration"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:408
+#: src/admin/class-admin-settings.php:517
 msgid "Set the cache period for the Eventbrite API. Read %1$sthis article%2$s before changing the default of once per day"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:414
+#: src/admin/class-admin-settings.php:523
 msgid "Background API Processing"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:422
+#: src/admin/class-admin-settings.php:531
 msgid "Leave ticked for background processing"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:425
+#: src/admin/class-admin-settings.php:534
 msgid "Background API processing is useful when you have many hundreds of events or using advanced pro features like long description that create many API calls"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:437
+#: src/admin/class-admin-settings.php:546
 msgid ""
 "Shortcode usage e.g. [wfea] [wfea limit=10 ] etc.<br>\n"
 "		See your own events on the shortcode builder site to select your desired options\n"
@@ -193,38 +213,38 @@ msgid ""
 "			"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:463
+#: src/admin/class-admin-settings.php:572
 msgid ""
 "%1$s\n"
 "				Shortcode [wfea]  or [wfea layout=\"venue\" style=\"dark, grid\"] or  [wfea layout=\"cal\"] etc - many other options see  <a href=\"https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/usage/using-the-shotcode/\" target=\"_blank\"> this page</a> for optional arguments<br>\n"
 "				See your own events on the shortcode builder site to select your desired options "
 msgstr ""
 
-#: src/admin/class-admin-settings.php:482
+#: src/admin/class-admin-settings.php:591
 msgid "Your API Key - Private Token"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:494
-msgid "The key is required to connect to Eventbrite - <a href=\"https://www.eventbrite.co.uk/platform/api-keys/\" target=\"_blank\">Click here to get your free API Key from Eventbrite</a>"
+#: src/admin/class-admin-settings.php:603
+msgid "The key is required to connect to Eventbrite"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:514
+#: src/admin/class-admin-settings.php:604
+msgid "Click here to get your free API Key from Eventbrite"
+msgstr ""
+
+#: src/admin/class-admin-settings.php:624
 msgid "Output Default CSS"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:526
+#: src/admin/class-admin-settings.php:636
 msgid "Need help with styling to your theme? Upgrade to a premium plan to request personal CSS support"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:528
-msgid "Upgrade now"
-msgstr ""
-
-#: src/admin/class-admin-settings.php:559
+#: src/admin/class-admin-settings.php:669
 msgid "Go to Shortcode Builder"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:581
+#: src/admin/class-admin-settings.php:691
 msgid "The Plugin Cache has been reset - If you have a CDN or Host Cache or Caching Plugin you may need to clear those caches manually"
 msgstr ""
 
@@ -308,69 +328,69 @@ msgstr ""
 msgid "<p>max allowed packet is very small, the Display Eventbrite plugin may not be able to handle many events, other WP features may also have issues. Current setting %sM</p>"
 msgstr ""
 
-#: src/frontend/class-frontend.php:60
+#: src/frontend/class-frontend.php:63
 msgid "Register »"
 msgstr ""
 
-#: src/frontend/class-frontend.php:72
+#: src/frontend/class-frontend.php:75
 msgid "Read More »"
 msgstr ""
 
-#: src/frontend/class-frontend.php:98, src/includes/class-eventbrite-api-widget.php:217, src/templates__free/parts/not_found__free.php:7
+#: src/frontend/class-frontend.php:101, src/includes/class-eventbrite-api-widget.php:217, src/templates__free/parts/not_found__free.php:7
 msgid "No Events Found"
 msgstr ""
 
-#: src/frontend/class-frontend.php:132
+#: src/frontend/class-frontend.php:135
 msgid "Min. Age: "
 msgstr ""
 
 #. translators: %1$s time (e.g.Show starts: 19:30)
-#: src/frontend/class-frontend.php:134
+#: src/frontend/class-frontend.php:137
 msgid "Show: %s"
 msgstr ""
 
 #. translators: %1$s time (e.g. Doors open: 18:30) %2$s time (e.g.Show starts: 19:30)
-#: src/frontend/class-frontend.php:137
+#: src/frontend/class-frontend.php:140
 msgid "Doors: %1$s | Show: %2$s"
 msgstr ""
 
-#: src/frontend/class-frontend.php:157, src/includes/class-eventbrite-api-widget.php:245
+#: src/frontend/class-frontend.php:160, src/includes/class-eventbrite-api-widget.php:245
 msgid "Search events"
 msgstr ""
 
-#: src/frontend/class-frontend.php:158, src/includes/class-eventbrite-api-widget.php:246
+#: src/frontend/class-frontend.php:161, src/includes/class-eventbrite-api-widget.php:246
 msgid "Search"
 msgstr ""
 
-#: src/frontend/class-frontend.php:410
+#: src/frontend/class-frontend.php:413
 msgid "*** Invalid regex used in your shortcode filter_title option *** "
 msgstr ""
 
-#: src/frontend/class-frontend.php:422
+#: src/frontend/class-frontend.php:425
 msgid "*** Invalid regex used in your shortcode filter_location option *** "
 msgstr ""
 
-#: src/frontend/class-frontend.php:460
+#: src/frontend/class-frontend.php:463
 msgid "*** Invalid Regular Expression (regex) used in your shortcode search option *** "
 msgstr ""
 
-#: src/frontend/class-frontend.php:582
+#: src/frontend/class-frontend.php:584
 msgid "[Display Eventbrite Plugin] Admin Notice! ( this shows to admins only ): "
 msgstr ""
 
-#: src/frontend/class-frontend.php:644, src/includes/class-utilities.php:1383
+#: src/frontend/class-frontend.php:646, src/includes/class-utilities.php:1519
 msgid "Free"
 msgstr ""
 
-#: src/frontend/class-frontend.php:917
+#: src/frontend/class-frontend.php:915
 msgid "--- DEBUG OUTPUT ---"
 msgstr ""
 
-#: src/frontend/class-frontend.php:927
+#: src/frontend/class-frontend.php:925
 msgid "[Display Eventbrite Plugin] Selected attribute: ["
 msgstr ""
 
-#: src/frontend/class-frontend.php:929
+#: src/frontend/class-frontend.php:927
 msgid "] is not valid - maybe a typo or maybe not included in your plan, refer to documentation"
 msgstr ""
 
@@ -522,51 +542,51 @@ msgstr ""
 msgid "Readmore Text"
 msgstr ""
 
-#: src/includes/class-eventbrite-manager.php:205
+#: src/includes/class-eventbrite-manager.php:350
 msgid "No Eventbrite API key set, please set in settings"
 msgstr ""
 
-#: src/includes/class-utilities.php:626
+#: src/includes/class-utilities.php:763
 msgid "To be announced"
 msgstr ""
 
-#: src/includes/class-utilities.php:620, src/includes/class-utilities.php:942
+#: src/includes/class-utilities.php:757, src/includes/class-utilities.php:1079
 msgid "Online"
 msgstr ""
 
-#: src/includes/class-utilities.php:896
+#: src/includes/class-utilities.php:1033
 msgid "%1$s Tickets Remaining"
 msgstr ""
 
-#: src/includes/class-utilities.php:894
+#: src/includes/class-utilities.php:1031
 msgid "Tickets Available"
 msgstr ""
 
-#: src/includes/class-utilities.php:892
+#: src/includes/class-utilities.php:1029
 msgid "Sold Out"
 msgstr ""
 
-#: src/includes/class-utilities.php:1122
+#: src/includes/class-utilities.php:1258
 msgid "« Previous"
 msgstr ""
 
-#: src/includes/class-utilities.php:1123
+#: src/includes/class-utilities.php:1259
 msgid "Next »"
 msgstr ""
 
-#: src/includes/class-utilities.php:1631
+#: src/includes/class-utilities.php:1767
 msgid "Donation"
 msgstr ""
 
-#: src/includes/class-utilities.php:1644
+#: src/includes/class-utilities.php:1780
 msgid "Your plan does not include this template"
 msgstr ""
 
-#: src/includes/class-utilities.php:1645
+#: src/includes/class-utilities.php:1781
 msgid "Upgrade your plan for access"
 msgstr ""
 
-#: src/includes/class-utilities.php:1647
+#: src/includes/class-utilities.php:1783
 msgid "Upgrade Link"
 msgstr ""
 

@@ -26,6 +26,51 @@ class Eventbrite_Manager
     }
     
     /**
+     * Flush all transients.
+     *
+     */
+    public function flush_transients( $service, $request = null )
+    {
+        // Bail if it wasn't an Eventbrite connection that got deleted.
+        if ( 'eventbrite' != $service ) {
+            return;
+        }
+        // Get the list of registered transients.
+        $transients = $this->get_wfea_transients();
+        // Bail if we have no transients.
+        if ( !$transients ) {
+            return;
+        }
+        // Loop through all registered transients, deleting each one.
+        foreach ( $transients as $transient ) {
+            delete_transient( $transient );
+            delete_transient( $transient . ' _bak' );
+        }
+    }
+    
+    function get_wfea_transients()
+    {
+        // need to cache this as it's a db call but persispent cache is not available yet so using transient
+        $transients = get_transient( '_x_wfea_transients' );
+        
+        if ( false === $transients ) {
+            global  $wpdb ;
+            $prefix = $wpdb->prefix;
+            $transients = $wpdb->get_col( $wpdb->prepare( "SELECT option_name FROM {$wpdb->options} WHERE option_name LIKE %s", '_transient_wfea%' ) );
+            // Remove the "_transient_" part from the names
+            $transients = str_replace( '_transient_', '', $transients );
+            set_transient( '_x_wfea_transients', $transients, 120 );
+        }
+        
+        global  $wpdb ;
+        $prefix = $wpdb->prefix;
+        $transients = $wpdb->get_col( $wpdb->prepare( "SELECT option_name FROM {$wpdb->options} WHERE option_name LIKE %s", '_transient_wfea%' ) );
+        // Remove the "_transient_" part from the names
+        $transients = str_replace( '_transient_', '', $transients );
+        return $transients;
+    }
+    
+    /**
      * Get user-owned private and public events.
      *
      * @access public
@@ -88,6 +133,16 @@ class Eventbrite_Manager
     }
     
     /**
+     * Increase the timeout for Eventbrite API calls from the default 5 seconds to 30.
+     *
+     * @access public
+     */
+    public function increase_timeout()
+    {
+        return 30;
+    }
+    
+    /**
      * Make a call to the Eventbrite v3 REST API, or return an existing transient.
      *
      * @access public
@@ -137,6 +192,9 @@ class Eventbrite_Manager
                         'id'       => $id,
                     ),
                     ), true ) );
+                }
+                if ( in_array( $endpoint, array( 'organizations', 'user_owned_events' ) ) ) {
+                    $cached->cached = true;
                 }
                 return $cached;
             } else {
@@ -192,9 +250,33 @@ class Eventbrite_Manager
         
         if ( !is_wp_error( $request ) ) {
             $transient_name = $this->get_transient_name( $endpoint, $params, $id );
+            // if there are backup transient and is is different to the request if so we need to flush cache
+            $transient_name_bak = $transient_name . '_bak';
+            // need a copy as we will remove pagination
+            $current_request = $request;
+            $transient_bak = get_transient( $transient_name_bak );
+            // check if the request is the same as the backup transient if not then we will clear cache
+            
+            if ( false !== $transient_bak ) {
+                // pagination is not part of the request so remove it
+                if ( property_exists( $current_request, 'pagination' ) ) {
+                    unset( $current_request->pagination );
+                }
+                if ( property_exists( $transient_bak, 'pagination' ) ) {
+                    unset( $transient_bak->pagination );
+                }
+                $serialized_request = serialize( $current_request );
+                $serialize_transient_bak = serialize( $transient_bak );
+                if ( $serialized_request == $serialize_transient_bak ) {
+                    Utilities::get_instance()->clear_all_cache();
+                }
+            } else {
+                // if no backup then clear cache
+                Utilities::get_instance()->clear_all_cache();
+            }
+            
             set_transient( $transient_name, $request, apply_filters( 'wfea_eventbrite_cache_expiry', DAY_IN_SECONDS ) );
-            $this->register_transient( $transient_name );
-            // save a copy for a month incase EB is unavailable
+            // save a copy for a month incase EB is unavailable and useful to tell if data changes for cache clearing
             set_transient( $transient_name . '_bak', $request, MONTH_IN_SECONDS );
         } else {
             if ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) {
@@ -214,7 +296,6 @@ class Eventbrite_Manager
             
             if ( $transient_value !== false ) {
                 set_transient( $transient_name, $transient_value, 2 * MINUTE_IN_SECONDS );
-                $this->register_transient( $transient_name );
                 // we have a good cache even though API call failed so lets use that and extend the bakup
                 set_transient( $transient_name . '_bak', $transient_value, MONTH_IN_SECONDS );
                 return $transient_value;
@@ -224,7 +305,6 @@ class Eventbrite_Manager
                 if ( $transient_value !== false ) {
                     // we have a good backup cache even though API call failed so lets use that and extend the bakup
                     set_transient( $transient_name, $transient_value, 2 * MINUTE_IN_SECONDS );
-                    $this->register_transient( $transient_name );
                     // resave backup copy to extend the month incase EB continues to be unavailable
                     set_transient( $transient_name . '_bak', $transient_value, MONTH_IN_SECONDS );
                     $error_string = Utilities::get_instance()->get_api_error_string( $request );
@@ -353,32 +433,7 @@ class Eventbrite_Manager
     {
         // Results in 62 characters for the timeout option name (maximum is 64).
         $transient_name = 'wfea_' . md5( $endpoint . implode( $params ) . $id );
-        return apply_filters(
-            'wfea_transient_name',
-            $transient_name,
-            $endpoint,
-            $params,
-            $id
-        );
-    }
-    
-    /**
-     * Add a transient name to the list of registered transients, stored in the 'eventbrite_api_transients' option.
-     *
-     * @access protected
-     *
-     * @param string $transient_name The transient name/key used to store the transient.
-     */
-    protected function register_transient( $transient_name )
-    {
-        // Get any existing list of transients.
-        $transients = get_option( 'wfea_transients', array() );
-        // Add the new transient if it doesn't already exist.
-        if ( !in_array( $transient_name, $transients ) ) {
-            $transients[] = $transient_name;
-        }
-        // Save the updated list of transients.
-        update_option( 'wfea_transients', $transients );
+        return $transient_name;
     }
     
     /**
@@ -403,41 +458,6 @@ class Eventbrite_Manager
     protected function get_cache_transient( $endpoint, $params, $id )
     {
         return get_transient( $this->get_transient_name( $endpoint, $params, $id ) );
-    }
-    
-    /**
-     * Flush all transients.
-     *
-     */
-    public function flush_transients( $service, $request = null )
-    {
-        // Bail if it wasn't an Eventbrite connection that got deleted.
-        if ( 'eventbrite' != $service ) {
-            return;
-        }
-        // Get the list of registered transients.
-        $transients = get_option( 'wfea_transients', array() );
-        // Bail if we have no transients.
-        if ( !$transients ) {
-            return;
-        }
-        // Loop through all registered transients, deleting each one.
-        foreach ( $transients as $transient ) {
-            delete_transient( $transient );
-            delete_transient( $transient . ' _bak' );
-        }
-        // Reset the list of registered transients.
-        delete_option( 'wfea_transients' );
-    }
-    
-    /**
-     * Increase the timeout for Eventbrite API calls from the default 5 seconds to 30.
-     *
-     * @access public
-     */
-    public function increase_timeout()
-    {
-        return 30;
     }
     
     /**

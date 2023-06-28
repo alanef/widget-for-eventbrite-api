@@ -24,6 +24,9 @@ class FrontEnd
      *
      */
     private  $version ;
+    /**
+     * @var \WidgetForEventbriteAPI\Includes\Utilities $utilities Object for utilities.
+     */
     private  $utilities ;
     /**
      * @var \Freemius $freemius Object for freemius.

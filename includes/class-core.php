@@ -66,6 +66,9 @@ class Core
         if ( false === $options ) {
             $options = Admin_Settings::option_defaults( 'widget-for-eventbrite-api-settings' );
             add_option( 'widget-for-eventbrite-api-settings', $options );
+        } elseif ( !isset( $options['webhook'] ) ) {
+            $options['webhook'] = '';
+            update_option( 'widget-for-eventbrite-api-settings', $options );
         }
         
         // upgrade options

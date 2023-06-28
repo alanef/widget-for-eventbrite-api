@@ -41,6 +41,7 @@ class Utilities
      * @var \Freemius $freemius Object for freemius.
      */
     private  $freemius ;
+    private static  $cache_cleared = false ;
     /**
      * Utilities constructor.
      */
@@ -63,6 +64,168 @@ class Utilities
             self::$instance = new self();
         }
         return self::$instance;
+    }
+    
+    public function clear_all_cache()
+    {
+        // ensure general cache cleared only once per session
+        if ( self::$cache_cleared ) {
+            return;
+        }
+        self::$cache_cleared = true;
+        
+        if ( function_exists( 'w3tc_flush_all' ) ) {
+            w3tc_flush_all();
+            $this->error_log( 'w3tc_flush_all' );
+        }
+        
+        
+        if ( function_exists( 'wp_cache_clear_cache' ) ) {
+            wp_cache_clear_cache();
+            $this->error_log();
+        }
+        
+        
+        if ( function_exists( 'rocket_clean_domain' ) ) {
+            rocket_clean_domain();
+            $this->error_log( 'rocket_clean_domain' );
+        }
+        
+        
+        if ( has_action( 'cachify_flush_cache' ) ) {
+            do_action( 'cachify_flush_cache' );
+            $this->error_log( 'cachify_flush_cache' );
+        }
+        
+        
+        if ( has_action( 'litespeed_purge_all' ) ) {
+            do_action( 'litespeed_purge_all' );
+            $this->error_log( 'litespeed_purge_all' );
+        }
+        
+        
+        if ( has_action( 'wpfc_clear_all_cache' ) ) {
+            do_action( 'wpfc_clear_all_cache' );
+            $this->error_log( 'wpfc_clear_all_cache' );
+        }
+        
+        
+        if ( class_exists( 'WP_Optimize' ) ) {
+            \WP_Optimize()->get_page_cache()->purge();
+            $this->error_log( 'WP_Optimize' );
+        }
+        
+        
+        if ( has_action( 'cache_enabler_clear_site_cache' ) ) {
+            do_action( 'cache_enabler_clear_site_cache' );
+            $this->error_log( 'cache_enabler_clear_site_cache' );
+        }
+        
+        
+        if ( has_action( 'breeze_clear_all_cache' ) ) {
+            do_action( 'breeze_clear_all_cache' );
+            $this->error_log( 'breeze_clear_all_cache' );
+        }
+        
+        
+        if ( class_exists( '\\comet_cache' ) ) {
+            \comet_cache::clear();
+            $this->error_log( 'comet_cache' );
+        }
+        
+        
+        if ( function_exists( 'sg_cachepress_purge_cache' ) ) {
+            sg_cachepress_purge_cache();
+            $this->error_log( 'sg_cachepress_purge_cache' );
+        }
+    
+    }
+    
+    public function clear_post_cache( $post_id )
+    {
+        
+        if ( function_exists( 'w3tc_flush_post' ) ) {
+            w3tc_flush_post( $post_id );
+            $this->error_log( 'w3tc_flush_post on ' . $post_id );
+        }
+        
+        
+        if ( function_exists( 'wp_cache_post_change' ) ) {
+            wp_cache_post_change( $post_id );
+            $this->error_log( 'wpsc_delete_post_cache on ' . $post_id );
+        }
+        
+        
+        if ( function_exists( 'rocket_clean_post' ) ) {
+            rocket_clean_post( $post_id );
+            $this->error_log( 'rocket_clean_post on ' . $post_id );
+        }
+        
+        
+        if ( has_action( 'cachify_remove_post_cache' ) ) {
+            do_action( 'cachify_remove_post_cache', $post_id );
+            $this->error_log( 'cachify_remove_post_cache on ' . $post_id );
+        }
+        
+        
+        if ( has_action( 'litespeed_purge_post' ) ) {
+            do_action( 'litespeed_purge_post', $post_id );
+            $this->error_log( 'litespeed_purge_post on ' . $post_id );
+        }
+        
+        
+        if ( function_exists( 'wpfc_clear_post_cache_by_id' ) ) {
+            wpfc_clear_post_cache_by_id( $post_id );
+            $this->error_log( 'wpfc_clear_post_cache_by_id on ' . $post_id );
+        }
+        
+        
+        if ( class_exists( 'WPO_Page_Cache' ) ) {
+            \WPO_Page_Cache::delete_single_post_cache( $post_id );
+            $this->error_log( 'WPO_Page_Cache on ' . $post_id );
+        }
+        
+        
+        if ( has_action( 'cache_enabler_clear_page_cache_by_post' ) ) {
+            do_action( 'cache_enabler_clear_page_cache_by_post', $post_id );
+            $this->error_log( 'cache_enabler_clear_page_cache_by_post on ' . $post_id );
+        }
+        
+        
+        if ( has_action( 'breeze_clear_all_cache' ) ) {
+            // breeze seems not to have a single post clear
+            do_action( 'breeze_clear_all_cache' );
+            $this->error_log( 'breeze_clear_all_cache - breeze does not have a single post clear triggered on ' . $post_id );
+        }
+        
+        
+        if ( class_exists( '\\comet_cache' ) ) {
+            \comet_cache::clearPost( $post_id );
+            $this->error_log( 'comet_cache::clearPost on ' . $post_id );
+        }
+        
+        
+        if ( function_exists( 'sg_cachepress_purge_cache' ) ) {
+            sg_cachepress_purge_cache( get_the_permalink( $post_id ) );
+            $this->error_log( 'sg_cachepress_purge_cache on ' . $post_id );
+        }
+        
+        //  hook to allow easy extension of other cache plugins
+        do_action( 'wfea_clear_post_cache', $post_id );
+    }
+    
+    public function error_log( $message )
+    {
+        if ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) {
+            // if message an array or object, print_r it
+            
+            if ( is_array( $message ) || is_object( $message ) ) {
+                error_log( 'WFEA ' . print_r( $message, true ) );
+            } else {
+                error_log( 'WFEA ' . $message );
+            }
+        
+        }
     }
     
     /**
