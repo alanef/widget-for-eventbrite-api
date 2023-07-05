@@ -127,6 +127,13 @@ class Utilities
             $this->error_log( 'breeze_clear_all_cache' );
         }
         
+        // hummingbird
+        
+        if ( has_action( 'wphb_clear_page_cache' ) ) {
+            do_action( 'wphb_clear_page_cache' );
+            $this->error_log( 'wphb_clear_page_cache' );
+        }
+        
         
         if ( class_exists( '\\comet_cache' ) ) {
             \comet_cache::clear();
