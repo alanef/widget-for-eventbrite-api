@@ -2,7 +2,7 @@
 Contributors: fullworks
 Tags: eventbrite, widget, events, eventbrite widget, eventbrite shortcode
 Tested up to: 6.2
-Stable tag: 5.3.1
+Stable tag: 5.3.2
 Type: freemium
 
 Display your upcoming Eventbrite events quickly and easily.
