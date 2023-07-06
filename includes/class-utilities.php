@@ -33,6 +33,7 @@ use  http\Url ;
 class Utilities
 {
     protected static  $instance ;
+    private static  $cache_cleared = false ;
     private  $modal_setup = false ;
     private  $modal_id ;
     private  $modal_elements ;
@@ -41,7 +42,6 @@ class Utilities
      * @var \Freemius $freemius Object for freemius.
      */
     private  $freemius ;
-    private static  $cache_cleared = false ;
     /**
      * Utilities constructor.
      */
@@ -82,7 +82,7 @@ class Utilities
         
         if ( function_exists( 'wp_cache_clear_cache' ) ) {
             wp_cache_clear_cache();
-            $this->error_log();
+            $this->error_log( 'wp_cache_clear_cache' );
         }
         
         

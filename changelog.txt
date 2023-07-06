@@ -1,3 +1,6 @@
+= 5.3.2 =
+* Fix cache debug log message for Supercache
+
 = 5.3.1 =
 * Freemius SDK update to 2.5.10
 * Add Hummingbord to cache clear
