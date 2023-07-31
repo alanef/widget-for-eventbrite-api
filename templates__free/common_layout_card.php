@@ -29,10 +29,4 @@ $data->template_loader->get_template_part( 'paginate_links_top' . $data->event->
 		?>
     </section>
 <?php $data->template_loader->get_template_part( 'paginate_links_bottom' . $data->event->plan );
-if ( $data->args['long_description_modal']) {
-	$data->template_loader->get_template_part( 'full_modal' );
-	// args to transient for modal ajax consumption
-	$transient_name = 'wfea_modal_args_' . md5( implode( $data->args ) );
-	set_transient( $transient_name, $data->args,DAY_IN_SECONDS );
-	echo '<script>var wfea_modal_args="' . $transient_name . '"</script>';
-}
+$data->template_loader->get_template_part( 'full_modal' );

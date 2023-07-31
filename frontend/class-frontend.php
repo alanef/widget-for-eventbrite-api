@@ -282,6 +282,15 @@ class FrontEnd
         );
     }
     
+    public function wfea_the_content( $content )
+    {
+        $strip = apply_filters( 'wfea_strip_eb_inline_style', true );
+        if ( true === $strip ) {
+            $content = preg_replace( '/(<[^>]+) style=".*?"/i', '$1', $content );
+        }
+        return $content;
+    }
+    
     private function shortcode_bool( $att )
     {
         

@@ -10,7 +10,7 @@ $delivery_header = isset($_SERVER['HTTP_X_EVENTBRITE_DELIVERY']) ? $_SERVER['HTT
 
 
 // Check if the required headers are present and have valid values
-$valid_actions = ['event.created', 'event.published', 'event.unpublished', 'event.updated'];
+$valid_actions = ['event.created', 'event.published', 'event.unpublished', 'event.updated', 'test'];
 if (!in_array($event_header, $valid_actions) || empty($delivery_header)) {
 	// Headers are missing or incorrect, return an error response
 	$response = array('message' => 'Invalid headers');
@@ -40,8 +40,14 @@ if ($result) {
 	$filename = $event_id . '.json';
 // Write the request body to a new file in the queue directory
 	file_put_contents( $queue_directory . $filename, $delivery_header );
+	$response = array( 'message' => 'Webhook processed' );
+} elseif ( $event_header === 'test' ) {
+	$response = array( 'message' => 'Test webhook received' );
+} else {
+	http_response_code(400);
+	$response = array( 'message' => 'Invalid webhook' );
 }
 
 // Respond with a success message
-$response = array( 'message' => 'Webhook processed' );
+
 echo json_encode( $response );

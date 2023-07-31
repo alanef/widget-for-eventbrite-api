@@ -594,6 +594,15 @@ class Utilities
         }, 90 );
     }
     
+    public function the_content()
+    {
+        $content = get_the_content();
+        $content = apply_filters( 'the_content', $content );
+        $content = str_replace( ']]>', ']]&gt;', $content );
+        $content = apply_filters( 'wfea_the_content', $content );
+        echo  $content ;
+    }
+    
     /**
      * @param $args template $data->args
      * @param $url

@@ -319,7 +319,9 @@ class Admin_Settings extends Admin_Pages
         esc_html_e( 'Upgrade to a premium plan to enable WebHook handling', 'widget-for-eventbrite-api' );
         ?>
                             <a class="button-secondary"
-                               href="<? echo esc_url( $this->freemius->get_upgrade_url() ); ?>"><?php 
+                               href="<?php 
+        echo  esc_url( $this->freemius->get_upgrade_url() ) ;
+        ?>"><?php 
         esc_html_e( 'Upgrade now', 'widget-for-eventbrite-api' );
         ?></a>
                         </span>
@@ -583,7 +585,9 @@ Additional shortcode options are available in the  paid for version<br><br>
             esc_html_e( 'Need help with styling to your theme? Upgrade to a premium plan to request personal CSS support', 'widget-for-eventbrite-api' );
             ?>
                             <a class="button-secondary"
-                               href="<? echo esc_url( $this->freemius->get_upgrade_url() ); ?>"><?php 
+                               href="<?php 
+            echo  esc_url( $this->freemius->get_upgrade_url() ) ;
+            ?>"><?php 
             esc_html_e( 'Upgrade now', 'widget-for-eventbrite-api' );
             ?></a>
                         </span>

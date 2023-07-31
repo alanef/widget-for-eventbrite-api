@@ -1,8 +1,8 @@
 === Display Eventbrite Events ===
 Contributors: fullworks
 Tags: eventbrite, widget, events, eventbrite widget, eventbrite shortcode
-Tested up to: 6.2
-Stable tag: 5.3.2
+Tested up to: 6.3
+Stable tag: 5.3.4
 Type: freemium
 
 Display your upcoming Eventbrite events quickly and easily.
@@ -172,6 +172,17 @@ This plugin does not collect, process or send any website visitor personal data 
 == Upgrade Notice ==
 
 == Changelog ==
+= 5.3.4 =
+* Fix undefined variable warning
+* Add filter to remove EB inline styles in full content ( Pro only )
+* Fix long title wordbreak in venue layout ( Pro only )
+* Add response to TEST webhook ( Pro only )
+* Add instructions in settings when direct php webhook is not allowed by host ( Pro only )
+
+= 5.3.3 =
+* Fix admin setting for webhook to not required ( Pro only )
+* Fix some old php tags
+
 = 5.3.2 =
 * Fix cache debug log message for Supercache
 

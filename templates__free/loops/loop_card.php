@@ -15,7 +15,7 @@
 	            <?php $data->template_loader->get_template_part( 'venue' . $data->event->plan ); ?>
 	            <?php $data->template_loader->get_template_part( 'location' . $data->event->plan ); ?>
                 <div class="eaw-buttons">
-                    <?php if ( $data->args['long_description_modal']) {
+                    <?php if ( $data->utilities->get_element('long_description_modal', $data->args) ) {
                         $data->template_loader->get_template_part( 'full_modal_details_button' );
                      } else { ?>
                     <button class="eaw-button-details"><?php echo apply_filters('wfea_layout_card_details',esc_html__( 'Details', 'widget-for-eventbrite-api')) ; ?>
