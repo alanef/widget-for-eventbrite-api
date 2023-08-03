@@ -1,3 +1,6 @@
+= 5.3.5 =
+* Fix issue with cal_list template ( Pro only )
+
 = 5.3.4 =
 * Fix undefined variable warning
 * Add filter to remove EB inline styles in full content ( Pro only )

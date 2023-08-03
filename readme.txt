@@ -60,6 +60,10 @@ Tested on PHP 8.0 and PHP 8.1
 Use the demo shortcode builder to see what your events may look like, this works with your events. [Click Here to go to the demo page](https://fullworksplugins.com/products/widget-for-eventbrite/eventbrite-shortcode-demo/)
 [youtube https://youtu.be/ztQlecAALRk]
 
+= The Original Widget for Eventbrite API =
+This plugin was the first to use the Eventbrite API to create a widget for Eventbrite. It has been around since 2017 when it was a simple widget, literally a 'widget for eventbrite api' and has been constantly updated and improved.
+Now the free version is used by many thousands of users and the Pro version is used by a range of organisations from small community groups to very large music venue promoters.
+
 == Screenshots ==
 1. Widget Layout
 2. Card Layout
@@ -172,6 +176,9 @@ This plugin does not collect, process or send any website visitor personal data 
 == Upgrade Notice ==
 
 == Changelog ==
+= 5.3.5 =
+* Fix issue with cal_list template ( Pro only )
+
 = 5.3.4 =
 * Fix undefined variable warning
 * Add filter to remove EB inline styles in full content ( Pro only )
