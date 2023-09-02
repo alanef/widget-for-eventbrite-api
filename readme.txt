@@ -2,7 +2,7 @@
 Contributors: fullworks
 Tags: eventbrite, widget, events, eventbrite widget, eventbrite shortcode
 Tested up to: 6.3
-Stable tag: 5.3.4
+Stable tag: 5.3.7
 Type: freemium
 
 Display your upcoming Eventbrite events quickly and easily.
@@ -139,6 +139,10 @@ The plugin has a 24 hour cache so new events may not show for up to 24 hours.  T
 = (advanced) How does the template system work? =
 create a directory in your theme ( or child theme ) directory called widget-for-eventbrite-api  and copy the template(s) from wp-content/plugins/widget-for-event-brite-api/templates__free/  and modify as required.
 
+= How can I report security bugs? =
+
+You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/widget-for-eventbrite-api)
+
 == Go Pro ==
 
 Get so much more with the Pro version.
@@ -156,6 +160,7 @@ Or review a full description of all options in the free and paid for plans. [Fre
 * pre-built calendar page template with grid layout
 * pre-built calendar view in month list format, and custom periods
 * full width, venue, short date, card and grid layouts
+* use different APIkeys for different shortcodes, so different organisation feeds can be used
 * 5 star support
 * additional filters so you can split events across pages
 * link from summary lists to full page event on site
@@ -176,6 +181,12 @@ This plugin does not collect, process or send any website visitor personal data 
 == Upgrade Notice ==
 
 == Changelog ==
+= 5.3.7 =
+* Fix issue with cal and cal_list template ( Pro only )
+
+= 5.3.6 =
+* Added extra options filter to cal / cal_list ( Pro only )
+
 = 5.3.5 =
 * Fix issue with cal_list template ( Pro only )
 

@@ -288,7 +288,8 @@ class FrontEnd
         if ( true === $strip ) {
             $content = preg_replace( '/(<[^>]+) style=".*?"/i', '$1', $content );
         }
-        return $content;
+        $class = ( apply_filters( 'wfea_strip_eb_inline_style', true ) ? 'local_style' : '' );
+        return '<div class="wfea_eb_content ' . $class . '">' . $content . '</div>';
     }
     
     private function shortcode_bool( $att )

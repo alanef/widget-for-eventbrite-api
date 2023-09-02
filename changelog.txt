@@ -1,3 +1,6 @@
+= 5.3.6 =
+* Added extra options filter to cal / cal_list ( Pro only )
+
 = 5.3.5 =
 * Fix issue with cal_list template ( Pro only )
 
