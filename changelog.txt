@@ -1,3 +1,9 @@
+= 5.3.8 =
+* Internationalize date on Card layout.
+
+= 5.3.7 =
+* Fix issue with cal and cal_list template ( Pro only )
+
 = 5.3.6 =
 * Added extra options filter to cal / cal_list ( Pro only )
 
