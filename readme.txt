@@ -181,6 +181,9 @@ This plugin does not collect, process or send any website visitor personal data 
 == Upgrade Notice ==
 
 == Changelog ==
+= 5.3.9 =
+* Fix harmless warning
+
 = 5.3.8 =
 * Internationalize date on Card layout.
 
