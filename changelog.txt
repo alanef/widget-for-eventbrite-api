@@ -1,3 +1,6 @@
+= 5.3.10 =
+* Fix card template long desc calendar link ( Pro only )
+
 = 5.3.9 =
 * Fix harmless warning
 
