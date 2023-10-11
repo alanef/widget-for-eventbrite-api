@@ -29,59 +29,30 @@ class Admin_Setup_Wizard {
 		add_action( 'wp_ajax_update_api_option', array( $this, 'update_api_option' ) );
 	}
 
+	public function add_meta_boxes() {
+		// in extended class
+	}
 
-	public function settings_setup() {
+	public function add_required_meta_boxes() {
+		global $hook_suffix;
 
+		if ( $this->settings_page_id == $hook_suffix ) {
 
-		/* Add settings menu page */
-		add_submenu_page(
-			'options-general.php',
-			esc_html__( 'Display Eventbrite Setup Wizard', 'widget-for-eventbrite-api' ),
-			esc_html__( 'Display Eventbrite Setup Wizard', 'widget-for-eventbrite-api' ),
-			'manage_options',                 /* Capability */
-			'widget-for-eventbrite-api-setup-wizard',                         /* Page Slug */
-			array( $this, 'settings_page' )          /* Settings Page Function Callback */
-		);
+			$this->add_meta_boxes();
 
-		$this->register_settings();
-
-
-		/* Vars */
-		$page_hook_id = $this->settings_page_id;
-
-		/* Do stuff in settings page, such as adding scripts, etc. */
-		if ( ! empty( $this->settings_page ) ) {
-			/* Load the JavaScript needed for the settings screen. */
-			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-			add_action( "admin_footer-{$page_hook_id}", array( $this, 'footer_scripts' ) );
-			/* Set number of column available. */
-			add_filter( 'screen_layout_columns', array( $this, 'screen_layout_column' ), 10, 2 );
-			add_action( $this->settings_page_id . '_settings_page_boxes', array( $this, 'add_required_meta_boxes' ) );
-
+			add_meta_box(
+				'submitdiv',               /* Meta Box ID */
+				__( 'Save Options', 'widget-for-eventbrite-api' ),            /* Title */
+				array( $this, 'submit_meta_box' ),  /* Function Callback */
+				$this->settings_page_id,                /* Screen: Our Settings Page */
+				'side',                    /* Context */
+				'high'                     /* Priority */
+			);
 		}
 	}
 
-	public function register_settings() {
-
-	}
-
-	public function update_api_option() {
-		if ( ! wp_doing_ajax() ) {
-			die;
-		}
-		if ( ! current_user_can( 'manage_options' ) ) {
-			die;
-		}
-		//check nonce
-		if ( ! wp_verify_nonce( $_REQUEST['nonce'], "wfea_api_key" ) ) {
-			wp_die( esc_html__( 'Invalid nonce', 'widget-for-eventbrite-api' ) );
-		}
-		$options        = get_option( 'widget-for-eventbrite-api-settings' );
-		$options['key'] = sanitize_text_field( $_POST['apikey'] );
-		update_option( 'widget-for-eventbrite-api-settings', $options );
-		echo json_encode( array( 'result' => true ) );
-		die();
-
+	public function delete_options() {
+		// for extended class to manage
 	}
 
 	public function enqueue_scripts( $hook_suffix ) {
@@ -101,19 +72,36 @@ class Admin_Setup_Wizard {
             jQuery(document).ready(function ($) {
                 // toggle
                 $('.if-js-closed').removeClass('if-js-closed').addClass('closed');
-                postboxes.add_postbox_toggles('<?php echo $page_hook_id; ?>');
+                postboxes.add_postbox_toggles('<?php echo esc_attr( $page_hook_id ); ?>');
                 // display spinner
                 $('#fx-smb-form').submit(function () {
                     $('#publishing-action .spinner').css('visibility', 'visible');
                 });
 // confirm before reset
                 $('#delete-action input').on('click', function () {
-                    return confirm('<?php echo $confmsg; ?>');
+                    return confirm('<?php echo esc_html( $confmsg ); ?>');
                 });
             });
             //]]>
         </script>
 		<?php
+	}
+
+	public function register_settings() {
+
+	}
+
+	public function reset_sanitize( $settings ) {
+		/* Add Update Notice */
+
+		if ( ! empty( $settings ) ) {
+			add_settings_error( $this->option_group, '', esc_html__( 'Settings reset to defaults.', 'widget-for-eventbrite-api' ), 'updated' );
+			/* Delete Option */
+			$this->delete_options();
+
+		}
+
+		return $settings;
 	}
 
 	public function screen_layout_column( $columns, $screen ) {
@@ -214,7 +202,8 @@ class Admin_Setup_Wizard {
                                 </li>
                             </ol>
                             <div class="api-key">
-                                <input type="text" data-nonce="<?php echo wp_create_nonce( "wfea_api_key" );; ?>"
+                                <input type="text"
+                                       data-nonce="<?php echo esc_attr( wp_create_nonce( "wfea_api_key" ) ); ?>"
                                        id="widget-for-eventbrite-api-setup-api-key" name="api_key"
                                        value=""
                                        placeholder="<?php esc_attr_e( 'Your Eventbrite private token', 'widget-for-eventbrite-api' ); ?>"
@@ -222,7 +211,9 @@ class Admin_Setup_Wizard {
                                 <p class="api-key-result"></p>
                             </div>
                             <div class="result"></div>
-                            <div class="settings-link"><a href="<?php echo admin_url('options-general.php?page=widget-for-eventbrite-api-settings');?>"><?php esc_html_e('go to settings','widget-for-eventbrite-api');?></a></div>
+                            <div class="settings-link"><a
+                                        href="<?php echo esc_url( admin_url( 'options-general.php?page=widget-for-eventbrite-api-settings' ) ); ?>"><?php esc_html_e( 'go to settings', 'widget-for-eventbrite-api' ); ?></a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -232,26 +223,35 @@ class Admin_Setup_Wizard {
 
 	}
 
-	public function add_required_meta_boxes() {
-		global $hook_suffix;
+	public function settings_setup() {
 
-		if ( $this->settings_page_id == $hook_suffix ) {
 
-			$this->add_meta_boxes();
+		/* Add settings menu page */
+		add_submenu_page(
+			'options-general.php',
+			esc_html__( 'Display Eventbrite Setup Wizard', 'widget-for-eventbrite-api' ),
+			esc_html__( 'Display Eventbrite Setup Wizard', 'widget-for-eventbrite-api' ),
+			'manage_options',                 /* Capability */
+			'widget-for-eventbrite-api-setup-wizard',                         /* Page Slug */
+			array( $this, 'settings_page' )          /* Settings Page Function Callback */
+		);
 
-			add_meta_box(
-				'submitdiv',               /* Meta Box ID */
-				__( 'Save Options', 'widget-for-eventbrite-api' ),            /* Title */
-				array( $this, 'submit_meta_box' ),  /* Function Callback */
-				$this->settings_page_id,                /* Screen: Our Settings Page */
-				'side',                    /* Context */
-				'high'                     /* Priority */
-			);
+		$this->register_settings();
+
+
+		/* Vars */
+		$page_hook_id = $this->settings_page_id;
+
+		/* Do stuff in settings page, such as adding scripts, etc. */
+		if ( ! empty( $this->settings_page ) ) {
+			/* Load the JavaScript needed for the settings screen. */
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+			add_action( "admin_footer-{$page_hook_id}", array( $this, 'footer_scripts' ) );
+			/* Set number of column available. */
+			add_filter( 'screen_layout_columns', array( $this, 'screen_layout_column' ), 10, 2 );
+			add_action( $this->settings_page_id . '_settings_page_boxes', array( $this, 'add_required_meta_boxes' ) );
+
 		}
-	}
-
-	public function add_meta_boxes() {
-		// in extended class
 	}
 
 	public function submit_meta_box() {
@@ -262,8 +262,8 @@ class Admin_Setup_Wizard {
             <div id="major-publishing-actions">
 
                 <div id="delete-action">
-                    <input type="submit" name="<?php echo "{$this->option_group}-reset"; ?>"
-                           id="<?php echo "{$this->option_group}-reset"; ?>"
+                    <input type="submit" name="<?php echo esc_attr( "{$this->option_group}-reset" ); ?>"
+                           id="<?php echo esc_attr( "{$this->option_group}-reset" ); ?>"
                            class="button"
                            value="Reset Settings">
                 </div><!-- #delete-action -->
@@ -282,21 +282,21 @@ class Admin_Setup_Wizard {
 		<?php
 	}
 
-	public function reset_sanitize( $settings ) {
-		/* Add Update Notice */
-
-		if ( ! empty( $settings ) ) {
-			add_settings_error( $this->option_group, '', esc_html__( 'Settings reset to defaults.', 'widget-for-eventbrite-api' ), 'updated' );
-			/* Delete Option */
-			$this->delete_options();
-
+	public function update_api_option() {
+		if ( ! wp_doing_ajax() ) {
+			die;
 		}
+		if ( ! current_user_can( 'manage_options' ) ) {
+			die;
+		}
+		//check nonce ajax
+		check_ajax_referer( 'wfea_api_key', 'nonce' );
+		$options        = get_option( 'widget-for-eventbrite-api-settings' );
+		$options['key'] = ( isset( $_POST['apikey'] ) ) ? sanitize_text_field( wp_unslash( $_POST['apikey'] ) ) : '';
+		update_option( 'widget-for-eventbrite-api-settings', $options );
+		echo json_encode( array( 'result' => true ) );
+		die();
 
-		return $settings;
-	}
-
-	public function delete_options() {
-		// for extended class to manage
 	}
 
 

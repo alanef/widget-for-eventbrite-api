@@ -1,6 +1,7 @@
 <?php
 /**
  * @var mixed $data Custom data for the template.
+ * phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- template files escaped at output
  */
 if ( property_exists( $data->event, 'cta' ) ) {
 	$cta_text = $data->event->cta->text;

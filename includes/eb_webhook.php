@@ -5,17 +5,17 @@
  * Queues webhooks into flat files ready or wp processing
  */
 // Retrieve the request headers
-$event_header = isset($_SERVER['HTTP_X_EVENTBRITE_EVENT']) ? $_SERVER['HTTP_X_EVENTBRITE_EVENT'] : '';
-$delivery_header = isset($_SERVER['HTTP_X_EVENTBRITE_DELIVERY']) ? $_SERVER['HTTP_X_EVENTBRITE_DELIVERY'] : '';
+$event_header    = isset( $_SERVER['HTTP_X_EVENTBRITE_EVENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_X_EVENTBRITE_EVENT'] ) ) : '';
+$delivery_header = isset( $_SERVER['HTTP_X_EVENTBRITE_DELIVERY'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_X_EVENTBRITE_DELIVERY'] ) ) : '';
 
 
 // Check if the required headers are present and have valid values
-$valid_actions = ['event.created', 'event.published', 'event.unpublished', 'event.updated', 'test'];
-if (!in_array($event_header, $valid_actions) || empty($delivery_header)) {
+$valid_actions = [ 'event.created', 'event.published', 'event.unpublished', 'event.updated', 'test' ];
+if ( ! in_array( $event_header, $valid_actions ) || empty( $delivery_header ) ) {
 	// Headers are missing or incorrect, return an error response
-	$response = array('message' => 'Invalid headers');
-	http_response_code(400);
-	echo json_encode($response);
+	$response = array( 'message' => 'Invalid headers' );
+	http_response_code( 400 );
+	echo json_encode( $response );
 	exit;
 }
 
@@ -29,13 +29,13 @@ $queue_directory = 'queue/';
 if ( ! is_dir( $queue_directory ) ) {
 	mkdir( $queue_directory, 0755, true );
 }
-$payload = json_decode($request_body, true);
+$payload = json_decode( $request_body, true );
 
-if ($payload) {
+if ( $payload ) {
 	$api_url = $payload['api_url'];
 }
-$result = preg_match('/events\/(\d+)/', $api_url, $matches);
-if ($result) {
+$result = preg_match( '/events\/(\d+)/', $api_url, $matches );
+if ( $result ) {
 	$event_id = $matches[1];
 	$filename = $event_id . '.json';
 // Write the request body to a new file in the queue directory
@@ -44,7 +44,7 @@ if ($result) {
 } elseif ( $event_header === 'test' ) {
 	$response = array( 'message' => 'Test webhook received' );
 } else {
-	http_response_code(400);
+	http_response_code( 400 );
 	$response = array( 'message' => 'Invalid webhook' );
 }
 

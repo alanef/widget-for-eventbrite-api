@@ -98,7 +98,12 @@ class FrontEnd
         add_shortcode( 'wfea', array( $this, 'build_shortcode' ) );
     }
     
-    public function build_shortcode( $initial_atts )
+    /**
+     * @param $initial_atts
+     *
+     * @return array
+     */
+    public function build_query_args_from_atts( $initial_atts ) : array
     {
         // force default for short date to be true modal
         if ( isset( $initial_atts['layout'] ) && 'short_date' == $initial_atts['layout'] ) {
@@ -163,6 +168,12 @@ class FrontEnd
         }
         $query['thumb_original'] = $atts['thumb_original'];
         $query['display_private'] = $atts['display_private'];
+        return array( $atts, $query );
+    }
+    
+    public function build_shortcode( $initial_atts )
+    {
+        list( $atts, $query ) = $this->build_query_args_from_atts( $initial_atts );
         global  $wfea_instance_counter ;
         $wfea_instance_counter++;
         // Allow plugins/themes developer to filter the query.
@@ -207,7 +218,7 @@ class FrontEnd
                     $plan_title = esc_html__( 'Free', 'widget-for-eventbrite-api' );
                     $err_msg = $admin_msg . '<div class="wfea error">' . esc_html__( 'Selected LAYOUT="', 'widget_for_eventbrite_api' ) . esc_html( $atts['layout'] ) . esc_html__( '" Not found in any paths. Your plan is ', 'widget_for_eventbrite_api' ) . esc_html( $plan_title ) . esc_html__( ' and includes these layouts ', 'widget_for_eventbrite_api' ) . esc_html( $layouts ) . esc_html__( ' and any custom developed layouts you have made.', 'widget_for_eventbrite_api' ) . '<br><br>' . esc_html__( 'Paths checked are:', 'widget_for_eventbrite_api' ) . '<br>' . implode( '<br>', $template_loader->get_file_paths() );
                     '</div>';
-                    echo  $err_msg ;
+                    echo  wp_kses_post( $err_msg ) ;
                 }
             
             }
@@ -282,6 +293,59 @@ class FrontEnd
         );
     }
     
+    /**
+     * Build social meta for single pages
+     * @return void
+     */
+    public function wfea_generate_meta_for_social_media()
+    {
+        $shortcode = $this->utilities->is_single_with_wfea_shortcode();
+        // checks and returns the limit is a shortcode on a post
+        if ( false === $shortcode ) {
+            return;
+        }
+        // remove [ ] from $shortcode
+        $shortcode = substr( $shortcode, 1, -1 );
+        $atts = shortcode_parse_atts( $shortcode );
+        if ( !isset( $atts['limit'] ) ) {
+            $atts['limit'] = 5;
+        }
+        list( $atts, $query_args ) = $this->build_query_args_from_atts( $atts );
+        
+        if ( !isset( $query_args['ID'] ) && $atts['limit'] > 1 ) {
+            return;
+            // no id and the shortcode has a limit of more than 1 so not a single event
+        }
+        
+        $events = new Eventbrite_Query( $query_args );
+        
+        if ( !empty($events->api_results->events[0]) ) {
+            $link = get_the_permalink();
+            if ( isset( $query_args['ID'] ) ) {
+                $link .= trailingslashit( $link ) . 'e/' . $query_args['ID'] . '/';
+            }
+            echo  '<link ref="canonical" href="' . esc_url( $link ) . '" />' ;
+            echo  '<meta property="og:url" content="' . esc_url( uniqid() ) . '" />' ;
+            // some reason we have to break this for facebook to work
+            echo  '<meta property="og:title" content="' . esc_attr( $events->post->post_title ) . '" />' ;
+            echo  '<meta property="og:description" content="' . esc_attr( $events->post->post_excerpt ) . '" />' ;
+            echo  '<meta property="og:image" content="' . esc_url( $events->post->logo_url ) . '" />' ;
+            /*
+             * Twitter works on singlepage but not wit a specified Event ID
+             */
+            echo  '<meta name="twitter:card" content="summary_large_image">' ;
+            // display og:site_name
+            $site_name = get_bloginfo( 'name' );
+            if ( !empty($site_name) ) {
+                echo  '<meta property="og:site_name" content="' . esc_attr( $site_name ) . '" />' ;
+            }
+            echo  '<meta name="twitter:title" content="' . esc_attr( $events->post->post_title ) . '" />' ;
+            echo  '<meta name="twitter:description" content="' . esc_attr( $events->post->post_excerpt ) . '" />' ;
+            echo  '<meta name="twitter:image" content="' . esc_url( $events->post->logo_url ) . '" />' ;
+        }
+    
+    }
+    
     public function wfea_the_content( $content )
     {
         $strip = apply_filters( 'wfea_strip_eb_inline_style', true );
@@ -321,8 +385,8 @@ class FrontEnd
                 $message = esc_html__( '[Display Eventbrite Plugin] Selected attribute: [', 'widget-for-eventbrite-api' ) . esc_attr( $att ) . esc_html__( '] is not valid - maybe a typo or maybe not included in your plan, refer to documentation', 'widget-for-eventbrite-api' );
                 
                 if ( isset( $atts['debug'] ) && $atts['debug'] ) {
-                    echo  '<div class="error">' . $message . '</div>' ;
-                    trigger_error( $message, E_USER_NOTICE );
+                    echo  '<div class="error">' . wp_kses_post( $message ) . '</div>' ;
+                    trigger_error( esc_html( $message ), E_USER_NOTICE );
                 }
             
             }

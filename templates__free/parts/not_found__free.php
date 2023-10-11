@@ -1,6 +1,7 @@
 <?php
 /**
  * @var mixed $data Custom data for the template.
+ * phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- template files escaped at output
  */
 ?>
 <div>

@@ -31,109 +31,6 @@ class EventBrite_API_Widget extends WP_Widget
         $this->alt_option_name = 'widget_eventbrite_events';
     }
     
-    /**
-     * Outputs the content for the current EventBrite events widget instance.
-     *
-     */
-    public function widget( $args, $instance )
-    {
-        /** @var \Freemius $wfea_fs Freemius global object. */
-        global  $wfea_fs ;
-        extract( $args );
-        // Merge the input arguments and the defaults.
-        $instance = wp_parse_args( (array) $instance, $this->default_args() );
-        // Query arguments.
-        $query = array(
-            'nopaging' => true,
-            'limit'    => $instance['limit'],
-        );
-        $query['order_by'] = $instance['order_by'];
-        $status = array();
-        if ( $instance['status_live'] ) {
-            $status[] = 'live';
-        }
-        if ( $instance['status_ended'] ) {
-            $status[] = 'ended';
-        }
-        if ( $instance['status_started'] ) {
-            $status[] = 'started';
-        }
-        $query['status'] = implode( ',', $status );
-        if ( empty($query['status']) ) {
-            $query['status'] = 'live';
-        }
-        global  $wfea_instance_counter ;
-        $wfea_instance_counter++;
-        // Allow plugins/themes developer to filter the default query.
-        $query = apply_filters( 'eawp_default_query_arguments', $query );
-        // Perform the query.
-        $events = new Eventbrite_Query( $query );
-        $html = '';
-        
-        if ( is_wp_error( $events->api_results ) ) {
-            
-            if ( current_user_can( 'manage_options' ) ) {
-                $error_string = $this->utilities->get_api_error_string( $events->api_results );
-                $html .= $admin_msg . '<div class="wfea error">' . $error_string . '</div>';
-            }
-        
-        } else {
-            $template = 'layout_widget';
-            $theme = wp_get_theme();
-            $template_loader = new Template_Loader();
-            $template_loader->set_template_data( array(
-                'template_loader' => $template_loader,
-                'events'          => $events,
-                'args'            => $instance,
-                'template'        => strtolower( $theme->template ),
-                'plugin_name'     => 'widget-for-eventbrite-api',
-                'utilities'       => $this->utilities,
-                'unique_id'       => uniqid(),
-                'instance'        => $wfea_instance_counter,
-                'event'           => new stdClass(),
-            ) );
-            ob_start();
-            $template_loader->get_template_part( $template );
-            $html .= ob_get_clean();
-        }
-        
-        $recent = wp_kses_post( $instance['before'] ) . apply_filters( 'eawp_markup', $html ) . wp_kses_post( $instance['after'] );
-        // Restore original Post Data.
-        wp_reset_postdata();
-        // Allow devs to hook in stuff after the loop.
-        do_action( 'eawp_after_loop' );
-        // Return the  posts markup.
-        
-        if ( $recent ) {
-            // Output the theme's $before_widget wrapper.
-            echo  $before_widget ;
-            // If both title and title url is not empty, display it.
-            
-            if ( !empty($instance['title_url']) && !empty($instance['title']) ) {
-                echo  $before_title . '<a href="' . esc_url( $instance['title_url'] ) . '" title="' . esc_attr( $instance['title'] ) . '">' . apply_filters(
-                    'widget_title',
-                    $instance['title'],
-                    $instance,
-                    $this->id_base
-                ) . '</a>' . $after_title ;
-                // If the title not empty, display it.
-            } elseif ( !empty($instance['title']) ) {
-                echo  $before_title . apply_filters(
-                    'widget_title',
-                    $instance['title'],
-                    $instance,
-                    $this->id_base
-                ) . $after_title ;
-            }
-            
-            // Get the recent posts query.
-            echo  $recent ;
-            // Close the theme's widget wrapper.
-            echo  $after_widget ;
-        }
-    
-    }
-    
     public static function default_args()
     {
         //@TODO think about refactor into one
@@ -175,58 +72,6 @@ class EventBrite_API_Widget extends WP_Widget
     }
     
     /**
-     * Handles updating the settings for the current EventBrite widget instance.
-     *
-     */
-    public function update( $new_instance, $old_instance )
-    {
-        /** @var \Freemius $wfea_fs Freemius global object. */
-        global  $wfea_fs ;
-        $instance = $old_instance;
-        $instance['title'] = sanitize_text_field( $new_instance['title'] );
-        $instance['title_url'] = esc_url_raw( $new_instance['title_url'] );
-        $instance['number'] = ( isset( $new_instance['number'] ) ? (int) $new_instance['number'] : 0 );
-        $instance['excerpt'] = ( isset( $new_instance['excerpt'] ) ? (bool) $new_instance['excerpt'] : false );
-        $instance['length'] = intval( $new_instance['length'] );
-        $instance['date'] = ( isset( $new_instance['date'] ) ? (bool) $new_instance['date'] : false );
-        $instance['readmore'] = ( isset( $new_instance['readmore'] ) ? (bool) $new_instance['readmore'] : false );
-        $instance['readmore_text'] = sanitize_text_field( $new_instance['readmore_text'] );
-        $instance['booknow'] = ( isset( $new_instance['booknow'] ) ? (bool) $new_instance['booknow'] : false );
-        $instance['booknow_text'] = sanitize_text_field( $new_instance['booknow_text'] );
-        $instance['limit'] = intval( $new_instance['limit'] );
-        $instance['thumb'] = ( isset( $new_instance['thumb'] ) ? (bool) $new_instance['thumb'] : false );
-        $instance['thumb_width'] = intval( $new_instance['thumb_width'] );
-        $instance['thumb_default'] = esc_url_raw( $new_instance['thumb_default'] );
-        $instance['thumb_align'] = esc_attr( $new_instance['thumb_align'] );
-        $instance['cssid'] = sanitize_html_class( $new_instance['cssid'] );
-        $instance['css_class'] = sanitize_html_class( $new_instance['css_class'] );
-        $instance['newtab'] = ( isset( $new_instance['newtab'] ) ? (bool) $new_instance['newtab'] : false );
-        $instance['tickets'] = ( isset( $new_instance['tickets'] ) ? (bool) $new_instance['tickets'] : false );
-        $instance['order_by'] = ( isset( $new_instance['order_by'] ) ? sanitize_text_field( $new_instance['order_by'] ) : 'start_asc' );
-        $instance['status_live'] = ( isset( $new_instance['status_live'] ) ? (bool) $new_instance['status_live'] : false );
-        $instance['status_ended'] = ( isset( $new_instance['status_ended'] ) ? (bool) $new_instance['status_ended'] : false );
-        $instance['status_started'] = ( isset( $new_instance['status_started'] ) ? (bool) $new_instance['status_started'] : false );
-        if ( false === $instance['status_live'] && false === $instance['status_ended'] && false === $instance['status_started'] ) {
-            $instance['status_live'];
-        }
-        
-        if ( current_user_can( 'unfiltered_html' ) ) {
-            $instance['before'] = $new_instance['before'];
-        } else {
-            $instance['before'] = wp_kses_post( $new_instance['before'] );
-        }
-        
-        
-        if ( current_user_can( 'unfiltered_html' ) ) {
-            $instance['after'] = $new_instance['after'];
-        } else {
-            $instance['after'] = wp_kses_post( $new_instance['after'] );
-        }
-        
-        return $instance;
-    }
-    
-    /**
      * Outputs the settings form for the EventBrite widget.
      *
      */
@@ -243,7 +88,17 @@ class EventBrite_API_Widget extends WP_Widget
             ?>
             <div class="notice inline notice-info notice-alt"><p>
 					<?php 
-            printf( __( 'You are in the Free trial - <a href="%1$s">Upgrade Now!</a> to keep benefits', 'widget-for-eventbrite-api' ), $wfea_fs->get_upgrade_url() );
+            echo  esc_html__( 'You are in the Free trial:', 'widget-for-eventbrite-api' ) ;
+            ?>
+                    &nbsp;<a href="<?php 
+            echo  esc_url( $wfea_fs->get_upgrade_url() ) ;
+            ?>">
+						<?php 
+            echo  esc_html__( 'Upgrade to Pro', 'widget-for-eventbrite-api' ) ;
+            ?>
+                    </a>&nbsp;
+					<?php 
+            echo  esc_html__( 'to keep benefits', 'widget-for-eventbrite-api' ) ;
             ?>
                 </p>
             </div>
@@ -252,7 +107,18 @@ class EventBrite_API_Widget extends WP_Widget
             ?>
             <div class="notice inline notice-info notice-alt"><p>
 					<?php 
-            printf( __( 'Upgrade to Pro. <a href="%1$s">FREE 14 day trial.</a> Lots of great features', 'widget-for-eventbrite-api' ), $wfea_fs->get_trial_url() );
+            echo  esc_html__( 'Upgrade to Pro.', 'widget-for-eventbrite-api' ) ;
+            ?>
+                    &nbsp;
+                    <a href="<?php 
+            echo  esc_url( $wfea_fs->get_upgrade_url() ) ;
+            ?>">
+						<?php 
+            echo  esc_html__( 'FREE 14 day trial.', 'widget-for-eventbrite-api' ) ;
+            ?>
+                    </a>&nbsp;
+					<?php 
+            echo  esc_html__( 'Lots of great features.', 'widget-for-eventbrite-api' ) ;
             ?>
                 </p>
             </div>
@@ -275,7 +141,7 @@ class EventBrite_API_Widget extends WP_Widget
         echo  esc_attr( $this->get_field_id( 'title' ) ) ;
         ?>"
                        name="<?php 
-        echo  $this->get_field_name( 'title' ) ;
+        echo  esc_attr( $this->get_field_name( 'title' ) ) ;
         ?>" type="text"
                        value="<?php 
         echo  esc_attr( $instance['title'] ) ;
@@ -662,6 +528,161 @@ class EventBrite_API_Widget extends WP_Widget
 
 
 		<?php 
+    }
+    
+    /**
+     * Handles updating the settings for the current EventBrite widget instance.
+     *
+     */
+    public function update( $new_instance, $old_instance )
+    {
+        /** @var \Freemius $wfea_fs Freemius global object. */
+        global  $wfea_fs ;
+        $instance = $old_instance;
+        $instance['title'] = sanitize_text_field( $new_instance['title'] );
+        $instance['title_url'] = esc_url_raw( $new_instance['title_url'] );
+        $instance['number'] = ( isset( $new_instance['number'] ) ? (int) $new_instance['number'] : 0 );
+        $instance['excerpt'] = ( isset( $new_instance['excerpt'] ) ? (bool) $new_instance['excerpt'] : false );
+        $instance['length'] = intval( $new_instance['length'] );
+        $instance['date'] = ( isset( $new_instance['date'] ) ? (bool) $new_instance['date'] : false );
+        $instance['readmore'] = ( isset( $new_instance['readmore'] ) ? (bool) $new_instance['readmore'] : false );
+        $instance['readmore_text'] = sanitize_text_field( $new_instance['readmore_text'] );
+        $instance['booknow'] = ( isset( $new_instance['booknow'] ) ? (bool) $new_instance['booknow'] : false );
+        $instance['booknow_text'] = sanitize_text_field( $new_instance['booknow_text'] );
+        $instance['limit'] = intval( $new_instance['limit'] );
+        $instance['thumb'] = ( isset( $new_instance['thumb'] ) ? (bool) $new_instance['thumb'] : false );
+        $instance['thumb_width'] = intval( $new_instance['thumb_width'] );
+        $instance['thumb_default'] = esc_url_raw( $new_instance['thumb_default'] );
+        $instance['thumb_align'] = esc_attr( $new_instance['thumb_align'] );
+        $instance['cssid'] = sanitize_html_class( $new_instance['cssid'] );
+        $instance['css_class'] = sanitize_html_class( $new_instance['css_class'] );
+        $instance['newtab'] = ( isset( $new_instance['newtab'] ) ? (bool) $new_instance['newtab'] : false );
+        $instance['tickets'] = ( isset( $new_instance['tickets'] ) ? (bool) $new_instance['tickets'] : false );
+        $instance['order_by'] = ( isset( $new_instance['order_by'] ) ? sanitize_text_field( $new_instance['order_by'] ) : 'start_asc' );
+        $instance['status_live'] = ( isset( $new_instance['status_live'] ) ? (bool) $new_instance['status_live'] : false );
+        $instance['status_ended'] = ( isset( $new_instance['status_ended'] ) ? (bool) $new_instance['status_ended'] : false );
+        $instance['status_started'] = ( isset( $new_instance['status_started'] ) ? (bool) $new_instance['status_started'] : false );
+        if ( false === $instance['status_live'] && false === $instance['status_ended'] && false === $instance['status_started'] ) {
+            $instance['status_live'];
+        }
+        
+        if ( current_user_can( 'unfiltered_html' ) ) {
+            $instance['before'] = $new_instance['before'];
+        } else {
+            $instance['before'] = wp_kses_post( $new_instance['before'] );
+        }
+        
+        
+        if ( current_user_can( 'unfiltered_html' ) ) {
+            $instance['after'] = $new_instance['after'];
+        } else {
+            $instance['after'] = wp_kses_post( $new_instance['after'] );
+        }
+        
+        return $instance;
+    }
+    
+    /**
+     * Outputs the content for the current EventBrite events widget instance.
+     *
+     */
+    public function widget( $args, $instance )
+    {
+        /** @var \Freemius $wfea_fs Freemius global object. */
+        global  $wfea_fs ;
+        extract( $args );
+        // Merge the input arguments and the defaults.
+        $instance = wp_parse_args( (array) $instance, $this->default_args() );
+        // Query arguments.
+        $query = array(
+            'nopaging' => true,
+            'limit'    => $instance['limit'],
+        );
+        $query['order_by'] = $instance['order_by'];
+        $status = array();
+        if ( $instance['status_live'] ) {
+            $status[] = 'live';
+        }
+        if ( $instance['status_ended'] ) {
+            $status[] = 'ended';
+        }
+        if ( $instance['status_started'] ) {
+            $status[] = 'started';
+        }
+        $query['status'] = implode( ',', $status );
+        if ( empty($query['status']) ) {
+            $query['status'] = 'live';
+        }
+        global  $wfea_instance_counter ;
+        $wfea_instance_counter++;
+        // Allow plugins/themes developer to filter the default query.
+        $query = apply_filters( 'eawp_default_query_arguments', $query );
+        // Perform the query.
+        $events = new Eventbrite_Query( $query );
+        $html = '';
+        
+        if ( is_wp_error( $events->api_results ) ) {
+            
+            if ( current_user_can( 'manage_options' ) ) {
+                $error_string = $this->utilities->get_api_error_string( $events->api_results );
+                $html .= $admin_msg . '<div class="wfea error">' . $error_string . '</div>';
+            }
+        
+        } else {
+            $template = 'layout_widget';
+            $theme = wp_get_theme();
+            $template_loader = new Template_Loader();
+            $template_loader->set_template_data( array(
+                'template_loader' => $template_loader,
+                'events'          => $events,
+                'args'            => $instance,
+                'template'        => strtolower( $theme->template ),
+                'plugin_name'     => 'widget-for-eventbrite-api',
+                'utilities'       => $this->utilities,
+                'unique_id'       => uniqid(),
+                'instance'        => $wfea_instance_counter,
+                'event'           => new stdClass(),
+            ) );
+            ob_start();
+            $template_loader->get_template_part( $template );
+            $html .= ob_get_clean();
+        }
+        
+        $recent = wp_kses_post( $instance['before'] ) . apply_filters( 'eawp_markup', $html ) . wp_kses_post( $instance['after'] );
+        // Restore original Post Data.
+        wp_reset_postdata();
+        // Allow devs to hook in stuff after the loop.
+        do_action( 'eawp_after_loop' );
+        // Return the  posts markup.
+        
+        if ( $recent ) {
+            // Output the theme's $before_widget wrapper.
+            echo  wp_kses_post( $before_widget ) ;
+            // If both title and title url is not empty, display it.
+            
+            if ( !empty($instance['title_url']) && !empty($instance['title']) ) {
+                echo  wp_kses_post( $before_title . '<a href="' . esc_url( $instance['title_url'] ) . '" title="' . esc_attr( $instance['title'] ) . '">' . apply_filters(
+                    'widget_title',
+                    $instance['title'],
+                    $instance,
+                    $this->id_base
+                ) . '</a>' . $after_title ) ;
+                // If the title not empty, display it.
+            } elseif ( !empty($instance['title']) ) {
+                echo  wp_kses_post( $before_title . apply_filters(
+                    'widget_title',
+                    $instance['title'],
+                    $instance,
+                    $this->id_base
+                ) . $after_title ) ;
+            }
+            
+            // Get the recent posts query.
+            echo  wp_kses_post( $recent ) ;
+            // Close the theme's widget wrapper.
+            echo  wp_kses_post( $after_widget ) ;
+        }
+    
     }
 
 }

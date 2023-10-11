@@ -2,7 +2,7 @@
 Contributors: fullworks
 Tags: eventbrite, widget, events, eventbrite widget, eventbrite shortcode
 Tested up to: 6.3
-Stable tag: 5.3.10
+Stable tag: 5.4.0
 Type: freemium
 
 Display your upcoming Eventbrite events quickly and easily.
@@ -181,6 +181,11 @@ This plugin does not collect, process or send any website visitor personal data 
 == Upgrade Notice ==
 
 == Changelog ==
+= 5.4.0 =
+* Improve CSS for Card
+* Add social media meta for single event posts
+* Add support for Wp Engine cache clearing
+
 = 5.3.10 =
 * Fix card template long desc calendar link ( Pro only )
 

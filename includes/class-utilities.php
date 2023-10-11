@@ -30,6 +30,7 @@ namespace WidgetForEventbriteAPI\Includes;
 use  DateTime ;
 use  DateTimeZone ;
 use  http\Url ;
+use  WP_Query ;
 class Utilities
 {
     protected static  $instance ;
@@ -66,88 +67,49 @@ class Utilities
         return self::$instance;
     }
     
-    public function clear_all_cache()
+    /**
+     * Clears all caches for all posts that use the wfea shortcode
+     * @return void
+     * @internal
+     *
+     * @TODO consider in future posts with blocks,when implemented  see has_block() https://developer.wordpress.org/reference/functions/has_block/
+     */
+    public function clear_all_caches_for_posts_with_shortcode()
     {
-        // ensure general cache cleared only once per session
+        // ensure  cache cleared only once per session
         if ( self::$cache_cleared ) {
             return;
         }
         self::$cache_cleared = true;
-        
-        if ( function_exists( 'w3tc_flush_all' ) ) {
-            w3tc_flush_all();
-            $this->error_log( 'w3tc_flush_all' );
+        // now check if we actually have any plugins
+        if ( !$this->is_cache_plugin_installed() ) {
+            return;
         }
-        
-        
-        if ( function_exists( 'wp_cache_clear_cache' ) ) {
-            wp_cache_clear_cache();
-            $this->error_log( 'wp_cache_clear_cache' );
+        $args = array(
+            'post_type'      => array( 'post', 'page' ),
+            'post_status'    => 'publish',
+            'posts_per_page' => -1,
+        );
+        $query = new WP_Query( $args );
+        if ( $query->have_posts() ) {
+            while ( $query->have_posts() ) {
+                $query->the_post();
+                if ( has_shortcode( get_the_content(), 'wfea' ) ) {
+                    $this->clear_post_cache( get_the_ID() );
+                }
+            }
         }
-        
-        
-        if ( function_exists( 'rocket_clean_domain' ) ) {
-            rocket_clean_domain();
-            $this->error_log( 'rocket_clean_domain' );
-        }
-        
-        
-        if ( has_action( 'cachify_flush_cache' ) ) {
-            do_action( 'cachify_flush_cache' );
-            $this->error_log( 'cachify_flush_cache' );
-        }
-        
-        
-        if ( has_action( 'litespeed_purge_all' ) ) {
-            do_action( 'litespeed_purge_all' );
-            $this->error_log( 'litespeed_purge_all' );
-        }
-        
-        
-        if ( has_action( 'wpfc_clear_all_cache' ) ) {
-            do_action( 'wpfc_clear_all_cache' );
-            $this->error_log( 'wpfc_clear_all_cache' );
-        }
-        
-        
-        if ( class_exists( 'WP_Optimize' ) ) {
-            \WP_Optimize()->get_page_cache()->purge();
-            $this->error_log( 'WP_Optimize' );
-        }
-        
-        
-        if ( has_action( 'cache_enabler_clear_site_cache' ) ) {
-            do_action( 'cache_enabler_clear_site_cache' );
-            $this->error_log( 'cache_enabler_clear_site_cache' );
-        }
-        
-        
-        if ( has_action( 'breeze_clear_all_cache' ) ) {
-            do_action( 'breeze_clear_all_cache' );
-            $this->error_log( 'breeze_clear_all_cache' );
-        }
-        
-        // hummingbird
-        
-        if ( has_action( 'wphb_clear_page_cache' ) ) {
-            do_action( 'wphb_clear_page_cache' );
-            $this->error_log( 'wphb_clear_page_cache' );
-        }
-        
-        
-        if ( class_exists( '\\comet_cache' ) ) {
-            \comet_cache::clear();
-            $this->error_log( 'comet_cache' );
-        }
-        
-        
-        if ( function_exists( 'sg_cachepress_purge_cache' ) ) {
-            sg_cachepress_purge_cache();
-            $this->error_log( 'sg_cachepress_purge_cache' );
-        }
-    
+        wp_reset_postdata();
     }
     
+    /**
+     * Clear  apost cache if the method are avaialble
+     *
+     * @param $post_id
+     *
+     * @return void
+     * @internal
+     */
     public function clear_post_cache( $post_id )
     {
         
@@ -217,6 +179,9 @@ class Utilities
             $this->error_log( 'sg_cachepress_purge_cache on ' . $post_id );
         }
         
+        if ( is_callable( 'wpecommon::purge_varnish_cache' ) ) {
+            \wpecommon::purge_varnish_cache( $post_id );
+        }
         //  hook to allow easy extension of other cache plugins
         do_action( 'wfea_clear_post_cache', $post_id );
     }
@@ -552,6 +517,55 @@ class Utilities
     }
     
     /**
+     * Copy of Wp has_shortcode  but returns matches
+     * @link https://developer.wordpress.org/reference/functions/has_shortcode/
+     *
+     * @param $content
+     * @param $tag
+     *
+     * @return false|\string[][]
+     */
+    public function has_shortcode( $content, $tag )
+    {
+        if ( !str_contains( $content, '[' ) ) {
+            return false;
+        }
+        
+        if ( shortcode_exists( $tag ) ) {
+            preg_match_all(
+                '/' . get_shortcode_regex() . '/',
+                $content,
+                $matches,
+                PREG_SET_ORDER
+            );
+            if ( empty($matches) ) {
+                return false;
+            }
+            foreach ( $matches as $shortcode ) {
+                
+                if ( $tag === $shortcode[2] ) {
+                    return $matches;
+                } elseif ( !empty($shortcode[5]) && has_shortcode( $shortcode[5], $tag ) ) {
+                    return $matches;
+                }
+            
+            }
+        }
+        
+        return false;
+    }
+    
+    /**
+     * Checks if any cache plugin is active
+     * @return bool  true if any of the listed cache plugins are active.
+     * @internal
+     */
+    public function is_cache_plugin_installed()
+    {
+        return function_exists( 'w3tc_flush_post' ) || function_exists( 'wp_cache_post_change' ) || function_exists( 'rocket_clean_post' ) || has_action( 'cachify_remove_post_cache' ) || has_action( 'litespeed_purge_post' ) || function_exists( 'wpfc_clear_post_cache_by_id' ) || class_exists( 'WPO_Page_Cache' ) || has_action( 'cache_enabler_clear_page_cache_by_post' ) || has_action( 'breeze_clear_all_cache' ) || class_exists( '\\comet_cache' ) || function_exists( 'sg_cachepress_purge_cache' ) || is_callable( 'wpecommon::purge_varnish_cache' );
+    }
+    
+    /**
      * check if a multiday event
      * @return bool
      * @internal
@@ -570,6 +584,39 @@ class Utilities
      */
     public function is_popup_allowed( $args )
     {
+        return false;
+    }
+    
+    /**
+     * Check to see if we are on a single landingpage containing the wfea shortcode
+     * @return bool | array  false if not, otherwise the shortcode and limit
+     * @internal
+     */
+    public function is_single_with_wfea_shortcode()
+    {
+        $queried_object = get_queried_object();
+        
+        if ( $queried_object instanceof \WP_Post ) {
+            $post_content = $queried_object->post_content;
+            
+            if ( $matches = $this->has_shortcode( $post_content, 'wfea' ) ) {
+                //  remove any matches[$i][0] that are wrapped in [[.*]] as these are not real shortcodes
+                foreach ( $matches as $i => $match ) {
+                    if ( 1 === preg_match( '#\\[\\[.*\\]\\]#', $match[0] ) ) {
+                        unset( $matches[$i] );
+                    }
+                }
+                // redo array keys
+                $matches = array_values( $matches );
+                if ( count( $matches ) > 1 ) {
+                    // do nothing but note that only the first will be used
+                }
+                $shortcode = $matches[0][0];
+                return $shortcode;
+            }
+        
+        }
+        
         return false;
     }
     
@@ -594,13 +641,18 @@ class Utilities
         }, 90 );
     }
     
+    /**
+     * Template function to diaply content
+     * @return mixed|null
+     * @api
+     */
     public function the_content()
     {
         $content = get_the_content();
         $content = apply_filters( 'the_content', $content );
         $content = str_replace( ']]>', ']]&gt;', $content );
         $content = apply_filters( 'wfea_the_content', $content );
-        echo  $content ;
+        return $content;
     }
     
     /**

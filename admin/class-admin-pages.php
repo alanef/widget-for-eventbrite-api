@@ -30,50 +30,30 @@ class Admin_Pages {
 
 	}
 
+	public function add_meta_boxes() {
+		// in extended class
+	}
 
-	public function settings_setup() {
+	public function add_required_meta_boxes() {
+		global $hook_suffix;
 
-		/* top level
-				add_menu_page(
-					$this->settings_title, // Page Title
-					$this->settings_title,                       // Menu Title
-					'manage_options',                 // Capability
-					'plugin-name',                         // Page Slug
-					array( $this, 'settings_page' ),           // Settings Page Function Callback
-					'dashicons-shield',           // Menu Icon
-					70                                // Menu Position
-				);
-		*/
-		/* Add settings menu page */
-		add_submenu_page(
-			'options-general.php',
-			$this->settings_title, /* Page Title */
-			$this->settings_title,                       /* Menu Title */
-			'manage_options',                 /* Capability */
-			'widget-for-eventbrite-api-settings',                         /* Page Slug */
-			array( $this, 'settings_page' )          /* Settings Page Function Callback */
-		);
+		if ( $this->settings_page_id == $hook_suffix ) {
 
-		$this->register_settings();
+			$this->add_meta_boxes();
 
-
-		/* Vars */
-		$page_hook_id = $this->settings_page_id;
-
-		/* Do stuff in settings page, such as adding scripts, etc. */
-		if ( ! empty( $this->settings_page ) ) {
-			/* Load the JavaScript needed for the settings screen. */
-			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-			add_action( "admin_footer-{$page_hook_id}", array( $this, 'footer_scripts' ) );
-			/* Set number of column available. */
-			add_filter( 'screen_layout_columns', array( $this, 'screen_layout_column' ), 10, 2 );
-			add_action( $this->settings_page_id . '_settings_page_boxes', array( $this, 'add_required_meta_boxes' ) );
-
+			add_meta_box(
+				'submitdiv',               /* Meta Box ID */
+				esc_html__( 'Save Options', 'widget-for-eventbrite-api' ),            /* Title */
+				array( $this, 'submit_meta_box' ),  /* Function Callback */
+				$this->settings_page_id,                /* Screen: Our Settings Page */
+				'side',                    /* Context */
+				'high'                     /* Priority */
+			);
 		}
 	}
 
-	public function register_settings() {
-		// overide in extended class
+	public function delete_options() {
+		// for extended class to manage
 	}
 
 	public function enqueue_scripts( $hook_suffix ) {
@@ -94,19 +74,36 @@ class Admin_Pages {
             jQuery(document).ready(function ($) {
                 // toggle
                 $('.if-js-closed').removeClass('if-js-closed').addClass('closed');
-                postboxes.add_postbox_toggles('<?php echo $page_hook_id; ?>');
+                postboxes.add_postbox_toggles('<?php echo esc_attr( $page_hook_id ); ?>');
                 // display spinner
                 $('#fx-smb-form').submit(function () {
                     $('#publishing-action .spinner').css('visibility', 'visible');
                 });
 // confirm before reset
                 $('#delete-action input').on('click', function () {
-                    return confirm('<?php echo $confmsg; ?>');
+                    return confirm('<?php echo esc_html( $confmsg ); ?>');
                 });
             });
             //]]>
         </script>
 		<?php
+	}
+
+	public function register_settings() {
+		// overide in extended class
+	}
+
+	public function reset_sanitize( $settings ) {
+		/* Add Update Notice */
+
+		if ( ! empty( $settings ) ) {
+			add_settings_error( $this->option_group, '', esc_html__( 'Settings reset to defaults.', 'widget-for-eventbrite-api' ), 'updated' );
+			/* Delete Option */
+			$this->delete_options();
+
+		}
+
+		return $settings;
 	}
 
 	public function screen_layout_column( $columns, $screen ) {
@@ -134,7 +131,7 @@ class Admin_Pages {
 
             <div class="wrap">
 
-                <h2><?php echo $this->settings_title; ?></h2>
+                <h2><?php echo esc_html( $this->settings_title ); ?></h2>
 
 				<?php
 				global $pagenow;
@@ -189,26 +186,45 @@ class Admin_Pages {
 
 	}
 
-	public function add_required_meta_boxes() {
-		global $hook_suffix;
+	public function settings_setup() {
 
-		if ( $this->settings_page_id == $hook_suffix ) {
+		/* top level
+				add_menu_page(
+					$this->settings_title, // Page Title
+					$this->settings_title,                       // Menu Title
+					'manage_options',                 // Capability
+					'plugin-name',                         // Page Slug
+					array( $this, 'settings_page' ),           // Settings Page Function Callback
+					'dashicons-shield',           // Menu Icon
+					70                                // Menu Position
+				);
+		*/
+		/* Add settings menu page */
+		add_submenu_page(
+			'options-general.php',
+			$this->settings_title, /* Page Title */
+			$this->settings_title,                       /* Menu Title */
+			'manage_options',                 /* Capability */
+			'widget-for-eventbrite-api-settings',                         /* Page Slug */
+			array( $this, 'settings_page' )          /* Settings Page Function Callback */
+		);
 
-			$this->add_meta_boxes();
+		$this->register_settings();
 
-			add_meta_box(
-				'submitdiv',               /* Meta Box ID */
-				esc_html__( 'Save Options', 'widget-for-eventbrite-api' ),            /* Title */
-				array( $this, 'submit_meta_box' ),  /* Function Callback */
-				$this->settings_page_id,                /* Screen: Our Settings Page */
-				'side',                    /* Context */
-				'high'                     /* Priority */
-			);
+
+		/* Vars */
+		$page_hook_id = $this->settings_page_id;
+
+		/* Do stuff in settings page, such as adding scripts, etc. */
+		if ( ! empty( $this->settings_page ) ) {
+			/* Load the JavaScript needed for the settings screen. */
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+			add_action( "admin_footer-{$page_hook_id}", array( $this, 'footer_scripts' ) );
+			/* Set number of column available. */
+			add_filter( 'screen_layout_columns', array( $this, 'screen_layout_column' ), 10, 2 );
+			add_action( $this->settings_page_id . '_settings_page_boxes', array( $this, 'add_required_meta_boxes' ) );
+
 		}
-	}
-
-	public function add_meta_boxes() {
-		// in extended class
 	}
 
 	public function submit_meta_box() {
@@ -219,8 +235,8 @@ class Admin_Pages {
             <div id="major-publishing-actions">
 
                 <div id="delete-action">
-                    <input type="submit" name="<?php echo "{$this->option_group}-reset"; ?>"
-                           id="<?php echo "{$this->option_group}-reset"; ?>"
+                    <input type="submit" name="<?php echo esc_attr( "{$this->option_group}-reset" ); ?>"
+                           id="<?php echo esc_attr( "{$this->option_group}-reset" ); ?>"
                            class="button"
                            value="Reset Settings">
                 </div><!-- #delete-action -->
@@ -237,23 +253,6 @@ class Admin_Pages {
         </div><!-- #submitpost -->
 
 		<?php
-	}
-
-	public function reset_sanitize( $settings ) {
-		/* Add Update Notice */
-
-		if ( ! empty( $settings ) ) {
-			add_settings_error( $this->option_group, '', esc_html__( 'Settings reset to defaults.', 'widget-for-eventbrite-api' ), 'updated' );
-			/* Delete Option */
-			$this->delete_options();
-
-		}
-
-		return $settings;
-	}
-
-	public function delete_options() {
-		// for extended class to manage
 	}
 
 

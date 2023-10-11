@@ -61,6 +61,8 @@ class Admin
             $this->version,
             false
         );
+        // Create a nonce and pass it to the script.
+        $nonce = wp_create_nonce( 'wfea-script-nonce' );
         $data = array(
             'ajaxurl'             => admin_url( 'admin-ajax.php' ),
             'StringInvalidAPI'    => esc_html__( 'Not Connected (try again)', 'widget-for-eventbrite-api' ),
@@ -73,6 +75,7 @@ class Admin
             'StringInstructions1' => esc_html__( 'Create a page (or post) and use your favorite editor / page builder to add this shortcode [wfea] and you have started.', 'widget-for-eventbrite-api' ),
             'StringInstructions2' => esc_html__( 'Then start adjusting it for your needs, the best way is to visit our dynamic shortcode builder.', 'widget-for-eventbrite-api' ),
             'redirectURL'         => admin_url( 'options-general.php?page=widget-for-eventbrite-api-settings' ),
+            'nonce'               => $nonce,
         );
         wp_localize_script( $this->plugin_name . '-admin', 'wfea_data', $data );
     }
@@ -118,14 +121,16 @@ class Admin
         if ( !wp_doing_ajax() ) {
             return;
         }
-        if ( !current_user_can( 'manage_options' ) ) {
+        // Check the nonce.
+        check_ajax_referer( 'wfea-script-nonce', 'nonce' );
+        if ( !current_user_can( 'manage_options' ) || !isset( $_POST['id'] ) ) {
             return;
         }
         $um = get_user_meta( $user_id, 'wfea_dismissed_notices', true );
         if ( !is_array( $um ) ) {
             $um = array();
         }
-        $um[sanitize_text_field( $_POST['id'] )] = true;
+        $um[sanitize_text_field( wp_unslash( $_POST['id'] ) )] = true;
         update_user_meta( $user_id, 'wfea_dismissed_notices', $um );
         wp_die();
     }
@@ -153,7 +158,7 @@ class Admin
                         '<a href="https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/troubleshooting/database-limits-too-small/" target="_blank">',
                         '</a>'
                     );
-                    printf( '<div id="wfea_notice_1" class="wfea_notice notice is-dismissible notice-warning"><p>%s</p></div>', $notice );
+                    printf( '<div id="wfea_notice_1" class="wfea_notice notice is-dismissible notice-warning"><p>%s</p></div>', wp_kses_post( $notice ) );
                 }
             
             }

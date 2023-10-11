@@ -1,6 +1,7 @@
 <?php
 /**
  * @var mixed $data Custom data for the template.
+ * phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- template files escaped at output
  */
 if ( $data->utilities->get_element( 'date', $data->args ) ): ?>
     <div class="eaw-calendar-date">

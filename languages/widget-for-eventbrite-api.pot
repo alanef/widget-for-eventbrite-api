@@ -6,7 +6,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-09-28 20:03+0000\n"
+"POT-Creation-Date: 2023-10-11 14:57+0000\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -18,75 +18,59 @@ msgstr ""
 msgid "Manage Plugins Here"
 msgstr ""
 
-#: src/admin/class-admin-pages.php:90, src/admin/class-admin-setup-wizard.php:97
-msgid "Are you sure want to do this?"
-msgstr ""
-
-#: src/admin/class-admin-pages.php:201, src/admin/class-admin-setup-wizard.php:244
+#: src/admin/class-admin-pages.php:46, src/admin/class-admin-setup-wizard.php:45
 msgid "Save Options"
 msgstr ""
 
-#: src/admin/class-admin-pages.php:230, src/admin/class-admin-setup-wizard.php:273
-msgid "Save"
+#: src/admin/class-admin-pages.php:70, src/admin/class-admin-setup-wizard.php:68
+msgid "Are you sure want to do this?"
 msgstr ""
 
-#: src/admin/class-admin-pages.php:246, src/admin/class-admin-setup-wizard.php:289
+#: src/admin/class-admin-pages.php:100, src/admin/class-admin-setup-wizard.php:98
 msgid "Settings reset to defaults."
+msgstr ""
+
+#: src/admin/class-admin-pages.php:246, src/admin/class-admin-setup-wizard.php:273
+msgid "Save"
 msgstr ""
 
 #: src/admin/class-admin-settings.php:35
 msgid "Display Eventbrite Events Settings"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:91
+#: src/admin/class-admin-settings.php:59
 msgid "Information"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:99
+#: src/admin/class-admin-settings.php:67
 msgid "Eventbrite API Key"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:107
+#: src/admin/class-admin-settings.php:75
 msgid "Manage Cache"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:120
+#: src/admin/class-admin-settings.php:88
 msgid "Webhook Notifications ( optional )"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:128
+#: src/admin/class-admin-settings.php:96
 msgid "Style Settings"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:136
+#: src/admin/class-admin-settings.php:104
 msgid "Shortcode Syntax"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:145
+#: src/admin/class-admin-settings.php:113
 msgid "Shortcode Builder"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:240
-msgid " : instructions on how to find your key are <a href=\"https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/installation-display-eventbrite-events-in-wordpress/connect-to-eventbrite/\" target=\"_blank\">here</a> (note a change of Eventbrite password requires a new key)"
+#: src/admin/class-admin-settings.php:134
+msgid "The Plugin Cache has been reset - If you have a CDN or Host Cache or Caching Plugin you may need to clear those caches manually"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:320
-msgid "Your Webhook ID"
-msgstr ""
-
-#: src/admin/class-admin-settings.php:329
-msgid "After you have created a WebHook, go to details and there will be and ID number after the words  Manage Webhook, use that number here"
-msgstr ""
-
-#: src/admin/class-admin-settings.php:363
-msgid "Upgrade to a premium plan to enable WebHook handling"
-msgstr ""
-
-#: src/admin/class-admin-settings.php:365, src/admin/class-admin-settings.php:641
-msgid "Upgrade now"
-msgstr ""
-
-#: src/admin/class-admin-settings.php:378
+#: src/admin/class-admin-settings.php:165
 msgid ""
 "<p>Welcome. To use this plugin add the widget to your website</p><p>For more detailed setup instructions visit <a target= \"_blank\" href=\"https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/installation-display-eventbrite-events-in-wordpress/\" >the knowledgebase.</a></p>\n"
 "            <p>Support for the <strong>free</strong> version is provided <a class=\"button-secondary\" href=\"https://wordpress.org/support/plugin/widget-for-eventbrite-api\" target=\"_blank\">here on WordPress.org.</a></p>\n"
@@ -108,86 +92,86 @@ msgid ""
 "			"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:401
+#: src/admin/class-admin-settings.php:188
 msgid ""
 "Welcome to the premium version of this plugin %1$s. <p>To use this plugin add the widget to your website or use the shortcode in your pages or posts</p><p><a target= \"_blank\" href=\"https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/installation-display-eventbrite-events-in-wordpress/\" >detailed setup and usage instructions</a></p>\n"
 "            <p>To contact us for support or other reasons  please use <a href=\"/wp-admin/options-general.php?page=widget-for-eventbrite-api-settings-contact\"\">this page</a></p>\n"
 "			"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:426
+#: src/admin/class-admin-settings.php:212
 msgid "1 Week"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:430
+#: src/admin/class-admin-settings.php:216
 msgid "2 Days"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:434
+#: src/admin/class-admin-settings.php:220
 msgid "1 Day - recommended"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:438
+#: src/admin/class-admin-settings.php:224
 msgid "12 hours"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:442
+#: src/admin/class-admin-settings.php:228
 msgid "4 hours"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:446
+#: src/admin/class-admin-settings.php:232
 msgid "1 hour "
 msgstr ""
 
-#: src/admin/class-admin-settings.php:450
+#: src/admin/class-admin-settings.php:236
 msgid "30 Minutes"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:454
+#: src/admin/class-admin-settings.php:240
 msgid "15 Minutes - use on low volume sites only"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:458
+#: src/admin/class-admin-settings.php:244
 msgid "No Cache - use for development & testing only "
 msgstr ""
 
-#: src/admin/class-admin-settings.php:465
+#: src/admin/class-admin-settings.php:251
 msgid "Clear Cache"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:473
+#: src/admin/class-admin-settings.php:259
 msgid "Tick and [save] to clear"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:476
+#: src/admin/class-admin-settings.php:262
 msgid "Clear the cache now, use for testing or if you have published or changed events and you want to refresh now"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:495
+#: src/admin/class-admin-settings.php:281
 msgid "The following features are only available on the pro plan or trial"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:507
+#: src/admin/class-admin-settings.php:293
 msgid "Cache Duration"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:520
+#: src/admin/class-admin-settings.php:307
 msgid "Set the cache period for the Eventbrite API. Read %1$sthis article%2$s before changing the default of once per day"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:526
+#: src/admin/class-admin-settings.php:313
 msgid "Background API Processing"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:534
+#: src/admin/class-admin-settings.php:321
 msgid "Leave ticked for background processing"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:537
+#: src/admin/class-admin-settings.php:325
 msgid "Background API processing is useful when you have many hundreds of events or using advanced pro features like long description that create many API calls"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:549
+#: src/admin/class-admin-settings.php:337
 msgid ""
 "Shortcode usage e.g. [wfea] [wfea limit=10 ] etc.<br>\n"
 "		See your own events on the shortcode builder site to select your desired options\n"
@@ -213,118 +197,130 @@ msgid ""
 "			"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:575
+#: src/admin/class-admin-settings.php:363
 msgid ""
 "%1$s\n"
 "				Shortcode [wfea]  or [wfea layout=\"venue\" style=\"dark, grid\"] or  [wfea layout=\"cal\"] etc - many other options see  <a href=\"https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/usage/using-the-shotcode/\" target=\"_blank\"> this page</a> for optional arguments<br>\n"
 "				See your own events on the shortcode builder site to select your desired options "
 msgstr ""
 
-#: src/admin/class-admin-settings.php:594
+#: src/admin/class-admin-settings.php:382
 msgid "Your API Key - Private Token"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:606
+#: src/admin/class-admin-settings.php:394
 msgid "The key is required to connect to Eventbrite"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:607
+#: src/admin/class-admin-settings.php:396
 msgid "Click here to get your free API Key from Eventbrite"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:627
+#: src/admin/class-admin-settings.php:416
 msgid "Output Default CSS"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:639
+#: src/admin/class-admin-settings.php:428
 msgid "Need help with styling to your theme? Upgrade to a premium plan to request personal CSS support"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:672
+#: src/admin/class-admin-settings.php:430, src/admin/class-admin-settings.php:455
+msgid "Upgrade now"
+msgstr ""
+
+#: src/admin/class-admin-settings.php:453
+msgid "Upgrade to a premium plan to enable WebHook handling"
+msgstr ""
+
+#: src/admin/class-admin-settings.php:511
+msgid "Your Webhook ID"
+msgstr ""
+
+#: src/admin/class-admin-settings.php:520
+msgid "After you have created a WebHook, go to details and there will be and ID number after the words  Manage Webhook, use that number here"
+msgstr ""
+
+#: src/admin/class-admin-settings.php:640
+msgid " : instructions on how to find your key are <a href=\"https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/installation-display-eventbrite-events-in-wordpress/connect-to-eventbrite/\" target=\"_blank\">here</a> (note a change of Eventbrite password requires a new key)"
+msgstr ""
+
+#: src/admin/class-admin-settings.php:696
 msgid "Go to Shortcode Builder"
 msgstr ""
 
-#: src/admin/class-admin-settings.php:694
-msgid "The Plugin Cache has been reset - If you have a CDN or Host Cache or Caching Plugin you may need to clear those caches manually"
-msgstr ""
-
-#: src/admin/class-admin-setup-wizard.php:39, src/admin/class-admin-setup-wizard.php:40
-msgid "Display Eventbrite Setup Wizard"
-msgstr ""
-
-#: src/admin/class-admin-setup-wizard.php:77
-msgid "Invalid nonce"
-msgstr ""
-
-#: src/admin/class-admin-setup-wizard.php:194
+#: src/admin/class-admin-setup-wizard.php:182
 msgid "Welcome to Display Eventbrite Events!"
 msgstr ""
 
-#: src/admin/class-admin-setup-wizard.php:196
+#: src/admin/class-admin-setup-wizard.php:184
 msgid "Thank you for choosing Display Eventbrite Events - the premier WordPress plugin for displaying Eventbrite events."
 msgstr ""
 
-#: src/admin/class-admin-setup-wizard.php:197
+#: src/admin/class-admin-setup-wizard.php:185
 msgid "So let's get started"
 msgstr ""
 
-#: src/admin/class-admin-setup-wizard.php:202
+#: src/admin/class-admin-setup-wizard.php:190
 msgid "Vist this page to get your private token"
 msgstr ""
 
-#: src/admin/class-admin-setup-wizard.php:220
+#: src/admin/class-admin-setup-wizard.php:209
 msgid "Your Eventbrite private token"
 msgstr ""
 
-#: src/admin/class-admin-setup-wizard.php:225
+#: src/admin/class-admin-setup-wizard.php:215
 msgid "go to settings"
 msgstr ""
 
-#: src/admin/class-admin.php:70
-msgid "Not Connected (try again)"
+#: src/admin/class-admin-setup-wizard.php:232, src/admin/class-admin-setup-wizard.php:233
+msgid "Display Eventbrite Setup Wizard"
 msgstr ""
 
 #: src/admin/class-admin.php:71
-msgid "Connected! Let's go : make sure you have [Saved] ->"
+msgid "Not Connected (try again)"
 msgstr ""
 
 #: src/admin/class-admin.php:72
-msgid "Connecting....."
+msgid "Connected! Let's go : make sure you have [Saved] ->"
 msgstr ""
 
 #: src/admin/class-admin.php:73
+msgid "Connecting....."
+msgstr ""
+
+#: src/admin/class-admin.php:74
 msgid "go to other settings"
 msgstr ""
 
-#: src/admin/class-admin.php:75
+#: src/admin/class-admin.php:76
 msgid "Your Organizations"
 msgstr ""
 
-#: src/admin/class-admin.php:76
+#: src/admin/class-admin.php:77
 msgid "Start Displaying Events"
 msgstr ""
 
-#: src/admin/class-admin.php:77
+#: src/admin/class-admin.php:78
 msgid "Create a page (or post) and use your favorite editor / page builder to add this shortcode [wfea] and you have started."
 msgstr ""
 
-#: src/admin/class-admin.php:78
+#: src/admin/class-admin.php:79
 msgid "Then start adjusting it for your needs, the best way is to visit our dynamic shortcode builder."
 msgstr ""
 
-#: src/admin/class-admin.php:157
+#: src/admin/class-admin.php:160
 msgid "Display Eventbrite Plugin says: your database 'max_allowed_packet' is very low at %1$sMB and may cause issues, consider increasing this, see %2$sthis article%3$s."
 msgstr ""
 
-#: src/admin/class-admin.php:219
+#: src/admin/class-admin.php:222
 msgid "<p>max allowed packet can impact whether the database can read large stored elements. Current setting %sM</p>"
 msgstr ""
 
-#: src/admin/class-admin.php:227
+#: src/admin/class-admin.php:230
 msgid "<p>max allowed packet is not very big, this can impact all sorts of things, including the number of events the plugin can handle. Current setting %sM</p>"
 msgstr ""
 
-#: src/admin/class-admin.php:239
+#: src/admin/class-admin.php:242
 msgid "<p>max allowed packet is very small, the Display Eventbrite plugin may not be able to handle many events, other WP features may also have issues. Current setting %sM</p>"
 msgstr ""
 
@@ -336,7 +332,7 @@ msgstr ""
 msgid "Read More »"
 msgstr ""
 
-#: src/frontend/class-frontend.php:101, src/includes/class-eventbrite-api-widget.php:217, src/templates__free/parts/not_found__free.php:7
+#: src/frontend/class-frontend.php:101, src/includes/class-eventbrite-api-widget.php:78, src/templates__free/parts/not_found__free.php:8
 msgid "No Events Found"
 msgstr ""
 
@@ -354,43 +350,43 @@ msgstr ""
 msgid "Doors: %1$s | Show: %2$s"
 msgstr ""
 
-#: src/frontend/class-frontend.php:160, src/includes/class-eventbrite-api-widget.php:245
+#: src/frontend/class-frontend.php:160, src/includes/class-eventbrite-api-widget.php:106
 msgid "Search events"
 msgstr ""
 
-#: src/frontend/class-frontend.php:161, src/includes/class-eventbrite-api-widget.php:246
+#: src/frontend/class-frontend.php:161, src/includes/class-eventbrite-api-widget.php:107
 msgid "Search"
 msgstr ""
 
-#: src/frontend/class-frontend.php:421
+#: src/frontend/class-frontend.php:429
 msgid "*** Invalid regex used in your shortcode filter_title option *** "
 msgstr ""
 
-#: src/frontend/class-frontend.php:433
+#: src/frontend/class-frontend.php:441
 msgid "*** Invalid regex used in your shortcode filter_location option *** "
 msgstr ""
 
-#: src/frontend/class-frontend.php:471
+#: src/frontend/class-frontend.php:479
 msgid "*** Invalid Regular Expression (regex) used in your shortcode search option *** "
 msgstr ""
 
-#: src/frontend/class-frontend.php:592
+#: src/frontend/class-frontend.php:606
 msgid "[Display Eventbrite Plugin] Admin Notice! ( this shows to admins only ): "
 msgstr ""
 
-#: src/frontend/class-frontend.php:654, src/includes/class-utilities.php:1531
+#: src/frontend/class-frontend.php:668, src/includes/class-utilities.php:1604
 msgid "Free"
 msgstr ""
 
-#: src/frontend/class-frontend.php:932
+#: src/frontend/class-frontend.php:999
 msgid "--- DEBUG OUTPUT ---"
 msgstr ""
 
-#: src/frontend/class-frontend.php:942
+#: src/frontend/class-frontend.php:1009
 msgid "[Display Eventbrite Plugin] Selected attribute: ["
 msgstr ""
 
-#: src/frontend/class-frontend.php:944
+#: src/frontend/class-frontend.php:1011
 msgid "] is not valid - maybe a typo or maybe not included in your plan, refer to documentation"
 msgstr ""
 
@@ -402,286 +398,302 @@ msgstr ""
 msgid "You sent a test, it worked, the plugin responded"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:87
-msgid "Display Eventbrite Plugin Admin Notice! ( this shows to admins only ): "
-msgstr ""
-
-#: src/includes/class-eventbrite-api-widget.php:178
+#: src/includes/class-eventbrite-api-widget.php:39
 msgid "Upcoming Events"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:185
+#: src/includes/class-eventbrite-api-widget.php:46
 msgid "Read More &raquo;"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:187
+#: src/includes/class-eventbrite-api-widget.php:48
 msgid "Book Now &raquo;"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:347
-msgid "Upgrade to Pro. <a href=\"%1$s\">FREE 14 day trial.</a> Lots of great features"
+#: src/includes/class-eventbrite-api-widget.php:155
+msgid "Upgrade to Pro."
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:339
-msgid "You are in the Free trial - <a href=\"%1$s\">Upgrade Now!</a> to keep benefits"
+#: src/includes/class-eventbrite-api-widget.php:160
+msgid "FREE 14 day trial."
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:358
+#: src/includes/class-eventbrite-api-widget.php:164
+msgid "Lots of great features."
+msgstr ""
+
+#: src/includes/class-eventbrite-api-widget.php:139
+msgid "You are in the Free trial:"
+msgstr ""
+
+#: src/includes/class-eventbrite-api-widget.php:143
+msgid "Upgrade to Pro"
+msgstr ""
+
+#: src/includes/class-eventbrite-api-widget.php:147
+msgid "to keep benefits"
+msgstr ""
+
+#: src/includes/class-eventbrite-api-widget.php:175
 msgid "Title"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:367
+#: src/includes/class-eventbrite-api-widget.php:184
 msgid "Title URL"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:376
+#: src/includes/class-eventbrite-api-widget.php:193
 msgid "CSS ID"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:385
+#: src/includes/class-eventbrite-api-widget.php:202
 msgid "CSS Class"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:394
+#: src/includes/class-eventbrite-api-widget.php:211
 msgid "HTML or text before the recent posts"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:404
+#: src/includes/class-eventbrite-api-widget.php:221
 msgid "HTML or text after the recent posts"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:417
+#: src/includes/class-eventbrite-api-widget.php:234
 msgid "Display Book Now Button"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:427
+#: src/includes/class-eventbrite-api-widget.php:244
 msgid "Book Now button goes straight Eventbrite page ticket modal"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:436
+#: src/includes/class-eventbrite-api-widget.php:253
 msgid "Book Now Text"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:454
+#: src/includes/class-eventbrite-api-widget.php:271
 msgid "Ascending Start Date"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:463
+#: src/includes/class-eventbrite-api-widget.php:280
 msgid "Descending Start Date"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:472
+#: src/includes/class-eventbrite-api-widget.php:289
 msgid "Show live events"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:480
+#: src/includes/class-eventbrite-api-widget.php:297
 msgid "Show ended events"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:488
+#: src/includes/class-eventbrite-api-widget.php:305
 msgid "Show started events"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:497
+#: src/includes/class-eventbrite-api-widget.php:314
 msgid "Also display private events"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:505
+#: src/includes/class-eventbrite-api-widget.php:322
 msgid "Show Eventbrite checkout in an onsite popup ( requires SSL)"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:517
+#: src/includes/class-eventbrite-api-widget.php:334
 msgid "Open Eventbrite in a new tab"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:527
+#: src/includes/class-eventbrite-api-widget.php:344
 msgid "Display Date / Time"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:534
+#: src/includes/class-eventbrite-api-widget.php:351
 msgid "Number of posts to show"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:549
+#: src/includes/class-eventbrite-api-widget.php:366
 msgid "Display Thumbnail"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:555
+#: src/includes/class-eventbrite-api-widget.php:372
 msgid "Thumbnail (width,align)"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:563
+#: src/includes/class-eventbrite-api-widget.php:380
 msgid "Left"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:564
+#: src/includes/class-eventbrite-api-widget.php:381
 msgid "Right"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:565
+#: src/includes/class-eventbrite-api-widget.php:382
 msgid "Center"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:571
+#: src/includes/class-eventbrite-api-widget.php:388
 msgid "Default Thumbnail"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:576
+#: src/includes/class-eventbrite-api-widget.php:393
 msgid "Leave it blank to disable."
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:586
+#: src/includes/class-eventbrite-api-widget.php:403
 msgid "Display Event Description"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:592
+#: src/includes/class-eventbrite-api-widget.php:409
 msgid "Description Length"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:605
+#: src/includes/class-eventbrite-api-widget.php:422
 msgid "Display Readmore"
 msgstr ""
 
-#: src/includes/class-eventbrite-api-widget.php:611
+#: src/includes/class-eventbrite-api-widget.php:428
 msgid "Readmore Text"
+msgstr ""
+
+#: src/includes/class-eventbrite-api-widget.php:561
+msgid "Display Eventbrite Plugin Admin Notice! ( this shows to admins only ): "
 msgstr ""
 
 #: src/includes/class-eventbrite-manager.php:350
 msgid "No Eventbrite API key set, please set in settings"
 msgstr ""
 
-#: src/includes/class-utilities.php:767
+#: src/includes/class-utilities.php:749
 msgid "To be announced"
 msgstr ""
 
-#: src/includes/class-utilities.php:761, src/includes/class-utilities.php:1083
+#: src/includes/class-utilities.php:743, src/includes/class-utilities.php:1065
 msgid "Online"
 msgstr ""
 
-#: src/includes/class-utilities.php:1037
+#: src/includes/class-utilities.php:1019
 msgid "%1$s Tickets Remaining"
 msgstr ""
 
-#: src/includes/class-utilities.php:1035
+#: src/includes/class-utilities.php:1017
 msgid "Tickets Available"
 msgstr ""
 
-#: src/includes/class-utilities.php:1033
+#: src/includes/class-utilities.php:1015
 msgid "Sold Out"
 msgstr ""
 
-#: src/includes/class-utilities.php:1262
+#: src/includes/class-utilities.php:1329
 msgid "« Previous"
 msgstr ""
 
-#: src/includes/class-utilities.php:1263
+#: src/includes/class-utilities.php:1330
 msgid "Next »"
 msgstr ""
 
-#: src/includes/class-utilities.php:1779
+#: src/includes/class-utilities.php:1852
 msgid "Donation"
 msgstr ""
 
-#: src/includes/class-utilities.php:1792
+#: src/includes/class-utilities.php:1865
 msgid "Your plan does not include this template"
 msgstr ""
 
-#: src/includes/class-utilities.php:1793
+#: src/includes/class-utilities.php:1866
 msgid "Upgrade your plan for access"
 msgstr ""
 
-#: src/includes/class-utilities.php:1795
+#: src/includes/class-utilities.php:1868
 msgid "Upgrade Link"
 msgstr ""
 
-#: src/templates__free/loops/loop_card.php:21
+#: src/templates__free/loops/loop_card.php:22
 msgid "Details"
 msgstr ""
 
-#: src/templates__free/parts/booknow__free.php:25, src/templates__free/parts/excerpt_widget.php:15, src/templates__premium_only/parts/booknow.php:24, src/templates__premium_only/parts/content.php:21
+#: src/templates__free/parts/booknow__free.php:26, src/templates__free/parts/excerpt_widget.php:16, src/templates__premium_only/parts/booknow.php:25, src/templates__premium_only/parts/content.php:22
 msgid "on Eventbrite for"
 msgstr ""
 
-#: src/templates__free/parts/title_widget__free.php:10, src/templates__premium_only/loops/loop_grid.php:18, src/templates__premium_only/parts/header.php:12, src/templates__premium_only/parts/title_widget.php:10
+#: src/templates__free/parts/title_widget__free.php:11, src/templates__premium_only/loops/loop_grid.php:19, src/templates__premium_only/parts/header.php:13, src/templates__premium_only/parts/title_widget.php:11
 msgid "Eventbrite link to %1$s"
 msgstr ""
 
-#: src/templates__premium_only/parts/add_to_cal_button.php:8, src/templates__premium_only/parts/add_to_cal_button.php:8, src/templates__premium_only/parts/add_to_cal_button.php:9
+#: src/templates__premium_only/parts/add_to_cal_button.php:9, src/templates__premium_only/parts/add_to_cal_button.php:9, src/templates__premium_only/parts/add_to_cal_button.php:10
 msgid "Add this event to your Calendar"
 msgstr ""
 
-#: src/templates__premium_only/parts/add_to_cal_button.php:14
+#: src/templates__premium_only/parts/add_to_cal_button.php:15
 msgid "Add to Calendar"
 msgstr ""
 
-#: src/templates__premium_only/parts/add_to_cal_button.php:21
+#: src/templates__premium_only/parts/add_to_cal_button.php:22
 msgid "Add this event to your Outlook Calendar"
 msgstr ""
 
-#: src/templates__premium_only/parts/add_to_cal_button.php:23
+#: src/templates__premium_only/parts/add_to_cal_button.php:24
 msgid "Outlook Calendar"
 msgstr ""
 
-#: src/templates__premium_only/parts/add_to_cal_button.php:28
+#: src/templates__premium_only/parts/add_to_cal_button.php:29
 msgid "Add this event to your Google Calendar"
 msgstr ""
 
-#: src/templates__premium_only/parts/add_to_cal_button.php:32
+#: src/templates__premium_only/parts/add_to_cal_button.php:33
 msgid "Google Calendar"
 msgstr ""
 
-#: src/templates__premium_only/parts/add_to_cal_button.php:40
+#: src/templates__premium_only/parts/add_to_cal_button.php:41
 msgid "Add this event to your Apple Calendar"
 msgstr ""
 
-#: src/templates__premium_only/parts/add_to_cal_button.php:42
+#: src/templates__premium_only/parts/add_to_cal_button.php:43
 msgid "Apple Calendar"
 msgstr ""
 
-#: src/templates__premium_only/parts/add_to_cal_button.php:47
+#: src/templates__premium_only/parts/add_to_cal_button.php:48
 msgid "Add this event to your Yahoo Calendar"
 msgstr ""
 
-#: src/templates__premium_only/parts/add_to_cal_button.php:51
+#: src/templates__premium_only/parts/add_to_cal_button.php:52
 msgid "Yahoo Calendar"
 msgstr ""
 
-#: src/templates__premium_only/parts/full_modal_ajax_response.php:8
+#: src/templates__premium_only/parts/full_modal_ajax_response.php:9
 msgid "Close Modal"
 msgstr ""
 
-#: src/templates__premium_only/parts/full_modal_ajax_response.php:65
+#: src/templates__premium_only/parts/full_modal_ajax_response.php:66
 msgid "Event Organizer"
 msgstr ""
 
-#: src/templates__premium_only/parts/full_modal_details_button.php:6
+#: src/templates__premium_only/parts/full_modal_details_button.php:7
 msgid "View details"
 msgstr ""
 
-#: src/templates__premium_only/parts/search.php:18, src/templates__premium_only/parts/search.php:23
+#: src/templates__premium_only/parts/search.php:20, src/templates__premium_only/parts/search.php:25
 msgid "Search Events"
 msgstr ""
 
-#: src/templates__premium_only/parts/social_share_button.php:8, src/templates__premium_only/parts/social_share_button.php:14
+#: src/templates__premium_only/parts/social_share_button.php:9, src/templates__premium_only/parts/social_share_button.php:15
 msgid "Share on social media"
 msgstr ""
 
-#: src/templates__premium_only/parts/social_share_button.php:19
+#: src/templates__premium_only/parts/social_share_button.php:20
 msgid "Share with Friends"
 msgstr ""
 
-#: src/templates__premium_only/parts/social_share_button.php:21
+#: src/templates__premium_only/parts/social_share_button.php:22
 msgid "Share on Facebook"
 msgstr ""
 
-#: src/templates__premium_only/parts/social_share_button.php:26
+#: src/templates__premium_only/parts/social_share_button.php:27
 msgid "Facebook"
 msgstr ""
 
-#: src/templates__premium_only/parts/social_share_button.php:29
+#: src/templates__premium_only/parts/social_share_button.php:30
 msgid "Share on Twitter"
 msgstr ""
 
-#: src/templates__premium_only/parts/social_share_button.php:34
+#: src/templates__premium_only/parts/social_share_button.php:35
 msgid "Twitter"
 msgstr ""

@@ -183,6 +183,7 @@ class Core
         add_action( 'wp_enqueue_scripts', array( $plugin_public, 'enqueue_styles' ) );
         add_action( 'wp_enqueue_scripts', array( $plugin_public, 'enqueue_scripts' ) );
         add_action( 'init', array( $plugin_public, 'add_shortcode' ) );
+        add_action( 'wp_head', array( $plugin_public, 'wfea_generate_meta_for_social_media' ), -1 );
     }
 
 }

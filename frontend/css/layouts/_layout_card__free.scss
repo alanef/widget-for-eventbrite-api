@@ -12,13 +12,15 @@
     text-align: left;
     background-color: #fff;
     padding: 20px;
-    width: 300px;
+    max-width: 300px;
     position: absolute;
     border-radius: 3px;
     box-shadow: 1px 1px 1px rgb(0 0 0 / 20%);
     color: #000;
     font-size: 16px;
     line-height: 1.4;
+    word-wrap: normal;
+    white-space: normal;
   }
   .eaw-button-details:hover .eaw-card-details {
     display: block;

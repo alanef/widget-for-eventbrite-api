@@ -8,6 +8,7 @@
  * The main structure is in get_template_part( 'loop__free_widget' );
  *
  * @var mixed $data Custom data for the template.
+ * phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- template files escaped at output
  */
 
 $data->template_loader->get_template_part( 'paginate_links_top' . $data->event->plan );

@@ -67,6 +67,7 @@
         $(document).on('click', '.wfea_notice .notice-dismiss', function (event) {
             let data = {
                 action: 'wfea_dismiss_notice',
+                nonce: wfea_data.nonce,
                 id: $(this).closest('div').attr('id')
             };
 

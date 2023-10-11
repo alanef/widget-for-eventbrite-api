@@ -268,11 +268,11 @@ class Eventbrite_Manager
                 $serialized_request = serialize( $current_request );
                 $serialize_transient_bak = serialize( $transient_bak );
                 if ( $serialized_request == $serialize_transient_bak ) {
-                    Utilities::get_instance()->clear_all_cache();
+                    Utilities::get_instance()->clear_all_caches_for_posts_with_shortcode();
                 }
             } else {
                 // if no backup then clear cache
-                Utilities::get_instance()->clear_all_cache();
+                Utilities::get_instance()->clear_all_caches_for_posts_with_shortcode();
             }
             
             set_transient( $transient_name, $request, apply_filters( 'wfea_eventbrite_cache_expiry', DAY_IN_SECONDS ) );
@@ -534,6 +534,7 @@ class Eventbrite_Manager
         $event['post_title'] = ( isset( $api_event->name->text ) ? $api_event->name->text : '' );
         $event['post_content'] = ( isset( $api_event->summary ) ? $api_event->summary : '' );
         $event['summary'] = ( isset( $api_event->summary ) ? $api_event->summary : '' );
+        $event['post_excerpt'] = ( isset( $api_event->summary ) ? $api_event->summary : '' );
         $event['post_date'] = ( isset( $api_event->start->local ) ? str_replace( 'T', ' ', $api_event->start->local ) : '' );
         $event['created'] = ( isset( $api_event->created ) ? $api_event->created : '' );
         $event['post_date_gmt'] = ( isset( $api_event->start->utc ) ? str_replace( 'T', ' ', $api_event->start->utc ) : '' );

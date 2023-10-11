@@ -1,3 +1,8 @@
+= 5.4.0 =
+* Improve CSS for Card
+* Add social media meta for single event posts
+* Add support for Wp Engine cache clearing
+
 = 5.3.10 =
 * Fix card template long desc calendar link ( Pro only )
 
