@@ -1,8 +1,8 @@
 === Display Eventbrite Events ===
 Contributors: fullworks
 Tags: eventbrite, widget, events, eventbrite widget, eventbrite shortcode
-Tested up to: 6.3
-Stable tag: 5.4.0
+Tested up to: 6.4
+Stable tag: 5.4.3
 Type: freemium
 
 Display your upcoming Eventbrite events quickly and easily.
@@ -181,48 +181,21 @@ This plugin does not collect, process or send any website visitor personal data 
 == Upgrade Notice ==
 
 == Changelog ==
+= 5.4.3 =
+* fix long desc modal for some page builders ( Pro only )
+* fix long desc modal when organiser has not image ( Pro only )
+* fix event class for private events ( Pro only )
+
+= 5.4.2 =
+* fix html markup in widget free
+
+= 5.4.1 =
+* fix sanitization fro webhooks ( Pro only )
+
 = 5.4.0 =
 * Improve CSS for Card
 * Add social media meta for single event posts
 * Add support for Wp Engine cache clearing
-
-= 5.3.10 =
-* Fix card template long desc calendar link ( Pro only )
-
-= 5.3.9 =
-* Fix harmless warning
-
-= 5.3.8 =
-* Internationalize date on Card layout.
-
-= 5.3.7 =
-* Fix issue with cal and cal_list template ( Pro only )
-
-= 5.3.6 =
-* Added extra options filter to cal / cal_list ( Pro only )
-
-= 5.3.5 =
-* Fix issue with cal_list template ( Pro only )
-
-= 5.3.4 =
-* Fix undefined variable warning
-* Add filter to remove EB inline styles in full content ( Pro only )
-* Fix long title wordbreak in venue layout ( Pro only )
-* Add response to TEST webhook ( Pro only )
-* Add instructions in settings when direct php webhook is not allowed by host ( Pro only )
-
-= 5.3.3 =
-* Fix admin setting for webhook to not required ( Pro only )
-* Fix some old php tags
-
-= 5.3.2 =
-* Fix cache debug log message for Supercache
-
-= 5.3.1 =
-* Add Hummingbird to cache clear
-
-= 5.3.0 =
-* Work with cache plugins to clear cache on data change
 
 
 [Full Change History](https://plugins.trac.wordpress.org/browser/widget-for-eventbrite-api/trunk/changelog.txt)

@@ -5,8 +5,10 @@
  * Queues webhooks into flat files ready or wp processing
  */
 // Retrieve the request headers
-$event_header    = isset( $_SERVER['HTTP_X_EVENTBRITE_EVENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_X_EVENTBRITE_EVENT'] ) ) : '';
-$delivery_header = isset( $_SERVER['HTTP_X_EVENTBRITE_DELIVERY'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_X_EVENTBRITE_DELIVERY'] ) ) : '';
+// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- called outside WP
+$event_header    = isset( $_SERVER['HTTP_X_EVENTBRITE_EVENT'] ) ? filter_var( $_SERVER['HTTP_X_EVENTBRITE_EVENT'] , FILTER_SANITIZE_STRING) : '';
+// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- called outside WP
+$delivery_header = isset( $_SERVER['HTTP_X_EVENTBRITE_DELIVERY'] ) ? filter_var($_SERVER['HTTP_X_EVENTBRITE_DELIVERY'], FILTER_SANITIZE_STRING )  : '';
 
 
 // Check if the required headers are present and have valid values

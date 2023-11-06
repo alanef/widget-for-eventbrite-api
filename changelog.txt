@@ -1,3 +1,14 @@
+= 5.4.3 =
+* fix long desc modal for some page builders ( Pro only )
+* fix long desc modal when organiser has not image ( Pro only )
+* fix event class for private events ( Pro only )
+
+= 5.4.2 =
+* fix html markup in widget free
+
+= 5.4.1 =
+* fix sanitization fro webhooks ( Pro only )
+
 = 5.4.0 =
 * Improve CSS for Card
 * Add social media meta for single event posts

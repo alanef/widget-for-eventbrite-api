@@ -6,7 +6,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-10-11 14:57+0000\n"
+"POT-Creation-Date: 2023-11-06 21:16+0000\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -374,7 +374,7 @@ msgstr ""
 msgid "[Display Eventbrite Plugin] Admin Notice! ( this shows to admins only ): "
 msgstr ""
 
-#: src/frontend/class-frontend.php:668, src/includes/class-utilities.php:1604
+#: src/frontend/class-frontend.php:668, src/includes/class-utilities.php:1611
 msgid "Free"
 msgstr ""
 
@@ -562,47 +562,47 @@ msgstr ""
 msgid "No Eventbrite API key set, please set in settings"
 msgstr ""
 
-#: src/includes/class-utilities.php:749
+#: src/includes/class-utilities.php:756
 msgid "To be announced"
 msgstr ""
 
-#: src/includes/class-utilities.php:743, src/includes/class-utilities.php:1065
+#: src/includes/class-utilities.php:750, src/includes/class-utilities.php:1072
 msgid "Online"
 msgstr ""
 
-#: src/includes/class-utilities.php:1019
+#: src/includes/class-utilities.php:1026
 msgid "%1$s Tickets Remaining"
 msgstr ""
 
-#: src/includes/class-utilities.php:1017
+#: src/includes/class-utilities.php:1024
 msgid "Tickets Available"
 msgstr ""
 
-#: src/includes/class-utilities.php:1015
+#: src/includes/class-utilities.php:1022
 msgid "Sold Out"
 msgstr ""
 
-#: src/includes/class-utilities.php:1329
+#: src/includes/class-utilities.php:1336
 msgid "« Previous"
 msgstr ""
 
-#: src/includes/class-utilities.php:1330
+#: src/includes/class-utilities.php:1337
 msgid "Next »"
 msgstr ""
 
-#: src/includes/class-utilities.php:1852
+#: src/includes/class-utilities.php:1859
 msgid "Donation"
 msgstr ""
 
-#: src/includes/class-utilities.php:1865
+#: src/includes/class-utilities.php:1872
 msgid "Your plan does not include this template"
 msgstr ""
 
-#: src/includes/class-utilities.php:1866
+#: src/includes/class-utilities.php:1873
 msgid "Upgrade your plan for access"
 msgstr ""
 
-#: src/includes/class-utilities.php:1868
+#: src/includes/class-utilities.php:1875
 msgid "Upgrade Link"
 msgstr ""
 
@@ -658,11 +658,11 @@ msgstr ""
 msgid "Yahoo Calendar"
 msgstr ""
 
-#: src/templates__premium_only/parts/full_modal_ajax_response.php:9
+#: src/templates__premium_only/parts/full_modal_ajax_response.php:11
 msgid "Close Modal"
 msgstr ""
 
-#: src/templates__premium_only/parts/full_modal_ajax_response.php:66
+#: src/templates__premium_only/parts/full_modal_ajax_response.php:72
 msgid "Event Organizer"
 msgstr ""
 
