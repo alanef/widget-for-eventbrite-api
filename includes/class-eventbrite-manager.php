@@ -70,6 +70,29 @@ class Eventbrite_Manager
         return $transients;
     }
     
+    public function get_single_event( $params )
+    {
+        $event = $this->request(
+            'events',
+            $params,
+            false,
+            false
+        );
+        if ( is_wp_error( $event ) ) {
+            return $event;
+        }
+        $events = array();
+        
+        if ( !empty($event) ) {
+            $events[0] = $event;
+            $events = array_map( array( $this, 'map_event_keys' ), $events );
+        }
+        
+        $api_results = new \stdClass();
+        $api_results->events = $events;
+        return $api_results;
+    }
+    
     /**
      * Get user-owned private and public events.
      *
@@ -341,6 +364,7 @@ class Eventbrite_Manager
             'organizations'     => 'users/me/organizations',
             'description'       => 'events/' . $object_id . '/description',
             'organizers'        => 'organizers/' . $object_id,
+            'events'            => 'events/',
         );
         $endpoint_base = trailingslashit( self::API_BASE . $endpoint_map[$endpoint] );
         $endpoint_url = $endpoint_base;

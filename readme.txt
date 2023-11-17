@@ -2,7 +2,7 @@
 Contributors: fullworks
 Tags: eventbrite, widget, events, eventbrite widget, eventbrite shortcode
 Tested up to: 6.4
-Stable tag: 5.4.4
+Stable tag: 5.4.7
 Type: freemium
 
 Display your upcoming Eventbrite events quickly and easily.
@@ -181,6 +181,15 @@ This plugin does not collect, process or send any website visitor personal data 
 == Upgrade Notice ==
 
 == Changelog ==
+= 5.4.7 =
+* Improve processing for single events and long description modal ( Pro only )
+
+= 5.4.6 =
+* include eb script dependency for popup ( Pro only )
+
+= 5.4.5 =
+* tweak modal z-index for some themes ( Pro only )
+
 = 5.4.4 =
 * fix long desc modal when two different shortcode status on same page ( Pro only )
 

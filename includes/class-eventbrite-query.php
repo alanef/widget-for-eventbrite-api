@@ -46,25 +46,6 @@ class Eventbrite_Query extends WP_Query
     }
     
     /**
-     * Handle any query args that come from the requested URL.
-     *
-     * @access protected
-     *
-     * @param mixed $query Query string.
-     *
-     * @return array Query arguments
-     */
-    protected function process_query_args( $query )
-    {
-        // Handle requests for paged events.
-        /**
-         * @var \Freemius $wfea_fs Object for freemius.
-         */
-        global  $wfea_fs ;
-        return $query;
-    }
-    
-    /**
      * Retrieve the posts based on query variables.
      *
      * @access public
@@ -73,6 +54,10 @@ class Eventbrite_Query extends WP_Query
      */
     public function get_posts()
     {
+        /**
+         * @var \Freemius $wfea_fs Object for freemius.
+         */
+        global  $wfea_fs ;
         // Set up query variables.
         $this->parse_query();
         // Restore `paged` if changed to `page` (in the case of index pagination).
@@ -117,6 +102,25 @@ class Eventbrite_Query extends WP_Query
         }
         */
         return $this->posts;
+    }
+    
+    /**
+     * Handle any query args that come from the requested URL.
+     *
+     * @access protected
+     *
+     * @param mixed $query Query string.
+     *
+     * @return array Query arguments
+     */
+    protected function process_query_args( $query )
+    {
+        // Handle requests for paged events.
+        /**
+         * @var \Freemius $wfea_fs Object for freemius.
+         */
+        global  $wfea_fs ;
+        return $query;
     }
     
     /**
