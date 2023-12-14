@@ -213,7 +213,6 @@ section.wfea.rows {
 }
 
 /* </fs_premium_only> */
-
 @import 'layouts/layout_widget__free';
 @import 'layouts/layout_card__free';
 /* <fs_premium_only> */
@@ -226,6 +225,7 @@ section.wfea.rows {
 @import 'layouts/layout_short_date__premium_only';
 @import 'layouts/layout_social_modal__premium_only';
 @import 'layouts/layout_event_modal__premium_only';
+@import 'layouts/layout_accordion__premium_only';
 /* </fs_premium_only> */
 @import 'abstracts/theme-colors';
 @import 'abstracts/variables';

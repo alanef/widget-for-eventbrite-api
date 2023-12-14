@@ -12,6 +12,7 @@ use  stdClass ;
 use  WidgetForEventbriteAPI\Includes\ICS ;
 use  WidgetForEventbriteAPI\Includes\Template_Loader ;
 use  WidgetForEventbriteAPI\Includes\Eventbrite_Query ;
+use  WidgetForEventbriteAPI\Includes\Twig ;
 class FrontEnd
 {
     /**
@@ -32,6 +33,14 @@ class FrontEnd
      * @var \Freemius $freemius Object for freemius.
      */
     private  $freemius ;
+    /**
+     * @var \WidgetForEventbriteAPI\Includes\Template_Loader $template_loader Object for template loader.
+     */
+    private  $template_loader ;
+    /**
+     * @var \WidgetForEventbriteAPI\Includes\Eventbrite_Query $eventbrite_query Object for eventbrite query.
+     */
+    private  $events ;
     /**
      * Initialize the class and set its properties.
      *
@@ -103,7 +112,7 @@ class FrontEnd
      *
      * @return array
      */
-    public function build_query_args_from_atts( $initial_atts ) : array
+    public function build_query_args_from_atts( $initial_atts )
     {
         // force default for short date to be true modal
         if ( isset( $initial_atts['layout'] ) && 'short_date' == $initial_atts['layout'] ) {
@@ -180,17 +189,17 @@ class FrontEnd
         $query = apply_filters( 'eawp_shortcode_query_arguments', $query );
         $atts = apply_filters( 'eawp_shortcode_atts', $atts );
         // Perform the query.
-        $events = new Eventbrite_Query( $query );
+        $this->events = new Eventbrite_Query( $query );
         $html = '';
         $admin_msg = '<div class="wfea error">' . esc_html__( '[Display Eventbrite Plugin] Admin Notice! ( this shows to admins only ): ', 'widget-for-eventbrite-api' ) . '</div>';
         
-        if ( is_wp_error( $events->api_results ) ) {
+        if ( is_wp_error( $this->events->api_results ) ) {
             
             if ( current_user_can( 'manage_options' ) ) {
-                $error_string = $this->utilities->get_api_error_string( $events->api_results );
+                $error_string = $this->utilities->get_api_error_string( $this->events->api_results );
                 $html .= $admin_msg . '<div class="wfea error">' . $error_string . '</div>';
                 if ( $atts['debug'] ) {
-                    $html .= $this->get_debug_output( $events );
+                    $html .= $this->get_debug_output();
                 }
             }
         
@@ -198,32 +207,33 @@ class FrontEnd
             ob_start();
             $this->check_valid_att( $initial_atts );
             $theme = wp_get_theme();
-            $template_loader = new Template_Loader();
-            $template_loader->set_template_data( array(
-                'template_loader' => $template_loader,
-                'events'          => $events,
+            $this->template_loader = new Template_Loader();
+            $uniqid = uniqid();
+            $this->template_loader->set_template_data( array(
+                'template_loader' => $this->template_loader,
+                'events'          => $this->events,
                 'args'            => $atts,
                 'template'        => strtolower( $theme->template ),
                 'plugin_name'     => $this->plugin_name,
                 'utilities'       => $this->utilities,
-                'unique_id'       => uniqid(),
+                'unique_id'       => $uniqid,
                 'instance'        => $wfea_instance_counter,
                 'event'           => new stdClass(),
             ) );
-            $template_found = $template_loader->get_template_part( 'layout_' . $atts['layout'] );
+            $template_found = $this->template_loader->get_template_part( 'layout_' . $atts['layout'] );
             if ( false == $template_found ) {
                 
                 if ( current_user_can( 'manage_options' ) ) {
                     $layouts = 'widget,card';
                     $plan_title = esc_html__( 'Free', 'widget-for-eventbrite-api' );
-                    $err_msg = $admin_msg . '<div class="wfea error">' . esc_html__( 'Selected LAYOUT="', 'widget_for_eventbrite_api' ) . esc_html( $atts['layout'] ) . esc_html__( '" Not found in any paths. Your plan is ', 'widget_for_eventbrite_api' ) . esc_html( $plan_title ) . esc_html__( ' and includes these layouts ', 'widget_for_eventbrite_api' ) . esc_html( $layouts ) . esc_html__( ' and any custom developed layouts you have made.', 'widget_for_eventbrite_api' ) . '<br><br>' . esc_html__( 'Paths checked are:', 'widget_for_eventbrite_api' ) . '<br>' . implode( '<br>', $template_loader->get_file_paths() );
+                    $err_msg = $admin_msg . '<div class="wfea error">' . esc_html__( 'Selected LAYOUT="', 'widget_for_eventbrite_api' ) . esc_html( $atts['layout'] ) . esc_html__( '" Not found in any paths. Your plan is ', 'widget_for_eventbrite_api' ) . esc_html( $plan_title ) . esc_html__( ' and includes these layouts ', 'widget_for_eventbrite_api' ) . esc_html( $layouts ) . esc_html__( ' and any custom developed layouts you have made.', 'widget_for_eventbrite_api' ) . '<br><br>' . esc_html__( 'Paths checked are:', 'widget_for_eventbrite_api' ) . '<br>' . implode( '<br>', $this->template_loader->get_file_paths() );
                     '</div>';
                     echo  wp_kses_post( $err_msg ) ;
                 }
             
             }
             if ( $atts['debug'] ) {
-                echo  wp_kses_post( $this->get_debug_output( $events ) ) ;
+                echo  wp_kses_post( $this->get_debug_output() ) ;
             }
             $html .= ob_get_clean();
             $html = apply_filters( 'eawp_shortcode_markup', $html );
@@ -293,6 +303,12 @@ class FrontEnd
         );
     }
     
+    public function set_post( $idx )
+    {
+        global  $post ;
+        $post = $this->events->posts[$idx];
+    }
+    
     /**
      * Build social meta for single pages
      * @return void
@@ -317,9 +333,9 @@ class FrontEnd
             // no id and the shortcode has a limit of more than 1 so not a single event
         }
         
-        $events = new Eventbrite_Query( $query_args );
+        $this->events = new Eventbrite_Query( $query_args );
         
-        if ( !empty($events->api_results->events[0]) ) {
+        if ( !empty($this->events->api_results->events[0]) ) {
             $link = get_the_permalink();
             if ( isset( $query_args['ID'] ) ) {
                 $link .= trailingslashit( $link ) . 'e/' . $query_args['ID'] . '/';
@@ -327,9 +343,9 @@ class FrontEnd
             echo  '<link ref="canonical" href="' . esc_url( $link ) . '" />' ;
             echo  '<meta property="og:url" content="' . esc_url( uniqid() ) . '" />' ;
             // some reason we have to break this for facebook to work
-            echo  '<meta property="og:title" content="' . esc_attr( $events->post->post_title ) . '" />' ;
-            echo  '<meta property="og:description" content="' . esc_attr( $events->post->post_excerpt ) . '" />' ;
-            echo  '<meta property="og:image" content="' . esc_url( $events->post->logo_url ) . '" />' ;
+            echo  '<meta property="og:title" content="' . esc_attr( $this->events->post->post_title ) . '" />' ;
+            echo  '<meta property="og:description" content="' . esc_attr( $this->events->post->post_excerpt ) . '" />' ;
+            echo  '<meta property="og:image" content="' . esc_url( $this->events->post->logo_url ) . '" />' ;
             /*
              * Twitter works on singlepage but not wit a specified Event ID
              */
@@ -339,9 +355,9 @@ class FrontEnd
             if ( !empty($site_name) ) {
                 echo  '<meta property="og:site_name" content="' . esc_attr( $site_name ) . '" />' ;
             }
-            echo  '<meta name="twitter:title" content="' . esc_attr( $events->post->post_title ) . '" />' ;
-            echo  '<meta name="twitter:description" content="' . esc_attr( $events->post->post_excerpt ) . '" />' ;
-            echo  '<meta name="twitter:image" content="' . esc_url( $events->post->logo_url ) . '" />' ;
+            echo  '<meta name="twitter:title" content="' . esc_attr( $this->events->post->post_title ) . '" />' ;
+            echo  '<meta name="twitter:description" content="' . esc_attr( $this->events->post->post_excerpt ) . '" />' ;
+            echo  '<meta name="twitter:image" content="' . esc_url( $this->events->post->logo_url ) . '" />' ;
         }
     
     }
@@ -368,9 +384,9 @@ class FrontEnd
         return (bool) $att;
     }
     
-    private function get_debug_output( $events )
+    private function get_debug_output()
     {
-        return '<h2>' . esc_html__( '--- DEBUG OUTPUT ---', 'widget-for-eventbrite-api' ) . '</h2><pre>' . print_r( $events->api_results, true ) . '</pre>';
+        return '<h2>' . esc_html__( '--- DEBUG OUTPUT ---', 'widget-for-eventbrite-api' ) . '</h2><pre>' . print_r( $this->events->api_results, true ) . '</pre>';
     }
     
     private function check_valid_att( $atts )

@@ -211,13 +211,19 @@ class Eventbrite_Query extends WP_Query
     private function sort_results()
     {
         
-        if ( !isset( $this->query_vars['order_by'] ) ) {
-            $order_func = 'start_asc';
-        } else {
-            $order_func = $this->query_vars['order_by'];
+        if ( !isset( $this->query_vars['order_by_attrs'] ) ) {
+            
+            if ( !isset( $this->query_vars['order_by'] ) ) {
+                $order_func = 'start_asc';
+            } else {
+                $order_func = $this->query_vars['order_by'];
+            }
+            
+            usort( $this->api_results->events, array( $this, $order_func ) );
         }
         
-        usort( $this->api_results->events, array( $this, $order_func ) );
+        //
+        global  $wfea_fs ;
     }
     
     /**
@@ -359,6 +365,19 @@ class Eventbrite_Query extends WP_Query
     private function published_desc( $a, $b )
     {
         return strcmp( $b->eb_published, $a->eb_published );
+    }
+    
+    private function get_property( $class, $property_path )
+    {
+        $property_path = explode( '.', $property_path );
+        $property = $class;
+        foreach ( $property_path as $path ) {
+            if ( !isset( $property->{$path} ) ) {
+                return false;
+            }
+            $property = $property->{$path};
+        }
+        return $property;
     }
 
 }

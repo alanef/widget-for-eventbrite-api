@@ -118,6 +118,41 @@
 	}
 }
 
+@mixin accordion-theme ($colors)
+{
+	.wfea.wfea-accordion.#{map.get($colors, "name")} {
+		.wfea-accordion__head-date {
+			color: map.get($colors, "color-heading");
+		}
+
+		.wfea-accordion__series_summary {
+			color: map.get($colors, "color-default");
+		}
+
+		.wfea-accordion__date-time {
+			color: map.get($colors, "color-secondary");
+		}
+
+		.wfea-accordion__organizer_name {
+			color: map.get($colors, "color-secondary");
+		}
+
+		.wfea-accordion__venue_name {
+			color: map.get($colors, "color-secondary");
+			font-weight: 700;
+		}
+
+		.wfea-accordion__booknow {
+				background: map.get($colors, "bg-button");
+				color: map.get($colors, "color-button");
+		}
+		.tab.closed .tab__label {
+			background: map.get($colors, "bg-button");
+			color: map.get($colors, "color-button");
+		}
+	}
+}
+
 @mixin cal-theme ($colors)
 {
 	.wfea.wfea-cal.#{map.get($colors, "name")} {

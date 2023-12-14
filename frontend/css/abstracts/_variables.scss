@@ -121,13 +121,16 @@ $themes: (
 
 @each $theme in $themes {
 	@include wfea-theme($theme);
- 	@include short-date-theme($theme);
  	@include card-theme($theme);
+	/* <fs_premium_only> */
+	@include short-date-theme($theme);
+	@include accordion-theme($theme);
+	/* </fs_premium_only> */
 }
 
 
 
-
+/* <fs_premium_only> */
 
 // qtip
 $qtip-themes: (
@@ -199,10 +202,6 @@ $qtip-themes: (
 @each $theme in $qtip-themes {
  	@include qtip-theme($theme);
 }
-
-
-
-
 
 // cal
 $cal-themes: (
@@ -282,3 +281,4 @@ $cal-themes: (
 @each $theme in $cal-themes {
  	@include cal-theme($theme);
 }
+/* </fs_premium_only> */

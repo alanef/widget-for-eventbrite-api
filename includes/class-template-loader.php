@@ -47,22 +47,27 @@ class Template_Loader extends Gamajo_Template_Loader
         /**
          * @var \Freemius $wfea_fs Object for freemius.
          */
+        global  $wfea_fs ;
         add_filter( 'widget-for-eventbrite-api_template_paths', function ( $file_paths ) {
             
             if ( isset( $file_paths[1] ) ) {
                 $file_paths[2] = trailingslashit( $file_paths[1] ) . 'parts';
                 $file_paths[3] = trailingslashit( $file_paths[1] ) . 'loops';
+                $file_paths[4] = trailingslashit( $file_paths[1] ) . 'scripts';
             }
             
             $file_paths[11] = trailingslashit( $file_paths[10] ) . 'parts';
             $file_paths[12] = trailingslashit( $file_paths[10] ) . 'loops';
+            $file_paths[13] = trailingslashit( $file_paths[10] ) . 'scripts';
             $file_paths[20] = trailingslashit( dirname( WIDGET_FOR_EVENTBRITE_API_PLUGINS_TOP_DIR ) ) . 'widget-for-eventbrite-api';
             $file_paths[21] = trailingslashit( dirname( WIDGET_FOR_EVENTBRITE_API_PLUGINS_TOP_DIR ) ) . 'widget-for-eventbrite-api/parts';
             $file_paths[22] = trailingslashit( dirname( WIDGET_FOR_EVENTBRITE_API_PLUGINS_TOP_DIR ) ) . 'widget-for-eventbrite-api/loops';
+            $file_paths[23] = trailingslashit( dirname( WIDGET_FOR_EVENTBRITE_API_PLUGINS_TOP_DIR ) ) . 'widget-for-eventbrite-api/scripts';
             global  $wfea_fs ;
             $file_paths[] = WIDGET_FOR_EVENTBRITE_API_PLUGIN_DIR . 'templates__free';
             $file_paths[] = WIDGET_FOR_EVENTBRITE_API_PLUGIN_DIR . 'templates__free/parts';
             $file_paths[] = WIDGET_FOR_EVENTBRITE_API_PLUGIN_DIR . 'templates__free/loops';
+            $file_paths[] = WIDGET_FOR_EVENTBRITE_API_PLUGIN_DIR . 'templates__free/scripts';
             ksort( $file_paths );
             return $file_paths;
         }, 0 );
