@@ -1,3 +1,6 @@
+= 5.5.1 =
+* fix missing library
+
 = 5.5.0 =
 * add new layout  'Accordion' ( Pro only )
 * add filters for availability and detect if event started ( Pro only )
