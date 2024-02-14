@@ -62,16 +62,9 @@ class Admin_Pages {
 			wp_enqueue_script( 'common' );
 			wp_enqueue_script( 'wp-lists' );
 			wp_enqueue_script( 'postbox' );
-		}
-	}
-
-	public function footer_scripts() {
-		$page_hook_id = $this->settings_page_id;
-		$confmsg      = esc_html__( 'Are you sure want to do this?', 'widget-for-eventbrite-api' );
-		?>
-        <script type="text/javascript">
-            //<![CDATA[
-            jQuery(document).ready(function ($) {
+			$confmsg = esc_html__( 'Are you sure want to do this?', 'widget-for-eventbrite-api' );
+			$script  = <<<JS
+          jQuery(document).ready(function ($) {
                 // toggle
                 $('.if-js-closed').removeClass('if-js-closed').addClass('closed');
                 postboxes.add_postbox_toggles('<?php echo esc_attr( $page_hook_id ); ?>');
@@ -79,14 +72,14 @@ class Admin_Pages {
                 $('#fx-smb-form').submit(function () {
                     $('#publishing-action .spinner').css('visibility', 'visible');
                 });
-// confirm before reset
+                // confirm before reset
                 $('#delete-action input').on('click', function () {
                     return confirm('<?php echo esc_html( $confmsg ); ?>');
                 });
             });
-            //]]>
-        </script>
-		<?php
+JS;
+			wp_add_inline_script( 'common', $script );
+		}
 	}
 
 	public function register_settings() {
@@ -219,7 +212,6 @@ class Admin_Pages {
 		if ( ! empty( $this->settings_page ) ) {
 			/* Load the JavaScript needed for the settings screen. */
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-			add_action( "admin_footer-{$page_hook_id}", array( $this, 'footer_scripts' ) );
 			/* Set number of column available. */
 			add_filter( 'screen_layout_columns', array( $this, 'screen_layout_column' ), 10, 2 );
 			add_action( $this->settings_page_id . '_settings_page_boxes', array( $this, 'add_required_meta_boxes' ) );

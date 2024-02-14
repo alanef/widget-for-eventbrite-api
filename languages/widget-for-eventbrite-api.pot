@@ -1,4 +1,4 @@
-# Copyright (C) 2023 widget-for-eventbrite-api
+# Copyright (C) 2024 widget-for-eventbrite-api
 # This file is distributed under the same license as the widget-for-eventbrite-api package.
 msgid ""
 msgstr ""
@@ -6,7 +6,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-12-14 23:48+0000\n"
+"POT-Creation-Date: 2024-02-14 19:05+0000\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/widget-for-eventbrite-api.php:125
+#: src/widget-for-eventbrite-api.php:123
 msgid "Manage Plugins Here"
 msgstr ""
 
@@ -22,15 +22,15 @@ msgstr ""
 msgid "Save Options"
 msgstr ""
 
-#: src/admin/class-admin-pages.php:70, src/admin/class-admin-setup-wizard.php:68
+#: src/admin/class-admin-pages.php:65, src/admin/class-admin-setup-wizard.php:68
 msgid "Are you sure want to do this?"
 msgstr ""
 
-#: src/admin/class-admin-pages.php:100, src/admin/class-admin-setup-wizard.php:98
+#: src/admin/class-admin-pages.php:93, src/admin/class-admin-setup-wizard.php:98
 msgid "Settings reset to defaults."
 msgstr ""
 
-#: src/admin/class-admin-pages.php:246, src/admin/class-admin-setup-wizard.php:273
+#: src/admin/class-admin-pages.php:238, src/admin/class-admin-setup-wizard.php:273
 msgid "Save"
 msgstr ""
 
@@ -374,23 +374,23 @@ msgstr ""
 msgid "[Display Eventbrite Plugin] Admin Notice! ( this shows to admins only ): "
 msgstr ""
 
-#: src/frontend/class-frontend.php:706, src/includes/class-utilities.php:1640
+#: src/frontend/class-frontend.php:704, src/includes/class-utilities.php:1740
 msgid "Free"
 msgstr ""
 
-#: src/frontend/class-frontend.php:1089
+#: src/frontend/class-frontend.php:1053
 msgid "--- DEBUG OUTPUT ---"
 msgstr ""
 
-#: src/frontend/class-frontend.php:1099
+#: src/frontend/class-frontend.php:1063
 msgid "[Display Eventbrite Plugin] Selected attribute: ["
 msgstr ""
 
-#: src/frontend/class-frontend.php:1101
+#: src/frontend/class-frontend.php:1065
 msgid "] is not valid - maybe a typo or maybe not included in your plan, refer to documentation"
 msgstr ""
 
-#: src/includes/autoloader.php:8
+#: src/includes/autoloader.php:11
 msgid "System error - autoloader failed"
 msgstr ""
 
@@ -562,58 +562,58 @@ msgstr ""
 msgid "No Eventbrite API key set, please set in settings"
 msgstr ""
 
-#: src/includes/class-utilities.php:759
+#: src/includes/class-utilities.php:763
 msgid "To be announced"
 msgstr ""
 
-#: src/includes/class-utilities.php:753
+#: src/includes/class-utilities.php:757
 msgid "Webinar"
 msgstr ""
 
 #. translators: %d: Number of tickets available
-#: src/includes/class-utilities.php:1041
+#: src/includes/class-utilities.php:1121
 msgid "%d Ticket Available"
 msgid_plural "%d Tickets Available"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/includes/class-utilities.php:1035
+#: src/includes/class-utilities.php:1115
 msgid "Tickets Available"
 msgstr ""
 
-#: src/includes/class-utilities.php:1033
+#: src/includes/class-utilities.php:1113
 msgid "Sold Out"
 msgstr ""
 
-#: src/includes/class-utilities.php:1031
+#: src/includes/class-utilities.php:1111
 msgid "Started"
 msgstr ""
 
-#: src/includes/class-utilities.php:1097
+#: src/includes/class-utilities.php:1198
 msgid "Online"
 msgstr ""
 
-#: src/includes/class-utilities.php:1364
+#: src/includes/class-utilities.php:1465
 msgid "« Previous"
 msgstr ""
 
-#: src/includes/class-utilities.php:1365
+#: src/includes/class-utilities.php:1466
 msgid "Next »"
 msgstr ""
 
-#: src/includes/class-utilities.php:1888
+#: src/includes/class-utilities.php:1988
 msgid "Donation"
 msgstr ""
 
-#: src/includes/class-utilities.php:1901
+#: src/includes/class-utilities.php:2001
 msgid "Your plan does not include this template"
 msgstr ""
 
-#: src/includes/class-utilities.php:1902
+#: src/includes/class-utilities.php:2002
 msgid "Upgrade your plan for access"
 msgstr ""
 
-#: src/includes/class-utilities.php:1904
+#: src/includes/class-utilities.php:2004
 msgid "Upgrade Link"
 msgstr ""
 

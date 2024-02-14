@@ -2,7 +2,7 @@
 Contributors: fullworks
 Tags: eventbrite, widget, events, eventbrite widget, eventbrite shortcode
 Tested up to: 6.4
-Stable tag: 5.5.1
+Stable tag: 5.5.7
 Type: freemium
 
 Display your upcoming Eventbrite events quickly and easily.
@@ -181,6 +181,24 @@ This plugin does not collect, process or send any website visitor personal data 
 == Upgrade Notice ==
 
 == Changelog ==
+= 5.5.7 =
+* Tidy up warnings ( Pro only )
+
+= 5.5.6 =
+* Better enqueue of popup scripts so tracking can be applied ( Pro only )
+
+= 5.5.5 =
+* Fix issue with single event pages and background processing ( Pro only )
+
+= 5.5.4 =
+* Allow iframed video in long description ( Pro only )
+
+= 5.5.3 =
+* Add action hook for modal checkout complete ( Pro only )
+
+= 5.5.2 =
+* remove unneeded library to save space
+
 = 5.5.1 =
 * fix missing library
 
@@ -193,33 +211,7 @@ This plugin does not collect, process or send any website visitor personal data 
 * Prevent long description modal loading EB popup multiple time ( Pro only )
 * add new filter for Venue layout date format ( Pro only )
 
-= 5.4.7 =
-* Improve processing for single events and long description modal ( Pro only )
 
-= 5.4.6 =
-* include eb script dependency for popup ( Pro only )
-
-= 5.4.5 =
-* tweak modal z-index for some themes ( Pro only )
-
-= 5.4.4 =
-* fix long desc modal when two different shortcode status on same page ( Pro only )
-
-= 5.4.3 =
-* fix long desc modal for some page builders ( Pro only )
-* fix long desc modal when organiser has not image ( Pro only )
-* fix event class for private events ( Pro only )
-
-= 5.4.2 =
-* fix html markup in widget free
-
-= 5.4.1 =
-* fix sanitization fro webhooks ( Pro only )
-
-= 5.4.0 =
-* Improve CSS for Card
-* Add social media meta for single event posts
-* Add support for Wp Engine cache clearing
 
 
 [Full Change History](https://plugins.trac.wordpress.org/browser/widget-for-eventbrite-api/trunk/changelog.txt)

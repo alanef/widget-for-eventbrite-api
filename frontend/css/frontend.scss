@@ -212,6 +212,22 @@ section.wfea.rows {
    }
 }
 
+// set iframe wrapper to 100% and to 16:9 aspect ratio using padding hack
+.wfea_eb_content_iframe_container {
+  position: relative;
+  padding-bottom: 56.25%;
+  padding-top: 30px;
+  height: 0;
+  overflow: hidden;
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
 /* </fs_premium_only> */
 @import 'layouts/layout_widget__free';
 @import 'layouts/layout_card__free';

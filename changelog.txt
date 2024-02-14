@@ -1,3 +1,21 @@
+= 5.5.7 =
+* Tidy up warnings ( Pro only )
+
+= 5.5.6 =
+* Better enqueue of popup scripts so tracking can be applied ( Pro only )
+
+= 5.5.5 =
+* Fix issue with single event pages and background processing ( Pro only )
+
+= 5.5.4 =
+* Allow iframed video in long description ( Pro only
+
+= 5.5.3 =
+* Add action hook for modal checkout complete ( Pro only )
+
+= 5.5.2 =
+* remove unneeded library to save space
+
 = 5.5.1 =
 * fix missing library
 

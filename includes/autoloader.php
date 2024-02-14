@@ -4,6 +4,9 @@
  * Autoloader based on tutorial by
  * Tom McFarlin https://tommcfarlin.com/  Licensed          GPL-2.0+
  */
+if ( !defined( 'WPINC' ) ) {
+    die;
+}
 if ( !spl_autoload_register( 'fullworks_WidgetForEventbriteAPI_autoload' ) ) {
     wp_die( esc_html__( 'System error - autoloader failed', 'widget-for-eventbrite-api' ) );
 }

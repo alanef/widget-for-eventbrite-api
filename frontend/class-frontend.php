@@ -303,12 +303,6 @@ class FrontEnd
         );
     }
     
-    public function set_post( $idx )
-    {
-        global  $post ;
-        $post = $this->events->posts[$idx];
-    }
-    
     /**
      * Build social meta for single pages
      * @return void
@@ -369,6 +363,9 @@ class FrontEnd
             $content = preg_replace( '/(<[^>]+) style=".*?"/i', '$1', $content );
         }
         $class = ( apply_filters( 'wfea_strip_eb_inline_style', true ) ? 'local_style' : '' );
+        // add a container class to any iframe
+        $content = preg_replace( '/<iframe/i', '<div class="wfea_eb_content_iframe_container"><iframe', $content );
+        $content = preg_replace( '/<\\/iframe>/i', '</iframe></div>', $content );
         return '<div class="wfea_eb_content ' . $class . '">' . $content . '</div>';
     }
     

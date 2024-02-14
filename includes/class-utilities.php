@@ -321,6 +321,11 @@ class Utilities
         return false;
     }
     
+    public function get_event_attr( $attr )
+    {
+        return $this->get_value_by_string( get_post(), $attr );
+    }
+    
     public function get_event_classes()
     {
         return esc_attr( apply_filters( 'wfea_event_classes', '' ) );
@@ -509,6 +514,31 @@ class Utilities
     public function get_twitter_share_href( $args )
     {
         return '';
+    }
+    
+    function get_value_by_string( $data, $field )
+    {
+        $keys = explode( '.', $field );
+        foreach ( $keys as $key ) {
+            
+            if ( is_array( $data ) && array_key_exists( $key, $data ) ) {
+                $data = $data[$key];
+            } elseif ( is_object( $data ) ) {
+                // Handle nested object properties
+                
+                if ( property_exists( $data, $key ) ) {
+                    $data = $data->{$key};
+                } else {
+                    // Check if key represents a nested object and access it accordingly
+                    $data = ( isset( $data->{$key} ) ? $data->{$key} : null );
+                }
+            
+            } else {
+                return null;
+            }
+        
+        }
+        return $data;
     }
     
     /**
@@ -714,36 +744,6 @@ class Utilities
             $prices->maximum_ticket_price->major_value,
             $prices->minimum_ticket_price->currency
         ) );
-    }
-    
-    public function get_event_attr( $attr )
-    {
-        return $this->get_value_by_string( get_post(), $attr );
-    }
-    
-    function get_value_by_string( $data, $field )
-    {
-        $keys = explode( '.', $field );
-        foreach ( $keys as $key ) {
-            
-            if ( is_array( $data ) && array_key_exists( $key, $data ) ) {
-                $data = $data[$key];
-            } elseif ( is_object( $data ) ) {
-                // Handle nested object properties
-                
-                if ( property_exists( $data, $key ) ) {
-                    $data = $data->{$key};
-                } else {
-                    // Check if key represents a nested object and access it accordingly
-                    $data = ( isset( $data->{$key} ) ? $data->{$key} : null );
-                }
-            
-            } else {
-                return null;
-            }
-        
-        }
-        return $data;
     }
 
 }

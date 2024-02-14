@@ -162,6 +162,24 @@ class Core
      */
     private function define_public_hooks()
     {
+        // allow iframe in post content as Eventbright uses it for videos
+        add_filter(
+            'wp_kses_allowed_html',
+            function ( $tags, $context ) {
+            if ( 'post' === $context ) {
+                $tags['iframe'] = array(
+                    'src'             => true,
+                    'height'          => true,
+                    'width'           => true,
+                    'frameborder'     => true,
+                    'allowfullscreen' => true,
+                );
+            }
+            return $tags;
+        },
+            10,
+            2
+        );
         /**
          * The class responsible for defining all actions that occur in the public-facing
          * side of the site.
