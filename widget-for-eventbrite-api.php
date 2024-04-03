@@ -6,7 +6,7 @@
  * Plugin Name:       Display Eventbrite Events
  * Plugin URI:        https://fullworksplugins.com/products/widget-for-eventbrite/
  * Description:       Easily display Eventbrite events on your WordPress site
- * Version:           5.5.7
+ * Version:           5.5.9
  * Requires at least: 4.9
  * Requires PHP:      5.6
  * Author:            Fullworks
@@ -43,7 +43,7 @@ if ( !function_exists( 'WidgetForEventbriteAPI\\run_wfea' ) ) {
     define( 'WIDGET_FOR_EVENTBRITE_API_PLUGIN_NAME', basename( WIDGET_FOR_EVENTBRITE_API_PLUGIN_DIR ) );
     define( 'WIDGET_FOR_EVENTBRITE_API_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
     define( 'WIDGET_FOR_EVENTBRITE_API_PLUGINS_TOP_DIR', plugin_dir_path( __DIR__ ) );
-    define( 'WIDGET_FOR_EVENTBRITE_PLUGIN_VERSION', '5.5.7' );
+    define( 'WIDGET_FOR_EVENTBRITE_PLUGIN_VERSION', '5.5.9' );
     // Include the plugin autoloader, so we can dynamically include the classes.
     require_once WIDGET_FOR_EVENTBRITE_API_PLUGIN_DIR . 'includes/autoloader.php';
     // include legacy functions for backwards compatability

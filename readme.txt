@@ -1,8 +1,8 @@
 === Display Eventbrite Events ===
 Contributors: fullworks
 Tags: eventbrite, widget, events, eventbrite widget, eventbrite shortcode
-Tested up to: 6.4
-Stable tag: 5.5.7
+Tested up to: 6.5
+Stable tag: 5.5.9
 Type: freemium
 
 Display your upcoming Eventbrite events quickly and easily.
@@ -181,6 +181,12 @@ This plugin does not collect, process or send any website visitor personal data 
 == Upgrade Notice ==
 
 == Changelog ==
+= 5.5.9 =
+* Fix issue with some edge cases of next day events in calendar view ( Pro only )
+
+= 5.5.8 =
+* Tidy up warnings
+
 = 5.5.7 =
 * Tidy up warnings ( Pro only )
 

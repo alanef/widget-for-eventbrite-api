@@ -1,3 +1,9 @@
+= 5.5.9 =
+* Fix issue with some edge cases of next day events in calendar view ( Pro only )
+
+= 5.5.8 =
+* Tidy up warnings
+
 = 5.5.7 =
 * Tidy up warnings ( Pro only )
 

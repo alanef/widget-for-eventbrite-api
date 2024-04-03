@@ -35,6 +35,8 @@ class Core
      * The current version of the plugin.
      */
     protected  $version ;
+    private  $freemius ;
+    private  $utilities ;
     /**
      * Define the core functionality of the plugin.
      *
