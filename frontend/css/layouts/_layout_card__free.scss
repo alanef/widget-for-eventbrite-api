@@ -1,11 +1,18 @@
 .wfea-card {
-  &.enfold .wfea-card-item .eaw-img {
-        position: inherit!important;
-  }
   display: flex !important;
   flex-wrap: wrap !important;
   justify-content: center !important;
   margin: 0 auto !important;
+  
+  &.card {
+    // handle conflict with other card layouts
+    width:100%;
+    max-width: 100%;
+    min-width: 300px;
+  }
+  &.enfold .wfea-card-item .eaw-img {
+        position: inherit!important;
+  }
   .eaw-card-details {
     z-index: 999999;
     display: none;
@@ -131,6 +138,9 @@
           padding: .25rem 1rem !important;
           border-radius: 3px !important;
           text-decoration: none;
+          min-height: auto;
+          box-sizing: content-box;
+          width: auto;
         }
         &:hover {
           text-decoration: none

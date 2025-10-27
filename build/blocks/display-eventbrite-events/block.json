@@ -1,0 +1,320 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "widget-for-eventbrite-api/display-eventbrite-events",
+  "version": "1.0",
+  "title": "Display Eventbrite Layouts",
+  "category": "widgets",
+  "icon": "layout",
+  "textdomain": "widget-for-eventbrite-api",
+  "script": "file:./premium__only/filters.js",
+  "editorScript": "file:index.js",
+  "script_handles": [
+    "widget-for-eventbrite-api-eb-script",
+    "widget-for-eventbrite-api-eb-popup"
+  ],
+  "editorStyle": "file:index.css",
+  "style": "file:style-index.css",
+  "supports": {
+    "align": ["wide", "full"]
+  },
+  "attributes": {
+    "booknow": {
+      "type": "boolean",
+      "default": true
+    },
+    "date": {
+      "type": "boolean",
+      "default": true
+    },
+    "excerpt": {
+      "type": "boolean",
+      "default": true
+    },
+    "thumb": {
+      "type": "boolean",
+      "default": true
+    },
+    "thumb_original": {
+      "type": "boolean",
+      "default": false
+    },
+    "readmore": {
+      "type": "boolean",
+      "default": false
+    },
+    "newtab": {
+      "type": "boolean",
+      "default": false
+    },
+    "content": {
+      "type": "boolean",
+      "default": true
+    },
+    "long_description": {
+      "type": "boolean",
+      "default": false
+    },
+    "show_end_time": {
+      "type": "boolean",
+      "default": true
+    },
+    "show_end_date": {
+      "type": "boolean",
+      "default": true
+    },
+    "venue_name": {
+      "type": "boolean",
+      "default": true
+    },
+    "deduplicate": {
+      "type": "boolean",
+      "default": true
+    },
+    "first_of_series": {
+      "type": "boolean",
+      "default": false
+    },
+    "online_events_only": {
+      "type": "boolean",
+      "default": false
+    },
+    "display_private": {
+      "type": "boolean",
+      "default": true
+    },
+    "show_prices": {
+      "type": "boolean",
+      "default": true
+    },
+    "long_description_modal": {
+      "type": "boolean",
+      "default": true
+    },
+    "popup": {
+      "type": "boolean",
+      "default": true
+    },
+    "search_box": {
+      "type": "boolean",
+      "default": false
+    },
+    "show_live": {
+      "type": "boolean",
+      "default": true
+    },
+    "show_started": {
+      "type": "boolean",
+      "default": false
+    },
+    "show_ended": {
+      "type": "boolean",
+      "default": false
+    },
+    "show_canceled": {
+      "type": "boolean",
+      "default": false
+    },
+    "show_all": {
+      "type": "boolean",
+      "default": false
+    },
+    "booknow_text": {
+      "type": "string"
+    },
+    "css_class": {
+      "type": "string",
+      "default": ""
+    },
+    "css_ID": {
+      "type": "string",
+      "default": ""
+    },
+    "thumb_default": {
+      "type": "string",
+      "default": ""
+    },
+    "readmore_text": {
+      "type": "string"
+    },
+    "search": {
+      "type": "string",
+      "default": ""
+    },
+    "filter_location": {
+      "type": "string",
+      "default": ""
+    },
+    "filter_title": {
+      "type": "string",
+      "default": ""
+    },
+    "tags": {
+      "type": "string",
+      "default": ""
+    },
+    "start_date_range_start": {
+      "type": "string",
+      "default": ""
+    },
+    "start_date_range_end": {
+      "type": "string",
+      "default": ""
+    },
+    "organizer_id": {
+      "type": "string",
+      "default": ""
+    },
+    "organization_id": {
+      "type": "string",
+      "default": ""
+    },
+    "collection_id": {
+      "type": "string",
+      "default": ""
+    },
+    "venue_id": {
+      "type": "string",
+      "default": ""
+    },
+    "online_events_address_text": {
+      "type": "string",
+      "default": ""
+    },
+    "location_title": {
+      "type": "string",
+      "default": ""
+    },
+    "order_by_attr": {
+      "type": "string",
+      "default": ""
+    },
+    "canceled_event_button": {
+      "type": "string"
+    },
+    "coming_soon_button": {
+      "type": "string"
+    },
+    "link_custom_page": {
+      "type": "string",
+      "default": "https://"
+    },
+    "past_event_button": {
+      "type": "string"
+    },
+    "postponed_button": {
+      "type": "string"
+    },
+    "sales_ended_button": {
+      "type": "string"
+    },
+    "sold_out_button": {
+      "type": "string"
+    },
+    "started_event_button": {
+      "type": "string"
+    },
+    "unavailable_button": {
+      "type": "string"
+    },
+    "layout": {
+      "type": "string",
+      "default": "widget"
+    },
+    "style": {
+      "type": "string",
+      "default": "theme-gray"
+    },
+    "theme_style": {
+      "type": "string",
+      "default": "default"
+    },
+    "theme_color": {
+      "type": "string",
+      "default": "theme-gray"
+    },
+    "theme_contrast": {
+      "type": "string",
+      "default": "light"
+    },
+    "thumb_width": {
+      "type": "integer",
+      "default": 350
+    },
+    "length": {
+      "type": "integer",
+      "default": 5
+    },
+    "show_availability'": {
+      "type": "integer",
+      "default": 10
+    },
+    "events_per_page": {
+      "type": "integer"
+    },
+    "limit": {
+      "type": "integer",
+      "default": 5
+    },
+    "status": {
+      "type": "string",
+      "default": "live"
+    },
+    "order_by": {
+      "type": "string",
+      "default": ""
+    },
+    "thumb_align": {
+      "type": "string",
+      "default": ""
+    },
+    "category_id": {
+      "type": "string",
+      "default": ""
+    },
+    "format_id": {
+      "type": "string",
+      "default": ""
+    },
+    "location": {
+      "type": "string",
+      "default": ""
+    },
+    "paginate_position": {
+      "type": "string",
+      "default": "both"
+    },
+    "api_key": {
+      "type": "string",
+      "default": ""
+    },
+    "eb_id": {
+      "type": "string",
+      "default": ""
+    },
+    "subcategory_id": {
+      "type": "string",
+      "default": ""
+    },
+    "apiKeyOptions": {
+      "type": "object",
+      "default": {}
+    },
+    "organizationOptions": {
+      "type": "object",
+      "default": {}
+    },
+    "eventOptions": {
+      "type": "object",
+      "default": {}
+    },
+    "organizerOptions": {
+      "type": "object",
+      "default": {}
+    },
+    "venueOptions": {
+      "type": "object",
+      "default": {}
+    }
+  }
+}

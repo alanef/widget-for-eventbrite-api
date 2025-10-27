@@ -63,21 +63,20 @@ class Admin_Pages {
 			wp_enqueue_script( 'wp-lists' );
 			wp_enqueue_script( 'postbox' );
 			$confmsg = esc_html__( 'Are you sure want to do this?', 'widget-for-eventbrite-api' );
-			$script  = <<<JS
-          jQuery(document).ready(function ($) {
-                // toggle
-                $('.if-js-closed').removeClass('if-js-closed').addClass('closed');
-                postboxes.add_postbox_toggles('<?php echo esc_attr( $page_hook_id ); ?>');
-                // display spinner
-                $('#fx-smb-form').submit(function () {
-                    $('#publishing-action .spinner').css('visibility', 'visible');
-                });
-                // confirm before reset
-                $('#delete-action input').on('click', function () {
-                    return confirm('<?php echo esc_html( $confmsg ); ?>');
-                });
-            });
-JS;
+
+			$script = 'jQuery(document).ready(function ($) {
+    // toggle
+    $(".if-js-closed").removeClass("if-js-closed").addClass("closed");
+    postboxes.add_postbox_toggles("' . esc_attr( $page_hook_id ) . '");
+    // display spinner
+    $("#fx-smb-form").submit(function () {
+        $("#publishing-action .spinner").css("visibility", "visible");
+    });
+    // confirm before reset
+    $("#delete-action input").on("click", function () {
+        return confirm("' . esc_html( $confmsg ) . '");
+    });
+});';
 			wp_add_inline_script( 'common', $script );
 		}
 	}
@@ -122,7 +121,7 @@ JS;
 			do_action( $this->settings_page_id . '_settings_page_boxes', $hook_suffix );
 			?>
 
-            <div class="wrap">
+            <div class="wrap wfea-settings">
 
                 <h2><?php echo esc_html( $this->settings_title ); ?></h2>
 
@@ -180,6 +179,9 @@ JS;
 	}
 
 	public function settings_setup() {
+
+		$this->settings_title = esc_html__( 'Display Eventbrite Events Settings', 'widget-for-eventbrite-api' );
+
 
 		/* top level
 				add_menu_page(

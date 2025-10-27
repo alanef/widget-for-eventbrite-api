@@ -8,13 +8,16 @@
  */
 namespace WidgetForEventbriteAPI\Admin;
 
-use  WidgetForEventbriteAPI\Includes\Eventbrite_Manager ;
-class Admin_Settings extends Admin_Pages
-{
-    protected  $settings_page ;
-    protected  $settings_page_id = 'settings_page_widget-for-eventbrite-api-settings' ;
-    protected  $option_group = 'widget-for-eventbrite-api' ;
-    protected  $settings_title ;
+use WidgetForEventbriteAPI\Includes\Eventbrite_Manager;
+class Admin_Settings extends Admin_Pages {
+    protected $settings_page;
+
+    protected $settings_page_id = 'settings_page_widget-for-eventbrite-api-settings';
+
+    protected $option_group = 'widget-for-eventbrite-api';
+
+    protected $settings_title;
+
     /**
      * Settings constructor.
      *
@@ -22,17 +25,14 @@ class Admin_Settings extends Admin_Pages
      * @param string $version plugin version.
      * @param \Freemius $freemius Freemius SDK.
      */
-    public function __construct( $plugin_name, $version, $freemius )
-    {
+    public function __construct( $plugin_name, $version, $freemius ) {
         $this->plugin_name = $plugin_name;
         $this->version = $version;
         $this->freemius = $freemius;
-        $this->settings_title = esc_html__( 'Display Eventbrite Events Settings', 'widget-for-eventbrite-api' );
         parent::__construct();
     }
-    
-    public static function option_defaults( $option )
-    {
+
+    public static function option_defaults( $option ) {
         switch ( $option ) {
             case 'widget-for-eventbrite-api-settings':
                 return array(
@@ -40,22 +40,25 @@ class Admin_Settings extends Admin_Pages
                     'cache_duration' => 86400,
                     'plugin-css'     => 1,
                     'background_api' => 0,
-                    'key'            => '',
+                    'key'            => array(array(
+                        'key'   => '',
+                        'label' => 'API Key 1',
+                    )),
                     'webhook'        => '',
+                    'account_type'   => 'standard',
                 );
             default:
                 return false;
         }
     }
-    
-    public function add_meta_boxes()
-    {
+
+    public function add_meta_boxes() {
         add_meta_box(
             'info',
             /* Meta Box ID */
             esc_html__( 'Information', 'widget-for-eventbrite-api' ),
             /* Title */
-            array( $this, 'meta_box_1' ),
+            array($this, 'meta_box_1'),
             /* Function Callback */
             $this->settings_page_id,
             /* Screen: Our Settings Page */
@@ -68,7 +71,7 @@ class Admin_Settings extends Admin_Pages
             /* Meta Box ID */
             esc_html__( 'Eventbrite API Key', 'widget-for-eventbrite-api' ),
             /* Title */
-            array( $this, 'meta_box_4' ),
+            array($this, 'meta_box_4'),
             /* Function Callback */
             $this->settings_page_id,
             /* Screen: Our Settings Page */
@@ -81,7 +84,7 @@ class Admin_Settings extends Admin_Pages
             /* Meta Box ID */
             esc_html__( 'Manage Cache', 'widget-for-eventbrite-api' ),
             /* Title */
-            array( $this, 'meta_box_2' ),
+            array($this, 'meta_box_2'),
             /* Function Callback */
             $this->settings_page_id,
             /* Screen: Our Settings Page */
@@ -95,7 +98,7 @@ class Admin_Settings extends Admin_Pages
             /* Meta Box ID */
             esc_html__( 'Webhook Notifications ( optional )', 'widget-for-eventbrite-api' ),
             /* Title */
-            array( $this, $meta_box_webhooks ),
+            array($this, $meta_box_webhooks),
             /* Function Callback */
             $this->settings_page_id,
             /* Screen: Our Settings Page */
@@ -108,7 +111,7 @@ class Admin_Settings extends Admin_Pages
             /* Meta Box ID */
             esc_html__( 'Style Settings', 'widget-for-eventbrite-api' ),
             /* Title */
-            array( $this, 'meta_box_5' ),
+            array($this, 'meta_box_5'),
             /* Function Callback */
             $this->settings_page_id,
             /* Screen: Our Settings Page */
@@ -116,25 +119,47 @@ class Admin_Settings extends Admin_Pages
             /* Context */
             'default'
         );
-        add_meta_box(
-            'shortcode',
-            /* Meta Box ID */
-            esc_html__( 'Shortcode Syntax', 'widget-for-eventbrite-api' ),
-            /* Title */
-            array( $this, 'meta_box_3' ),
-            /* Function Callback */
-            $this->settings_page_id,
-            /* Screen: Our Settings Page */
-            'normal',
-            /* Context */
-            'default'
-        );
+        if ( !is_plugin_active( 'elementor/elementor.php' ) ) {
+            add_meta_box(
+                'shortcode',
+                /* Meta Box ID */
+                esc_html__( 'Shortcode Syntax', 'widget-for-eventbrite-api' ),
+                /* Title */
+                array($this, 'meta_box_3'),
+                /* Function Callback */
+                $this->settings_page_id,
+                /* Screen: Our Settings Page */
+                'normal',
+                /* Context */
+                'default'
+            );
+        }
+        if ( !is_plugin_active( 'elementor/elementor.php' ) ) {
+            if ( $this->is_block_editor_active() ) {
+                add_meta_box(
+                    'blockdiv',
+                    /* Meta Box ID */
+                    esc_html__( 'How to Use', 'widget-for-eventbrite-api' ),
+                    /* Title */
+                    array($this, 'demo_block_box'),
+                    /* Function Callback */
+                    $this->settings_page_id,
+                    /* Screen: Our Settings Page */
+                    'side',
+                    /* Context */
+                    'high'
+                );
+            }
+            $box = esc_html__( 'Shortcode Builder', 'widget-for-eventbrite-api' );
+        } else {
+            $box = esc_html__( 'Elementor Usage', 'widget-for-eventbrite-api' );
+        }
         add_meta_box(
             'demodiv',
             /* Meta Box ID */
-            esc_html__( 'Shortcode Builder', 'widget-for-eventbrite-api' ),
+            $box,
             /* Title */
-            array( $this, 'demo_meta_box' ),
+            array($this, 'demo_meta_box'),
             /* Function Callback */
             $this->settings_page_id,
             /* Screen: Our Settings Page */
@@ -143,14 +168,27 @@ class Admin_Settings extends Admin_Pages
             'high'
         );
     }
-    
+
+    private function is_block_editor_active() {
+        // Gutenberg plugin is installed and activated.
+        $gutenberg = !(false === has_filter( 'replace_editor', 'gutenberg_init' ));
+        // Block editor since 5.0.
+        $block_editor = version_compare( $GLOBALS['wp_version'], '5.0-beta', '>' );
+        if ( !$gutenberg && !$block_editor ) {
+            return false;
+        }
+        if ( has_filter( 'use_block_editor_for_post_type' ) ) {
+            return apply_filters( 'use_block_editor_for_post_type', true, null );
+        }
+        return true;
+    }
+
     /**
      * @param $settings
      *
      * @return array
      */
-    public function clear_cache( $settings )
-    {
+    public function clear_cache( $settings ) {
         $eventbrite_manager = new Eventbrite_Manager();
         $eventbrite_manager->flush_transients( 'eventbrite' );
         $settings['cache_clear'] = 0;
@@ -160,16 +198,14 @@ class Admin_Settings extends Admin_Pages
             esc_html__( 'The Plugin Cache has been reset - If you have a CDN or Host Cache or Caching Plugin you may need to clear those caches manually', 'widget-for-eventbrite-api' ),
             'updated'
         );
-        return array( $eventbrite_manager, $settings );
+        return array($eventbrite_manager, $settings);
     }
-    
-    public function delete_options()
-    {
+
+    public function delete_options() {
         update_option( 'widget-for-eventbrite-api-settings', self::option_defaults( 'widget-for-eventbrite-api-settings' ) );
     }
-    
-    public function demo_meta_box()
-    {
+
+    public function demo_meta_box() {
         ?>
         <div id="demopost" class="submitbox">
 
@@ -186,14 +222,41 @@ class Admin_Settings extends Admin_Pages
 
 		<?php 
     }
-    
-    public function meta_box_1()
-    {
-        $infomsg = '<p>' . sprintf( __( '<p>Welcome. To use this plugin add the widget to your website</p><p>For more detailed setup instructions visit <a target= "_blank" href="https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/installation-display-eventbrite-events-in-wordpress/" >the knowledgebase.</a></p>
+
+    public function demo_block_box() {
+        ?>
+        <div id="demopost" class="submitbox">
+
+            <div id="major-demo-actions">
+
+                <div id="demo-action">
+                    <p><?php 
+        esc_html_e( 'In the post or page editor is a block for the Eventbrite layouts, add the block and adjust the options to see the results.', 'widget-for-eventbrite-api' );
+        ?></p>
+                    <p><?php 
+        esc_html_e( 'You can also use a Shortcode if preferred.', 'widget-for-eventbrite-api' );
+        ?></p>
+                </div>
+
+            </div>
+        </div>;
+						?></p>
+                </div>
+
+            </div>
+        </div>
+
+		<?php 
+    }
+
+    public function meta_box_1() {
+        $infomsg = '<p>' . sprintf( 
+            // translators: placeholder leave as links
+            __( '<p>Welcome. To use this plugin add the widget to your website</p><p>For more detailed setup instructions visit <a target= "_blank" href="https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/installation-display-eventbrite-events-in-wordpress/" >the knowledgebase.</a></p>
             <p>Support for the <strong>free</strong> version is provided <a class="button-secondary" href="https://wordpress.org/support/plugin/widget-for-eventbrite-api" target="_blank">here on WordPress.org.</a></p>
 			<p>Get a FREE trial of the Pro version - <a href="%1$s">click here</a> 
 			<h2>Pro Version Benefits</h2>
-			<ul style="list-style-type:disc;list-style-position: inside;">
+			<ul >
 			    <li>14 day free trial</li>
 			    <li>Keep visitors on your site, with integrated checkout popup</li>
 			    <li>Show the full event details in a popup too</li>
@@ -206,13 +269,14 @@ class Admin_Settings extends Admin_Pages
 				<li>Do you have lots of events and would like to filter them down? The shortcode has sophisticated filters</li>
 			</ul>
 			</p>
-			', 'widget-for-eventbrite-api' ), $this->freemius->get_trial_url() );
-        echo  wp_kses_post( $infomsg ) ;
+			', 'widget-for-eventbrite-api' ),
+            $this->freemius->get_trial_url()
+         );
+        echo wp_kses_post( $infomsg );
     }
-    
-    public function meta_box_2()
-    {
-        $options = get_option( 'widget-for-eventbrite-api-settings' );
+
+    public function meta_box_2() {
+        $options = get_option( 'widget-for-eventbrite-api-settings', Admin_Settings::option_defaults( 'widget-for-eventbrite-api-settings' ) );
         if ( !isset( $options['cache_clear'] ) ) {
             $options['cache_clear'] = 0;
         }
@@ -220,15 +284,15 @@ class Admin_Settings extends Admin_Pages
             $options['cache_duration'] = 86400;
         }
         $units = array(
-            array( 604800, esc_html__( '1 Week', 'widget-for-eventbrite-api' ) ),
-            array( 172800, esc_html__( '2 Days', 'widget-for-eventbrite-api' ) ),
-            array( 86400, esc_html__( '1 Day - recommended', 'widget-for-eventbrite-api' ) ),
-            array( 43200, esc_html__( '12 hours', 'widget-for-eventbrite-api' ) ),
-            array( 14400, esc_html__( '4 hours', 'widget-for-eventbrite-api' ) ),
-            array( 3600, esc_html__( '1 hour ', 'widget-for-eventbrite-api' ) ),
-            array( 1800, esc_html__( '30 Minutes', 'widget-for-eventbrite-api' ) ),
-            array( 900, esc_html__( '15 Minutes - use on low volume sites only', 'widget-for-eventbrite-api' ) ),
-            array( 60, esc_html__( 'No Cache - use for development & testing only ', 'widget-for-eventbrite-api' ) )
+            array(604800, esc_html__( '1 Week', 'widget-for-eventbrite-api' )),
+            array(172800, esc_html__( '2 Days', 'widget-for-eventbrite-api' )),
+            array(86400, esc_html__( '1 Day - recommended', 'widget-for-eventbrite-api' )),
+            array(43200, esc_html__( '12 hours', 'widget-for-eventbrite-api' )),
+            array(14400, esc_html__( '4 hours', 'widget-for-eventbrite-api' )),
+            array(3600, esc_html__( '1 hour ', 'widget-for-eventbrite-api' )),
+            array(1800, esc_html__( '30 Minutes', 'widget-for-eventbrite-api' )),
+            array(900, esc_html__( '15 Minutes - use on low volume sites only', 'widget-for-eventbrite-api' )),
+            array(60, esc_html__( 'No Cache - use for development & testing only ', 'widget-for-eventbrite-api' ))
         );
         ?>
         <table class="form-table">
@@ -265,7 +329,7 @@ class Admin_Settings extends Admin_Pages
 						<?php 
         $infomsg = esc_html__( 'The following features are only available on the pro plan or trial', 'widget-for-eventbrite-api' );
         $disabled = ' disabled="disabled" ';
-        echo  wp_kses_post( $infomsg ) ;
+        echo wp_kses_post( $infomsg );
         ?></p>
             </tr>
             <tr valign="top" class="alternate">
@@ -274,7 +338,7 @@ class Admin_Settings extends Admin_Pages
         ?></th>
                 <td>
                     <select <?php 
-        echo  esc_attr( $disabled ) ;
+        echo esc_attr( $disabled );
         ?>
                             name="widget-for-eventbrite-api-settings[cache_duration]"
                             id="widget-for-eventbrite-api-settings[cache_duration]"
@@ -283,12 +347,12 @@ class Admin_Settings extends Admin_Pages
         foreach ( $units as $unit ) {
             ?>
                             <option value="<?php 
-            echo  (int) $unit[0] ;
+            echo (int) $unit[0];
             ?>"
 								<?php 
-            echo  ( $options['cache_duration'] == $unit[0] ? " selected" : "" ) ;
+            echo ( $options['cache_duration'] == $unit[0] ? " selected" : "" );
             ?>><?php 
-            echo  esc_html( $unit[1] ) ;
+            echo esc_html( $unit[1] );
             ?></option>
 						<?php 
         }
@@ -297,7 +361,12 @@ class Admin_Settings extends Admin_Pages
                     <p>
                         <span
                                 class="description"><?php 
-        printf( esc_html__( 'Set the cache period for the Eventbrite API. Read %1$sthis article%2$s before changing the default of once per day', 'widget-for-eventbrite-api' ), '<a href="https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/usage/understanding-the-cache/" target="_blank">', '</a>' );
+        printf( 
+            // translators: placeholders are a link
+            esc_html__( 'Set the cache period for the Eventbrite API. Read %1$sthis article%2$s before changing the default of once per day', 'widget-for-eventbrite-api' ),
+            '<a href="https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/usage/understanding-the-cache/" target="_blank">',
+            '</a>'
+         );
         ?></span>
                     </p>
                 </td>
@@ -308,7 +377,7 @@ class Admin_Settings extends Admin_Pages
         ?></th>
                 <td>
                     <label for="widget-for-eventbrite-api-settings[background_api]"><input <?php 
-        echo  esc_attr( $disabled ) ;
+        echo esc_attr( $disabled );
         ?>
                                 type="checkbox"
                                 name="widget-for-eventbrite-api-settings[background_api]"
@@ -318,13 +387,13 @@ class Admin_Settings extends Admin_Pages
         checked( '1', $options['background_api'] );
         ?>>
 						<?php 
-        esc_html_e( 'Leave ticked for background processing', 'widget-for-eventbrite-api' );
+        esc_html_e( 'Tick for background processing', 'widget-for-eventbrite-api' );
         ?>
                     </label>
                     <p>
                         <span
                                 class="description"><?php 
-        esc_html_e( 'Background API processing is useful when you have many hundreds of events or using advanced pro features like long description that create many API calls', 'widget-for-eventbrite-api' );
+        esc_html_e( 'Background API processing should ONLY be used when you have many hundreds of events, please contact support for advice before using.', 'widget-for-eventbrite-api' );
         ?></span>
                     </p>
                 </td>
@@ -335,17 +404,18 @@ class Admin_Settings extends Admin_Pages
         </table>
 		<?php 
     }
-    
-    public function meta_box_3()
-    {
-        $infomsg = '<p>' . sprintf( __( 'Shortcode usage e.g. [wfea] [wfea limit=10 ] etc.<br>
+
+    public function meta_box_3() {
+        $infomsg = '<p>' . sprintf( 
+            // translators: leave place holders they are links
+            __( 'Shortcode usage e.g. [wfea] [wfea limit=10 ] etc.<br>
 		See your own events on the shortcode builder site to select your desired options
 <a href="https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/usage/using-the-shortcode/#free" target="_blank">all free options detailed here</a>
 <br><br>
 Additional shortcode options are available in the  paid for version<br><br>
 			Get a FREE trial of the Pro version - <a href="%1$s">click here</a> 
 			<h2>Pro Version Benefits</h2>
-			<ul style="list-style-type:disc;list-style-position: inside;">
+			<ul>
 				<li>14 day free trial</li>
 				<li>Keep visitors on your site, with integrated checkout popup</li>
 				<li>Let your users see your events on full pages and post</li>
@@ -359,17 +429,48 @@ Additional shortcode options are available in the  paid for version<br><br>
 				<li>Need to see your events during development or quickly? The pro version has cache management</li>		
 			</ul>
 			Available when you go pro - layouts like  [wfea layout="cal" ] or [wfea layout="grid" popup=true ] etc - see  <a href="https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/usage/using-the-shotcode/" target="_blank"> this page</a> for many optional arguments
-			', 'widget-for-eventbrite-api' ), $this->freemius->get_trial_url() );
-        echo  wp_kses_post( $infomsg ) ;
+			', 'widget-for-eventbrite-api' ),
+            $this->freemius->get_trial_url()
+         );
+        echo wp_kses_post( $infomsg );
         $this->display_demo_button();
     }
-    
-    public function meta_box_4()
-    {
+
+    public function meta_box_4() {
         $options = get_option( 'widget-for-eventbrite-api-settings', array(
-            'key'     => '',
+            'key'     => array(array(
+                'key'   => '',
+                'label' => __( 'API Key 1', 'widget-for-eventbrite-api' ),
+            )),
             'webhook' => '',
         ) );
+        // Handle different formats of API key storage
+        if ( !isset( $options['key'] ) || empty( $options['key'] ) ) {
+            // No key set yet
+            $api_keys = array(array(
+                'key'   => '',
+                'label' => __( 'API Key 1', 'widget-for-eventbrite-api' ),
+            ));
+        } elseif ( is_string( $options['key'] ) ) {
+            // Old format: plain string
+            $api_keys = array(array(
+                'key'   => $options['key'],
+                'label' => __( 'API Key 1', 'widget-for-eventbrite-api' ),
+            ));
+        } elseif ( is_array( $options['key'] ) && isset( $options['key']['key'] ) ) {
+            // Single array format (not nested)
+            $api_keys = array($options['key']);
+        } elseif ( is_array( $options['key'] ) && isset( $options['key'][0] ) ) {
+            // New format: array of arrays
+            $api_keys = $options['key'];
+        } else {
+            // Fallback for any other format
+            $api_keys = array(array(
+                'key'   => '',
+                'label' => __( 'API Key 1', 'widget-for-eventbrite-api' ),
+            ));
+        }
+        $account_type = ( isset( $options['account_type'] ) ? $options['account_type'] : 'standard' );
         ?>
         <table class="form-table">
             <tbody>
@@ -377,37 +478,79 @@ Additional shortcode options are available in the  paid for version<br><br>
                 <th scope="row"><?php 
         esc_html_e( 'Your API Key - Private Token', 'widget-for-eventbrite-api' );
         ?></th>
-                <td>
-                    <input type="password" name="widget-for-eventbrite-api-settings[key]"
-                           id="widget-for-eventbrite-api-settings-api-key"
-                           class="regular-text required"
-                           required
-                           value="<?php 
-        echo  esc_attr( $options['key'] ) ;
-        ?>"
-                    >
-                    <p class="api-key-status"></p>
-                    <p class="api-key-result"></p>
-                    <p>
-                        <span
+                <td class="wfea-api-keys">
+					<?php 
+        foreach ( $api_keys as $index => $api_key ) {
+            $key = ( isset( $api_key['key'] ) ? $api_key['key'] : '' );
+            $key_label = ( isset( $api_key['label'] ) ? $api_key['label'] : sprintf( 
+                // translators:  placeholver is a number
+                __( 'API Key %d', 'widget-for-eventbrite-api' ),
+                $index + 1
+             ) );
+            ?>
+                        <div class="wfea-api-key-row"
+                             style="<?php 
+            echo ( $this->freemius->is_free_plan() && $index > 0 ? 'display:none;' : '' );
+            ?>"
+                             data-row="<?php 
+            echo esc_attr( $index );
+            ?>">
+                            <input
+                                    type="password"
+                                    name="widget-for-eventbrite-api-settings[key]<?php 
+            echo '[' . esc_attr( $index ) . ']';
+            ?>[key]"
+                                    id="widget-for-eventbrite-api-settings-api-key_<?php 
+            echo esc_attr( $index );
+            ?>"
+                                    class="wfea-key regular-text required"
+                                    required
+                                    value="<?php 
+            echo esc_attr( $key );
+            ?>"
+                            />
+                            </br><br>
+                            <input
+                                    type="text"
+                                    name="widget-for-eventbrite-api-settings[key]<?php 
+            echo '[' . esc_attr( $index ) . ']';
+            ?>[label]"
+                                    class="wfea-key-label regular-text required"
+                                    required
+                                    value="<?php 
+            echo esc_attr( $key_label );
+            ?>"
+                            />
+							<?php 
+            ?>
+                            <p class="api-key-status"></p>
+                            <p class="api-key-result"></p>
+                        </div>
+						<?php 
+        }
+        ?>
+                    <p class="wfea-api-key-notice">
+						<span
                                 class="description"><?php 
         esc_html_e( 'The key is required to connect to Eventbrite', 'widget-for-eventbrite-api' );
         ?>
-                             - <a href="https://www.eventbrite.co.uk/platform/api-keys/"
-                                  target="_blank"><?php 
+								- <a href="https://www.eventbrite.co.uk/platform/api-keys/"
+                                     target="_blank"><?php 
         esc_html_e( 'Click here to get your free API Key from Eventbrite', 'widget-for-eventbrite-api' );
         ?></a></span>
                     </p>
+					<?php 
+        ?>
                 </td>
             </tr>
-
+			<?php 
+        ?>
             </tbody>
         </table>
 		<?php 
     }
-    
-    public function meta_box_5()
-    {
+
+    public function meta_box_5() {
         $options = get_option( 'widget-for-eventbrite-api-settings' );
         if ( !isset( $options['plugin-css'] ) ) {
             $options['plugin-css'] = 1;
@@ -428,11 +571,10 @@ Additional shortcode options are available in the  paid for version<br><br>
         checked( '1', $options['plugin-css'] );
         ?>>
 						<?php 
-        esc_html_e( 'Enable this option to output the default CSS. Disable it if you plan to create your own CSS in a child theme or customizer additional CSS.', 'widget_for_eventbrite_api' );
+        esc_html_e( 'Enable this option to output the default CSS. Disable it if you plan to create your own CSS in a child theme or customizer additional CSS.', 'widget-for-eventbrite-api' );
         ?>
                     </label>
 					<?php 
-        
         if ( !$this->freemius->can_use_premium_code() ) {
             ?>
                         <p>
@@ -442,7 +584,7 @@ Additional shortcode options are available in the  paid for version<br><br>
             ?>
                             <a class="button-secondary"
                                href="<?php 
-            echo  esc_url( $this->freemius->get_upgrade_url() ) ;
+            echo esc_url( $this->freemius->get_upgrade_url() );
             ?>"><?php 
             esc_html_e( 'Upgrade now', 'widget-for-eventbrite-api' );
             ?></a>
@@ -450,7 +592,6 @@ Additional shortcode options are available in the  paid for version<br><br>
                         </p>
 					<?php 
         }
-        
         ?>
                 </td>
             </tr>
@@ -459,9 +600,8 @@ Additional shortcode options are available in the  paid for version<br><br>
 
 		<?php 
     }
-    
-    public function meta_box_webhooks()
-    {
+
+    public function meta_box_webhooks() {
         ?>
         <table class="form-table">
             <tbody>
@@ -469,7 +609,7 @@ Additional shortcode options are available in the  paid for version<br><br>
                 <td colspan="100">
                     <p>
 						<?php 
-        esc_html_e( '[Optional] you can set up WebHooks to notify this website that an event has changed, this will speed up changes appearing', 'widget_for_eventbrite_api' );
+        esc_html_e( '[Optional] you can set up WebHooks to notify this website that an event has changed, this will speed up changes appearing', 'widget-for-eventbrite-api' );
         ?>
                     </p>
                     <p>
@@ -479,7 +619,7 @@ Additional shortcode options are available in the  paid for version<br><br>
         ?>
                             <a class="button-secondary"
                                href="<?php 
-        echo  esc_url( $this->freemius->get_upgrade_url() ) ;
+        echo esc_url( $this->freemius->get_upgrade_url() );
         ?>"><?php 
         esc_html_e( 'Upgrade now', 'widget-for-eventbrite-api' );
         ?></a>
@@ -492,17 +632,16 @@ Additional shortcode options are available in the  paid for version<br><br>
         </table>
 		<?php 
     }
-    
-    public function register_settings()
-    {
+
+    public function register_settings() {
         /* Register our setting. */
-        register_setting(
+        register_setting( 
             $this->option_group,
             /* Option Group */
             'widget-for-eventbrite-api-settings',
             /* Option Name */
-            array( $this, 'sanitize_settings_1' )
-        );
+            array($this, 'sanitize_settings_1')
+         );
         /* Add settings menu page */
         $this->settings_page = add_submenu_page(
             'widget-for-eventbrite-api',
@@ -514,41 +653,34 @@ Additional shortcode options are available in the  paid for version<br><br>
             /* Capability */
             'widget-for-eventbrite-api',
             /* Page Slug */
-            array( $this, 'settings_page' )
+            array($this, 'settings_page')
         );
-        register_setting(
+        register_setting( 
             $this->option_group,
             /* Option Group */
             "{$this->option_group}-reset",
             /* Option Name */
-            array( $this, 'reset_sanitize' )
-        );
+            array($this, 'reset_sanitize')
+         );
     }
-    
-    public function sanitize_settings_1( $settings )
-    {
-        if ( empty($settings) ) {
+
+    public function sanitize_settings_1( $settings ) {
+        if ( empty( $settings ) ) {
             return $settings;
         }
         $options = get_option( 'widget-for-eventbrite-api-settings' );
-        
         if ( !isset( $settings['plugin-css'] ) ) {
             $settings['plugin-css'] = 0;
             // always set checkboxes of they dont exist
         }
-        
-        
         if ( !isset( $settings['cache_duration'] ) ) {
             $settings['cache_duration'] = 86400;
             // always set if they dont exist
         }
-        
-        
         if ( !isset( $settings['cache_clear'] ) ) {
             $settings['cache_clear'] = 0;
             // always set if they dont exist
         }
-        
         $settings['background_api'] = 0;
         if ( 1 == $settings['cache_clear'] ) {
             list( $display_eventbrite, $settings ) = $this->clear_cache( $settings );
@@ -559,12 +691,11 @@ Additional shortcode options are available in the  paid for version<br><br>
         flush_rewrite_rules();
         $options = get_option( 'widget-for-eventbrite-api-settings' );
         if ( isset( $settings['key'] ) ) {
-            
-            if ( empty($settings['key'] || empty($options['key'])) ) {
+            if ( empty( $settings['key'] ) || empty( $options['key'] ) ) {
                 add_settings_error(
                     'wfea-api-key',
                     'wfea-api-key',
-                    esc_html__( 'An API Private Token is required', 'fullworks-security' ),
+                    esc_html__( 'An API Private Token is required', 'widget-for-eventbrite-api' ),
                     'error'
                 );
                 $settings['key'] = $options['key'];
@@ -573,19 +704,46 @@ Additional shortcode options are available in the  paid for version<br><br>
                 // not empty and changed
                 // flush transients
                 list( $display_eventbrite, $settings ) = $this->clear_cache( $settings );
-                // test the new key
-                $organizations = $display_eventbrite->request(
-                    'organizations',
-                    array(
-                    'token' => $settings['key'],
-                ),
-                    false,
-                    true
-                );
-                
-                if ( is_wp_error( $organizations ) ) {
+                $validation_error = false;
+                // test the new keys
+                if ( is_array( $settings['key'] ) ) {
+                    $registered_keys = array();
+                    foreach ( $settings['key'] as $index => $api_key ) {
+                        if ( !in_array( $api_key['key'], $registered_keys, true ) ) {
+                            $registered_keys[] = $api_key['key'];
+                        } else {
+                            unset($settings['key'][$index]);
+                            continue;
+                        }
+                        $organizations = $display_eventbrite->request(
+                            'organizations',
+                            array(
+                                'token' => $api_key['key'],
+                            ),
+                            false,
+                            true
+                        );
+                        if ( is_wp_error( $organizations ) ) {
+                            $validation_error = true;
+                            break;
+                        }
+                    }
+                    $settings['key'] = array_values( $settings['key'] );
+                } else {
+                    $organizations = $display_eventbrite->request(
+                        'organizations',
+                        array(
+                            'token' => $settings['key'],
+                        ),
+                        false,
+                        true
+                    );
+                    if ( is_wp_error( $organizations ) ) {
+                        $validation_error = true;
+                    }
+                }
+                if ( $validation_error ) {
                     $msg = $organizations->get_error_message();
-                    
                     if ( is_array( $msg ) ) {
                         $text = json_decode( $msg['body'] );
                         $msg = $text->error_description;
@@ -595,59 +753,70 @@ Additional shortcode options are available in the  paid for version<br><br>
                         add_settings_error(
                             'wfea-api-key-fail',
                             'wfea-api-key-fail',
-                            sprintf( esc_html__( 'Something failed with the key: %1$s', 'fullworks-security' ), $msg ),
+                            sprintf( 
+                                // translators:  placeholder is an API key
+                                esc_html__( 'Something failed with the key: %1$s', 'widget-for-eventbrite-api' ),
+                                $msg
+                             ),
                             'error'
                         );
                         $settings['key'] = $options['key'];
                     }
-                    
-                    
                     if ( is_wp_error( $msg ) ) {
                         $msg = $organizations->get_error_message();
                         if ( !is_string( $msg ) ) {
-                            $msg = sprintf( esc_html__( 'A very unexpected error with the API call to check the key happened: %1$s', 'fullworks-security' ), print_r( $msg, true ) );
+                            $msg = sprintf( 
+                                // translators:  placeholder is an API key
+                                esc_html__( 'A very unexpected error with the API call to check the key happened: %1$s', 'widget-for-eventbrite-api' ),
+                                print_r( $msg, true )
+                             );
                         }
                         add_settings_error(
                             'wfea-api-key-fail',
                             'wfea-api-key-fail',
-                            sprintf( esc_html__( 'Something failed with the key: %1$s', 'fullworks-security' ), $msg ),
+                            sprintf( 
+                                // translators:  placeholder is an API key
+                                esc_html__( 'Something failed with the key: %1$s', 'widget-for-eventbrite-api' ),
+                                $msg
+                             ),
                             'error'
                         );
                         $settings['key'] = $options['key'];
                     }
-                    
                     return $settings;
                 }
-            
             }
-        
         }
-        $settings['key'] = sanitize_text_field( $settings['key'] );
         return $settings;
     }
-    
-    private function display_demo_button()
-    {
+
+    private function display_demo_button() {
         $plan = 'Free&layout=widget';
         $layout = 'widget';
         $options = get_option( 'widget-for-eventbrite-api-settings' );
-        ?>
-        <button class="button button-primary"
-                onclick="wfea_demo_form()"><?php 
-        esc_html_e( 'Go to Shortcode Builder', 'widget-for-eventbrite-api' );
-        ?></button>
-        <script>
-            function wfea_demo_form() {
-                document.body.innerHTML += '<form id="dynForm" action="https://fullworksplugins.com/products/widget-for-eventbrite/eventbrite-shortcode-demo" method="post" target="_blank"><input type="hidden" name="layout" value="<?php 
-        echo  esc_attr( $layout ) ;
-        ?>"><input type="hidden" name="plan" value="<?php 
-        echo  esc_attr( $plan ) ;
-        ?>"><input type="hidden" name="apikey" value="<?php 
-        echo  esc_attr( $options['key'] ) ;
-        ?>"><input type="hidden" name="useapi" value="Own API Private Token"></form>';
-                document.getElementById("dynForm").submit();
-            }
-        </script><?php 
+        if ( is_plugin_active( 'elementor/elementor.php' ) ) {
+            echo esc_html__( 'Go to your page, in Elementor add the Display Eventbrite widget and select options', 'widget-for-eventbrite-api' );
+        } elseif ( is_array( $options ) && isset( $options['key'] ) && is_array( $options['key'] ) && isset( $options['key'][0] ) && is_array( $options['key'][0] ) && isset( $options['key'][0]['key'] ) ) {
+            ?>
+            <button class="button button-primary"
+                    onclick="wfea_demo_form()"><?php 
+            esc_html_e( 'Go to Shortcode Builder', 'widget-for-eventbrite-api' );
+            ?>
+            </button>
+            <script>
+                function wfea_demo_form() {
+                    document.body.innerHTML += '<form id="dynForm" action="https://fullworksplugins.com/products/widget-for-eventbrite/eventbrite-shortcode-demo" method="post" target="_blank"><input type="hidden" name="layout" value="<?php 
+            echo esc_attr( $layout );
+            ?>"><input type="hidden" name="plan" value="<?php 
+            echo esc_attr( $plan );
+            ?>"><input type="hidden" name="apikey" value="<?php 
+            echo esc_attr( $options['key'][0]['key'] );
+            ?>"><input type="hidden" name="useapi" value="Own API Private Token"></form>';
+                    document.getElementById("dynForm").submit();
+                }
+            </script>
+			<?php 
+        }
     }
 
 }

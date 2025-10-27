@@ -45,12 +45,12 @@
 
 		.booknow {
 			a {
-				background: map.get($colors, "bg-button");
-				color: map.get($colors, "color-button");
+				background: map.get($colors, "bg-button")!important;
+				color: map.get($colors, "color-button")!important;
 			}
 			button {
-				background: map.get($colors, "bg-button");
-				color: map.get($colors, "color-button");
+				background: map.get($colors, "bg-button")!important;
+				color: map.get($colors, "color-button")!important;
 			}
 		}
 
@@ -73,12 +73,12 @@
 
 		.booknow {
 			a {
-				background: map.get($colors, "bg-button");
-				color: map.get($colors, "color-button");
+				background: map.get($colors, "bg-button")!important;
+				color: map.get($colors, "color-button")!important;
 			}
 			button {
-				background: map.get($colors, "bg-button");
-				color: map.get($colors, "color-button");
+				background: map.get($colors, "bg-button")!important;
+				color: map.get($colors, "color-button")!important;
 			}
 		}
 
@@ -90,30 +90,23 @@
 	// slideshow
 	.wfea-slideshow-wrap section.wfea-slider.#{map.get($colors, "name")} .text-block {
 		a.book-now__link.button {
-			background: map.get($colors, "bg-button");
-			color: map.get($colors, "color-button");
+			background: map.get($colors, "bg-button")!important;
+			color: map.get($colors, "color-button")!important;
 		}
 	}
 	/* </fs_premium_only> */
 }
 /* <fs_premium_only> */
 @mixin qtip-theme ($colors)
+
 {
-	.wfea.wfea-cal.#{map.get($colors, "name")} .help-tip,
-	.qtip.#{map.get($colors, "name")} {
+	.wfea.wfea-cal.#{map.get($colors, "name")} .wfea-help-tip {
 		background: map.get($colors, "bg-main");
 		border-color: map.get($colors, "color-border");
 		color: map.get($colors, "color-default");
 
-		.qtip-titlebar {
+		.wfea-help-tip-titlebar {
 			background: map.get($colors, "bg-title");
-		}
-
-		.qtip-tip:before {
-		    border-color: map.get($colors, "color-border") transparent transparent;
-		}
-		.qtip-tip:after {
-    		border-color: map.get($colors, "bg-main") transparent transparent transparent;
 		}
 	}
 }
@@ -143,12 +136,12 @@
 		}
 
 		.wfea-accordion__booknow {
-				background: map.get($colors, "bg-button");
-				color: map.get($colors, "color-button");
+				background: map.get($colors, "bg-button")!important;
+				color: map.get($colors, "color-button")!important;
 		}
 		.tab.closed .tab__label {
-			background: map.get($colors, "bg-button");
-			color: map.get($colors, "color-button");
+			background: map.get($colors, "bg-button")!important;
+			color: map.get($colors, "color-button")!important;
 		}
 	}
 }
@@ -202,7 +195,7 @@
 				background: map.get($colors, "color-link") !important;	
 			}
 
-			button.wfea-modal-view-details {
+			.button.wfea-modal-view-details {
 				color: map.get($colors, "color-link") !important;		
 			}
 		}
@@ -211,6 +204,16 @@
 	.wfea-modal-container.#{map.get($colors, "name")} {
 		.wfea-modal-checkout-button {
 			background: map.get($colors, "color-link") !important;	
+		}
+	}
+}
+
+@mixin venue-theme ($colors)
+{	
+	.wfea-blocks.wfea.#{map.get($colors, "name")} article {
+		.wfea-venue__cta-wrap {
+			border-left: map.get($colors, "color-secondary") solid;
+			padding-left: 10px;
 		}
 	}
 }

@@ -1,0 +1,82 @@
+# Development and version control
+.git
+.gitignore
+.gitattributes
+.github
+
+# Build tools and config
+.editorconfig
+.nvmrc
+composer.json
+composer.lock
+package.json
+package-lock.json
+phpcs.xml
+phpcs.xml.dist
+phpcs_sec.xml
+phpunit.xml
+phpunit.xml.dist
+.phpcs.xml
+.phpcs.xml.dist
+gulpfile.js
+post-composer-script.php
+
+# Dependencies
+node_modules
+
+# Core library files (already in WordPress core)
+# jQuery is enqueued via WordPress's built-in 'jquery' handle
+# Moment is copied to vendor/moment during build by post-composer-script.php
+includes/vendor/components/
+components/jquery/
+components/moment/
+
+# Testing
+tests
+bin
+.phpunit.result.cache
+
+# Build artifacts
+dist
+zipped
+*.zip
+
+# Documentation (keep readme.txt)
+*.md
+README*
+!readme.txt
+
+# WordPress.org assets
+.wordpress-org
+assets-wp-repo
+
+# IDE and editor files
+.travis.yml
+.gitlab-ci.yml
+.idea
+.vscode
+*.iml
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+
+# Temporary files
+.distignore
+*.tmp
+*.bak
+*~
+
+# WP-ENV
+.wp-env.json
+.wp-env.override.json
+
+# Claude AI files
+.claude-prompt.txt
+.claude-system-prompt.txt
+CLAUDE.md

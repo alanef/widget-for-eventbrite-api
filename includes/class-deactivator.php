@@ -29,17 +29,15 @@ namespace WidgetForEventbriteAPI\Includes;
  * Class Deactivator
  * @package WidgetForEventbriteAPI\Includes
  */
-class Deactivator
-{
+class Deactivator {
     /**
      *
      */
-    public static function deactivate()
-    {
+    public static function deactivate() {
         /**
          * @var \Freemius $wfea_fs Object for freemius.
          */
-        global  $wfea_fs ;
+        global $wfea_fs;
     }
 
 }

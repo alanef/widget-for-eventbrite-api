@@ -3,6 +3,8 @@
  * @var mixed $data Custom data for the template.
  * phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped -- template files escaped at output
  */
+/** @var \Freemius $wfea_fs Freemius global object. */
+global $wfea_fs;
 ?>
 
 <article class="wfea-card-list-item">
@@ -16,7 +18,7 @@
 	            <?php $data->template_loader->get_template_part( 'venue' . $data->event->plan ); ?>
 	            <?php $data->template_loader->get_template_part( 'location' . $data->event->plan ); ?>
                 <div class="eaw-buttons">
-                    <?php if ( $data->utilities->get_element('long_description_modal', $data->args) ) {
+                    <?php if ( $wfea_fs->can_use_premium_code() && $data->utilities->get_element('long_description_modal', $data->args) ) {
                         $data->template_loader->get_template_part( 'full_modal_details_button' );
                      } else { ?>
                     <button class="eaw-button-details"><?php echo apply_filters('wfea_layout_card_details',esc_html__( 'Details', 'widget-for-eventbrite-api')) ; ?>

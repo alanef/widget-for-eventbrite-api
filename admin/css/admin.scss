@@ -68,6 +68,15 @@ $brand_darkgrey: #2E3744;
 .settings_page_widget-for-eventbrite-api-settings-account #wpfooter {
   display: none;
 }
+.wfea-settings{
+  ul {
+    list-style-type: disc;
+    list-style-position: inside;
+  }
+  li {
+    margin-left: 20px;
+  }
+}
 
 .fs-settings-meta-box-wrap {
   input {
@@ -80,6 +89,7 @@ $brand_darkgrey: #2E3744;
     }
   }
 }
+
 .settings_page_widget-for-eventbrite-api-settings {
   .api-key-status {
     background: green;
@@ -153,6 +163,62 @@ $brand_darkgrey: #2E3744;
     }
   }
 }
+
+.wfea-block-control__number {
+  position: relative;
+  max-width: 120px;
+
+  input {
+    z-index: 1;
+  }
+}
+.wfea-block-control__venue-contrast-popover {
+  button:nth-child(2) {
+    background-color: black;
+    color: white;
+  }
+}
+
+.dashicon {
+  &.gray {
+    color: rgba(75, 85, 99, 1);
+  }
+
+  &.red {
+    color: rgba(220, 38, 38, 1);
+  }
+
+  &.orange {
+    color: rgba(217, 119, 6, 1);
+  }
+
+  &.green {
+    color: rgba(5, 150, 105, 1);
+  }
+
+  &.blue {
+    color: rgba(37, 99, 235, 1);
+  }
+
+  &.indigo {
+    color: rgba(79, 70, 229, 1);
+  }
+
+  &.purple {
+    color: rgba(124, 58, 237, 1);
+  }
+
+  &.pink {
+    color: rgba(219, 39, 119, 1);
+  }
+
+  &.default {
+
+  }
+
+}
+
+
 @keyframes progress {
   from {background-color: lightgrey;}
   to {background-color: black;}

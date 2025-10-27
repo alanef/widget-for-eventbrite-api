@@ -15,13 +15,13 @@ $data->template_loader->get_template_part( 'paginate_links_top' . $data->event->
     <section <?php echo $data->utilities->get_section_attrs( $data ); ?>>
 		<?php
 		$data->args['readmore'] = false;
-		if ( false !== $data->events && $data->events->have_posts() ) {
-			while ( $data->events->have_posts() ) {
-				$data->events->the_post();
-				$data->event->booknow  = $data->utilities->get_booknow_link( $data->args );
-				$data->event->cta      = $data->utilities->get_cta( $data->args );
-				$data->event->classes  = $data->utilities->get_event_classes();
-				$data->event->classes  = ' ' . $data->event->cta->availability_class;
+		if ( ( $data->events->post_count ?? 0 ) > 0  ) {
+			foreach ( $data->events->posts as $event ) {
+				$data->utilities->set_event( $event );
+				$data->event->booknow = $data->utilities->get_booknow_link( $data->args );
+				$data->event->cta     = $data->utilities->get_cta( $data->args );
+				$data->event->classes = $data->utilities->get_event_classes( $data->args );
+				$data->event->classes = ' ' . $data->event->cta->availability_class;
 				$data->template_loader->get_template_part( 'loop_card' );
 			}
 		} else {

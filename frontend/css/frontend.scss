@@ -47,7 +47,9 @@ section.wfea.rows {
     }
   }
 }
+
 /* <fs_premium_only> */
+
 /* cal tag */
 .wfea-calendar-tag {
   top: 0;
@@ -57,7 +59,7 @@ section.wfea.rows {
   background: #ededef;
   background: -webkit-gradient(linear, left top, left bottom, from(#ededef), to(#ccc));
   background: -moz-linear-gradient(top, #ededef, #ccc);
-  font: bold 30px/60px "Lucida Sans Unicode", Arial Black, Arial, Helvetica, sans-serif;
+  font: bold 30px/60px "Lucida Sans Unicode", "Arial Black", Arial, Helvetica, sans-serif;
   text-align: center;
   color: #000;
   text-shadow: #fff 0 1px 0;
@@ -168,6 +170,55 @@ section.wfea.rows {
   padding: 0;
   margin: 0;
 }
+.wfea-help-tip {
+  z-index: 999999;
+  visibility: hidden;  /* hide it initially */
+  opacity: 0;
+  transition: visibility 0s, opacity 0.2s linear;   /* set duration and type of transition */
+  text-align: left;
+  padding: 0px;
+  min-width: 220px;
+  max-width: 330px;
+  position: absolute;
+  border-radius: 3px;
+  box-shadow: 1px 1px 1px rgb(0 0 0 / 20%);
+  right: -200px;
+
+  font-size: 16px;
+  line-height: 1.4;
+  border-width: 1px;
+  border-style: solid;
+  background-color: #E5F6FE;
+  border-color: #ADD9ED;
+  color: #5E99BD;
+  .wfea-help-tip-titlebar {
+    background-color: #D0E9F5;
+    padding: 5px;
+    font-weight: bold;
+  }
+  .wfea-help-tip-content {
+    padding: 5px;
+    font-size: 14px;
+  }
+}
+.fc-list-item-title {
+  position: relative;
+}
+.fc-event-container:hover, .fc-list-item-title:hover {
+  .wfea-help-tip {
+    visibility: visible;  /* make it visible */
+    opacity: 1;
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+.fc-scroller {
+  overflow: visible visible!important;
+}
+
+
 
 /* search box */
 .wfea-search__wrap {
@@ -184,6 +235,32 @@ section.wfea.rows {
     .wfea-search__submit  {
       border: 1px solid #ced4da;
       margin: 0;
+    }
+  }
+  
+  /* Calendar Search Specific Styles */
+  .wfea-search__form-calendar {
+    .wfea-search_cal__submit {
+      background-color: #3788d8;
+      color: #fff;
+      border-color: #3788d8;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      
+      &:hover {
+        background-color: #2c6db2;
+      }
+    }
+    
+    .wfea-search__input {
+      border-color: #ddd;
+      padding: 8px 12px;
+      transition: border-color 0.3s ease;
+      
+      &:focus {
+        border-color: #3788d8;
+        outline: none;
+      }
     }
   }
 }

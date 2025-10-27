@@ -1,0 +1,88 @@
+.elementor-editor-active .wfea-preview {
+  &.wfea-elementor-widget {
+    background-color: #fff; /* Override .elementor-element.elementor-widget-empty { background-color: rgba(213, 216, 220, 0.8); } */
+  }
+}
+
+.wfea-preview {
+  section.wfea {
+    .wfea-header {
+      font-size: 1rem;
+    }
+  }
+}
+
+/* Card */
+.wfea-blocks {
+  &.wfea-card {
+    .wfea-card-item {
+      .eaw-content-wrap .eaw-content-block h3 {
+        text-align: center;
+      }
+      .eaw-content-wrap .eaw-content-block .eaw-time {
+        font-size: 13px;
+      }
+      .eaw-content-wrap .eaw-calendar-date .eaw-calendar-date-month,
+      .eaw-content-wrap .eaw-calendar-date .eaw-calendar-date-day {
+     //   background: rgba(0,0,0,0.1);
+      }
+    }
+
+    .wfea-card-list-item {
+    //  max-width: 30rem !important; /* Width customized so that the longest time range string could fit into a single line on wide screens. */
+    }
+  }
+}
+
+/* Venue */
+.wfea-blocks {
+  &.wfea-venue {
+    .wfea-venue__content-wrap {
+      margin: auto 0;
+    }
+
+    .wfea-venue__content-group,
+    .wfea-venue__venue_name,
+    .wfea-venue__title {
+      margin: 1rem 0;
+    }
+
+    .wfea-venue__content-group .wfea-venue__date-time.eaw-time {
+      font-size: 16px;
+    }
+  
+    .wfea-venue__cta-wrap {
+      .wfea-venue__availability,
+      .wfea-venue__prices {
+        text-align: right;
+      }
+
+      .wfea-button.book-now__link{
+        padding: 10px;
+      }
+    }
+  }
+}
+
+/* One/Standard Layout */
+.wfea-blocks {
+  .wfea-1__booknow .wfea-button.book-now__link {
+    padding: 10px;
+    text-align: center;
+  }
+  &.wfea-1 article {
+    &:hover {
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    }
+    .wfea-group figure img.wp-post-image {
+      max-height: 400px;
+      width: auto;
+    }
+    .wfea-1__hero {
+      & > figure {
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
+}

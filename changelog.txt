@@ -1,3 +1,156 @@
+= 6.4.1 =
+* Modernize build and release process with GitHub Actions automation
+* Replace gulp-based build with composer scripts and wp-cli dist-archive
+* Add automated quality checks (PHP 7.4-8.3 compatibility, PHPCS, security)
+* Add automated Freemius deployment with free version sync
+* Add WordPress Plugin Check integration
+* Improve build performance and maintainability
+
+= 6.4.0 =
+* Add support for Eventbrite Collections - filter events by collection_id (Pro only)
+* Fix undefined $events variable warning in build_event_array()
+* Add automatic start_date_range_start when end date is in future
+
+= 6.3.11 =
+* Fix Elementor widget thumbnail display issue where original (uncropped) images were not showing correctly on frontend
+
+= 6.3.10 =
+* Add venue_name option to short_date layout
+* Add overflow hidden to wfea-fullcalendar to stop issues in some themes
+
+= 6.3.9 =
+* Fix PHP syntax errors in API key settings that could cause fatal errors
+* Add robust handling for various API key storage formats during migration
+* Fix incorrect logical operator syntax in settings validation
+
+= 6.3.8 =
+* Fix issue with long description modal title display (Pro only)
+* Improve trial mode messaging to clarify payment status and trial period
+
+= 6.3.7 =
+* Fix TypeError when migrating API key settings from pre-6.0 versions
+* Fix broken API key format conversion that could leave settings in invalid state
+
+= 6.3.6 =
+Fix issue with long_description_modal ( Pro Only )
+
+= 6.3.5 =
+* re-enable cache
+
+= 6.3.4 =
+* fix issue with  continuation when start dates specified
+
+= 6.3.3 =
+* cater for upcoming Eventbrite API change
+
+= 6.3.2 =
+* Fix issue in Elementor widget where  image display off is ignored
+* Add 'except' logic  to  tags filter ( Pro only )
+
+= 6.3.1 =
+* Fix issue where calendar sometimes shows no data ( Pro only )
+
+= 6.3 =
+* Implement fast calendar rendering ( Pro only )
+* Fix calendar search for Elementor widgets ( Pro only )
+* Fix calendar search for shortcode renders ( Pro only )
+* Add support for thumb_original in calendar views with lazy loading ( Pro only )
+
+= 6.2.6 =
+* Fix calendar titles ( Pro only )
+
+= 6.2.5 =
+*  Add support-config.json to allow support data to be sent to support
+
+= 6.2.4 =
+* Fix loop when specifying content=true in shortcode
+
+= 6.2.3 =
+* Fix issues from WP6.8 fix
+
+= 6.2.2 =
+Fix multiple issues with WP 6.8 compatability
+
+= 6.2.1 =
+* Fix issue with wizard
+
+= 6.2 =
+* Improve cache handling for long description modal ( Pro only feature )
+
+= 6.1.12 =
+* Pass args to date filters
+
+= 6.1.11 =
+* Update Libraries
+
+= 6.1.10 =
+* Fix issue with private events and Elementor widget ( Pro Only )
+
+= 6.1.9 =
+* Fix issue with long description modal ( Pro Only )
+
+= 6.1.8 =
+* improve consistency of display of warnings when layout not in the current plan
+
+= 6.1.7 =
+* update tested 6.7
+* upgrade freemius library
+
+= 6.1.6 =
+* reduce scope of translation functions to avoid conflict with WP bakery
+
+= 6.1.5 =
+* create even more stability of options
+
+= 6.1.4 =
+* create more stability of options
+
+= 6.1.3 =
+* add default arg to get_event_classes__premium_only for backward compatability with custom themes ( Pro Only )
+
+= 6.1.2 =
+* reset if options corrupt
+
+= 6.1.1 =
+* cater for non array options
+
+= 6.1 =
+* Fix demo link api key
+* Re-engineer EB Webhook Payloads for better host compatability ( Pro Only )
+* Improve integration with non Evenbrite events ( Pro Only )
+
+= 6.0.7 =
+* Fix conflict with WooCommerce Booking time picker
+
+= 6.0.6 =
+* Remove redundant option form Elementor and Block for Widget Layout to avoid confusion ( Pro Only )
+
+= 6.0.5 =
+* improve CSS for widget layout for mobile devices and narrow layouts
+* improve compatability of Eventbrite Webhooks to support different host configurations ( Pro Only )
+* fix grid layout with image sizes to take aspect ration of first in grid ( Pro Only )
+
+= 6.0.4 =
+* Fix issue with deprecated build_shortcode method
+
+= 6.0.3 =
+* Fix issue with calendar and status ( Pro Only )
+
+= 6.0.2 =
+* Fix issue with background processing ( Pro Only )
+
+= 6.0.1 =
+* Fix filter_by_attrs and display_private in calendar layouts ( Pro Only )
+
+= 6.0 =
+* Blocks added
+* Deprecated legacy widget removed, use the new blocks instead
+* Add Elementor Widget
+
+= 5.5.10 =
+* Improve automated cache plugin purging
+* Fix issue when Object Cache enabled
+
 = 5.5.9 =
 * Fix issue with some edge cases of next day events in calendar view ( Pro only )
 

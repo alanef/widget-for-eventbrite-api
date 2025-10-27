@@ -1,0 +1,31 @@
+{
+  "plugin_info": {
+    "name": "Display Eventbrite Events",
+    "slug": "widget-for-eventbrite-api",
+    "settings_page": "wp-admin/options-general.php?page=widget-for-eventbrite-api-settings"
+  },
+  "shortcodes": [
+    "wfea"
+  ],
+  "options_to_extract": [
+    {
+      "option_name": "widget-for-eventbrite-api-settings",
+      "label": "Main Settings",
+      "sensitive_fields": ["key"],
+      "mask_sensitive": true
+    },
+    {
+      "option_name": "widget-for-eventbrite-api-version",
+      "label": "Version"
+    },
+    {
+      "option_name": "wfea_last_webhook",
+      "label": "Last Webhook"
+    }
+  ],
+  "freemius": {
+    "global_variable": "wfea_fs",
+    "module_id": 1330,
+    "slug": "freemius-premium"
+  }
+}

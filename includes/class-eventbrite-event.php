@@ -12,6 +12,20 @@ class Eventbrite_Event {
 	public $ID; // id
 
 	/**
+	 * The id  sames as ID
+	 *
+	 * @var int
+	 */
+	public $id;
+
+	/**
+	 * The name object text and html
+	 *
+	 * @var string
+	 */
+	public $name;
+
+	/**
 	 * The event's title.
 	 *
 	 * @var string
@@ -116,7 +130,39 @@ class Eventbrite_Event {
 	 */
 	public $format;  // format->name
 
-	/**
+	public $summary;
+	public $post_excerpt;
+	public $created;
+	public $post_date_gmt;
+	public $logo;
+	public $eb_url;
+	public $status;
+	public $public;
+	public $eb_published;
+	public $organizer;
+	public $tickets;
+	public $series_id;
+	public $is_series;
+	public $is_free;
+	public $is_series_parent;
+	public $is_externally_ticketed;
+	public $online_event;
+	public $ticket_availability;
+	public $capacity;
+	public $event_sales_status;
+	public $series_dates;
+	public $music_properties;
+	public $filter;
+	public $long_description;
+	public $original_system;
+
+	public $external_ticketing;
+
+	public $tags;
+
+
+
+		/**
 	 * Constructor.
 	 *
 	 * @access public

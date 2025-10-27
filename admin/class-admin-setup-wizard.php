@@ -186,7 +186,7 @@ class Admin_Setup_Wizard {
 
                             <ol>
                                 <li>
-									<?php esc_html_e( 'Get your API Key:', 'widget-for-eventbite-api' ); ?>
+									<?php esc_html_e( 'Get your API Key:', 'widget-for-eventbrite-api' ); ?>
 									<?php esc_html_e( 'Vist this page to get your private token', 'widget-for-eventbrite-api' ) ?>
                                     <a class="wfea-link"
                                        href="https://www.eventbrite.com/platform/api-keys" target="_blank">
@@ -198,13 +198,13 @@ class Admin_Setup_Wizard {
                                     </a>
                                 </li>
                                 <li>
-									<?php esc_html_e( 'Paste or Input the API key into the box below', 'widget-for-eventbite-api' ); ?>
+									<?php esc_html_e( 'Paste or Input the API key into the box below', 'widget-for-eventbrite-api' ); ?>
                                 </li>
                             </ol>
                             <div class="api-key">
                                 <input type="text"
                                        data-nonce="<?php echo esc_attr( wp_create_nonce( "wfea_api_key" ) ); ?>"
-                                       id="widget-for-eventbrite-api-setup-api-key" name="api_key"
+                             Admin_          id="widget-for-eventbrite-api-setup-api-key" name="api_key"
                                        value=""
                                        placeholder="<?php esc_attr_e( 'Your Eventbrite private token', 'widget-for-eventbrite-api' ); ?>"
                                        required>
@@ -291,10 +291,10 @@ class Admin_Setup_Wizard {
 		}
 		//check nonce ajax
 		check_ajax_referer( 'wfea_api_key', 'nonce' );
-		$options        = get_option( 'widget-for-eventbrite-api-settings' );
-		$options['key'] = ( isset( $_POST['apikey'] ) ) ? sanitize_text_field( wp_unslash( $_POST['apikey'] ) ) : '';
+		$options        = get_option( 'widget-for-eventbrite-api-settings', Admin_Settings::option_defaults( 'widget-for-eventbrite-api-settings' ) );
+		$options['key'][0]['key'] = ( isset( $_POST['apikey'] ) ) ? sanitize_text_field( wp_unslash( $_POST['apikey'] ) ) : '';
 		update_option( 'widget-for-eventbrite-api-settings', $options );
-		echo json_encode( array( 'result' => true ) );
+		echo wp_json_encode( array( 'result' => true ) );
 		die();
 
 	}

@@ -21,15 +21,15 @@ printf( '<section %1$s class="wfea eaw-block %2$s %3$s">',
 	( ! empty( $data->utilities->get_element( 'css_class', $data->args ) ) ? '' . esc_attr( $data->utilities->get_element( 'css_class', $data->args ) ) . '' : '' ),
 	( ! empty( $data->utilities->get_element( 'style', $data->args ) ) ? '' . esc_attr( $data->utilities->get_element( 'style', $data->args ) ) . '' : '' )
 );
-if ( false !== $data->events && $data->events->have_posts() ) {
+if ( ( $data->events->post_count ?? 0) > 0 )  {
 	$data->template_loader->get_template_part( 'paginate_links_top' . $data->event->plan);
 	?>
     <div class="eaw-ulx">
-		<?php while ( $data->events->have_posts() ) {
-			$data->events->the_post();
+		<?php foreach ( $data->events->posts as $event ) {
+		    $data->utilities->set_event( $event );
 			$data->event->booknow = $data->utilities->get_booknow_link( $data->args );
 			$data->event->cta     = $data->utilities->get_cta( $data->args );
-			$data->event->classes = $data->utilities->get_event_classes();
+			$data->event->classes = $data->utilities->get_event_classes( $data->args );
 			$data->event->classes = ' ' . $data->event->cta->availability_class;
 			$data->template_loader->get_template_part( 'loop_widget' );
 		}

@@ -22,7 +22,7 @@ if ( $data->utilities->get_element( 'booknow', $data->args ) ) {
 		$data->event->booknow,
 		wp_kses_post( $cta_text ),
 		( $data->utilities->get_element( 'newtab', $data->args ) ) ? 'target="_blank"' : '',
-		esc_attr( get_the_title() ),
+		esc_attr( $data->utilities->get_event_title() ),
 		__( 'on Eventbrite for', 'widget-for-eventbrite-api' )
 	);
 	?></div><?php
