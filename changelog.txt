@@ -1,3 +1,10 @@
+= 6.5.0 =
+* Fix legacy Gold plan detection using license plan_id instead of unreliable plan name checks
+* Add helper method for detecting legacy Gold plan users (plan_id 7700)
+* Fix block editor not displaying Gold plan options correctly
+* Update all Gold plan checks throughout codebase to use new detection method
+* Ensure JavaScript receives correct Gold plan status for block editor features
+
 = 6.4.1 =
 * Modernize build and release process with GitHub Actions automation
 * Replace gulp-based build with composer scripts and wp-cli dist-archive

@@ -430,6 +430,7 @@ class Eventbrite_Manager {
             if ( !isset( $query_params['status'] ) ) {
                 $query_params['status'] = 'live';
             }
+            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Plugin's custom filter hook
             $query_params['expand'] = apply_filters(
                 'eventbrite_api_expansions',
                 'event_sales_status,ticket_availability,external_ticketing,music_properties,logo,organizer,venue,ticket_classes,format,category,subcategory',
@@ -447,6 +448,7 @@ class Eventbrite_Manager {
             if ( !isset( $query_params['time_filter'] ) ) {
                 $query_params['time_filter'] = 'current_future';
             }
+            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Plugin's custom filter hook
             $query_params['expand'] = apply_filters(
                 'eventbrite_api_expansions',
                 'series,venue,event_sales_status,ticket_availability,external_ticketing,music_properties,logo,organizer,ticket_classes,format,category,subcategory',
@@ -509,6 +511,7 @@ class Eventbrite_Manager {
         } elseif ( 'user_owned_events' === $endpoint || 'events' === $endpoint || 'collection_events' === $endpoint ) {
             $response->events = $items;
         }
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Plugin's custom action hook
         return apply_filters(
             'eventbrite_api_call_response',
             $response,

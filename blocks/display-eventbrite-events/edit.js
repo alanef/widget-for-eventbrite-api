@@ -58,6 +58,7 @@ import {Toolbar} from '@wordpress/components';
 import {Fragment} from '@wordpress/element';
 
 import '../common_scripts/attribute-filters.js';
+import './premium__only/filters.js';
 
 
 function handleClick(e) {

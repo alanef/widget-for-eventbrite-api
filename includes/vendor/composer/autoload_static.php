@@ -12,59 +12,59 @@ class ComposerStaticInite3ec9ad1c09a6355b04c1148500c931d
     );
 
     public static $prefixLengthsPsr4 = array (
-        'S' => 
+        'S' =>
         array (
             'Symfony\\Component\\Process\\' => 26,
         ),
-        'O' => 
+        'O' =>
         array (
             'OomphInc\\ComposerInstallersExtender\\' => 36,
         ),
-        'F' => 
+        'F' =>
         array (
             'Fullworks_WP_Autoloader\\' => 24,
             'Fullworks_Template_Loader_Lib\\' => 30,
         ),
-        'C' => 
+        'C' =>
         array (
             'Composer\\Installers\\' => 20,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Symfony\\Component\\Process\\' => 
+        'Symfony\\Component\\Process\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/process',
         ),
-        'OomphInc\\ComposerInstallersExtender\\' => 
+        'OomphInc\\ComposerInstallersExtender\\' =>
         array (
             0 => __DIR__ . '/..' . '/oomphinc/composer-installers-extender/src',
         ),
-        'Fullworks_WP_Autoloader\\' => 
+        'Fullworks_WP_Autoloader\\' =>
         array (
             0 => __DIR__ . '/..' . '/alanef/wp_autoloader/src',
         ),
-        'Fullworks_Template_Loader_Lib\\' => 
+        'Fullworks_Template_Loader_Lib\\' =>
         array (
             0 => __DIR__ . '/..' . '/alanef/fullworks-template-loader-lib/src',
         ),
-        'Composer\\Installers\\' => 
+        'Composer\\Installers\\' =>
         array (
             0 => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers',
         ),
     );
 
     public static $prefixesPsr0 = array (
-        'C' => 
+        'C' =>
         array (
-            'ComponentInstaller' => 
+            'ComponentInstaller' =>
             array (
                 0 => __DIR__ . '/..' . '/robloach/component-installer/src',
             ),
         ),
-        'A' => 
+        'A' =>
         array (
-            'Assetic' => 
+            'Assetic' =>
             array (
                 0 => __DIR__ . '/..' . '/kriswallsmith/assetic/src',
             ),

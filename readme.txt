@@ -2,7 +2,7 @@
 Contributors: fullworks
 Tags: eventbrite, widget, events, eventbrite widget, eventbrite shortcode
 Tested up to: 6.8
-Stable tag: 6.4.1
+Stable tag: 6.5.0
 Requires PHP: 7.4
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
@@ -18,10 +18,10 @@ In a couple of minutes you can start seeing your Eventbrite events on WordPress 
 Eventbrite is undoubtedly a very easy and powerful way to set up an events calendar, whether for free events or ticketed events.
 However, managing multiple events is an administrative burden and forgetting to update your event details manually may well cost you attendees and potential lost revenue.
 
-This free plugin a display for Eventbrite using the API feed enabling you to show your forthcoming events, just like you would do for recent posts in an easy-to-use and familiar way.
-If you want most power and features there is a Pro plugin, which you can easily try for a trial period without obligation.
+This free plugin provides a display for Eventbrite using the API feed enabling you to show your forthcoming events, just like you would do for recent posts in an easy-to-use and familiar way.
+If you want the most power and features there is a Pro plugin, which you can easily try for a trial period without obligation.
 
-The plugin has 3 methods of displaying
+The plugin has 3 methods of displaying events:
 * WordPress Block
 * Elementor Widget
 * Shortcode
@@ -30,24 +30,24 @@ The WordPress Block and Elementor widget enable you to get a realistic display o
 
 The best part? Every time you add or update an Eventbrite listing, all the changes will appear on your WordPress website - no duplication of work or coding skills required.
 
-This plugin uses the Eventbrite API to read directly from Evenbrite servers creating and event feed for Eventbrite. Don't be put off by the words API, that just means the plugin is linked directly to Eventbrite data - no rekeying, no extra data to manage, simplifying and automating your event marketing.
+This plugin uses the Eventbrite API to read directly from Eventbrite servers creating an event feed for Eventbrite. Don't be put off by the words API, that just means the plugin is linked directly to Eventbrite data - no rekeying, no extra data to manage, simplifying and automating your event marketing.
 
 See an interactive [demo here](https://fullworksplugins.com/products/widget-for-eventbrite/eventbrite-shortcode-demo/)
 
 What it looks like on your site will depend on your theme and any extra styling you want to apply. It will blend in as though the Eventbrite events are posts on your own site.
 
-Options to easily set different pre defined color styles.
+The plugin provides options to easily set different pre-defined color styles.
 
 The plugin gives you easy but powerful control over how you show Eventbrite events.
 
 Choice of two free layouts  - 'widget layout' and 'card layout'.
 
-I'm sure you will find plugin the best way of showing Eventbrite events on WordPress.
+I'm sure you will find this plugin the best way of showing Eventbrite events on WordPress.
 
-Want to learn more about the many options of the best Eventbrite plugin for WordPress? Check out the [Display Eventbrite demo page the demo page](https://fullworksplugins.com/products/widget-for-eventbrite/eventbrite-shortcode-demo/)
+Want to learn more about the many options of the best Eventbrite plugin for WordPress? Check out the [Display Eventbrite Events demo page](https://fullworksplugins.com/products/widget-for-eventbrite/eventbrite-shortcode-demo/)
 
 = PHP 8.3 compatible =
-Tested on PHP upto 8.3
+Tested on PHP up to 8.3
 
 = Features Include =
 * Custom html or text before and/or after recent posts.
@@ -55,7 +55,7 @@ Tested on PHP upto 8.3
 * Display thumbnails, with customizable size and alignment.
 * Exclude current event post
 * Read more option, with a link direct to the Eventbrite page.
-* Book now option with a link direct to the Eventbrite page..
+* Book now option with a link direct to the Eventbrite page.
 * Decide if you want Eventbrite to open in a new tab, or not
 * Easy to customise CSS.
 * Total of 22 options for the free version
@@ -73,7 +73,7 @@ Use the demo shortcode builder to see what your events may look like, this works
 = Easy to use with Elementor =
 A bespoke  Elementor Widget so you can see your efforts inside the editor.
 
-= Easy to use with teh Block Editor =
+= Easy to use with the Block Editor =
 A bespoke WordPress Block so you can see your efforts inside the editor.
 
 = The Original Widget for Eventbrite API =
@@ -115,7 +115,7 @@ Copy the key - you don't need to do anything else
 
 = Add your shortcode, Block or Elementor Widget to a page or post =
 Explore the options inside the Block Editor or Elementor Widget.
-For teh shortcode, as there are so many options we created the shortcode builder page on out site to make this easier to explore.
+For the shortcode, as there are so many options we created the shortcode builder page on our site to make this easier to explore.
 https://fullworksplugins.com/products/widget-for-eventbrite/eventbrite-shortcode-demo/
 
 
@@ -134,13 +134,13 @@ Also some page builders and other plugins allow you to set up widgets on pages.
 [all the free options are documented on this page, click to see](https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/usage/using-the-shortcode/#free)
 = I installed it and it looks ugly? =
 Every theme is different so if is close to impossible to style that will work with every theme. Normally a few simple tweaks to CSS will sort out issues like bullet points where you don't expect them, or font sizes.
-See also [the knowledge base articles her](https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/styling/)
+See also [the knowledge base articles here](https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/styling/)
 
 = Where can I find full documentation? =
 There is a detailed [knowledge base here](https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress)
 
 = How Do I Use this Plugin? =
-Go the the WP Editor and  search for Eventbrite, add the block and select the desired options.
+Go to the WP Editor and search for Eventbrite, add the block and select the desired options.
 In Elementor add a new widget Eventbrite and adjust the options as required.
 You can use a shortcode, the simplest form is [wfea]. You need to connect to your Eventbrite account to enable it to read your events, how to do that is detailed in the next FAQ.
 . If anything is not clear, why not ask in the support forum for clarification.  If you need more personalised support, then you can sign up for the Pro version right from inside your WordPress admin panel.

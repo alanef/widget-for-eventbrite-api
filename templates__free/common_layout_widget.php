@@ -25,8 +25,8 @@ if ( ( $data->events->post_count ?? 0) > 0 )  {
 	$data->template_loader->get_template_part( 'paginate_links_top' . $data->event->plan);
 	?>
     <div class="eaw-ulx">
-		<?php foreach ( $data->events->posts as $event ) {
-		    $data->utilities->set_event( $event );
+		<?php foreach ( $data->events->posts as $wfea_event ) {
+		    $data->utilities->set_event( $wfea_event );
 			$data->event->booknow = $data->utilities->get_booknow_link( $data->args );
 			$data->event->cta     = $data->utilities->get_cta( $data->args );
 			$data->event->classes = $data->utilities->get_event_classes( $data->args );

@@ -178,6 +178,7 @@ class Admin_Settings extends Admin_Pages {
             return false;
         }
         if ( has_filter( 'use_block_editor_for_post_type' ) ) {
+            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WordPress core hook
             return apply_filters( 'use_block_editor_for_post_type', true, null );
         }
         return true;

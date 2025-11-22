@@ -6,7 +6,7 @@
  * Plugin Name:       Display Eventbrite Events
  * Plugin URI:        https://fullworksplugins.com/products/widget-for-eventbrite/
  * Description:       Easily display Eventbrite events on your WordPress site
- * Version:           6.4.1
+ * Version:           6.5.0
  * Requires at least: 5.6
  * Requires PHP:      7.4
  * Author:            Fullworks
@@ -42,17 +42,17 @@ define( 'WIDGET_FOR_EVENTBRITE_API_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WIDGET_FOR_EVENTBRITE_API_PLUGIN_NAME', basename( WIDGET_FOR_EVENTBRITE_API_PLUGIN_DIR ) );
 define( 'WIDGET_FOR_EVENTBRITE_API_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'WIDGET_FOR_EVENTBRITE_API_PLUGINS_TOP_DIR', plugin_dir_path( __DIR__ ) );
-define( 'WIDGET_FOR_EVENTBRITE_API_PLUGIN_VERSION', '6.4.1' );
+define( 'WIDGET_FOR_EVENTBRITE_API_PLUGIN_VERSION', '6.5.0' );
 // Include the plugin autoloader, so we can dynamically include the classes.
 require_once WIDGET_FOR_EVENTBRITE_API_PLUGIN_DIR . 'includes/vendor/autoload.php';
 new AutoloaderPlugin(__NAMESPACE__, __DIR__);
 /** @var \Freemius $wfea_fs Freemius global object. */
 global $wfea_fs;
 /**
- * @var Freemius $freemius freemius SDK.
+ * @var Freemius $wfea_freemius freemius SDK.
  */
-$freemius = new Freemius_Config();
-$freemius->init();
+$wfea_freemius = new Freemius_Config();
+$wfea_freemius->init();
 if ( !function_exists( 'WidgetForEventbriteAPI\\run_wfea' ) ) {
     function run_wfea() {
         /** @var \Freemius $wfea_fs Freemius global object. */

@@ -211,10 +211,12 @@ class Utilities {
             $this->error_log( 'rocket_clean_post on ' . $post_id );
         }
         if ( has_action( 'cachify_remove_post_cache' ) ) {
+            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Third-party plugin integration hook
             do_action( 'cachify_remove_post_cache', $post_id );
             $this->error_log( 'cachify_remove_post_cache on ' . $post_id );
         }
         if ( has_action( 'litespeed_purge_post' ) ) {
+            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Third-party plugin integration hook
             do_action( 'litespeed_purge_post', $post_id );
             $this->error_log( 'litespeed_purge_post on ' . $post_id );
         }
@@ -227,11 +229,13 @@ class Utilities {
             $this->error_log( 'WPO_Page_Cache on ' . $post_id );
         }
         if ( has_action( 'cache_enabler_clear_page_cache_by_post' ) ) {
+            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Third-party plugin integration hook
             do_action( 'cache_enabler_clear_page_cache_by_post', $post_id );
             $this->error_log( 'cache_enabler_clear_page_cache_by_post on ' . $post_id );
         }
         if ( has_action( 'breeze_clear_all_cache' ) ) {
             // breeze seems not to have a single post clear
+            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Third-party plugin integration hook
             do_action( 'breeze_clear_all_cache' );
             $this->error_log( 'breeze_clear_all_cache - breeze does not have a single post clear triggered on ' . $post_id );
         }
@@ -868,6 +872,7 @@ class Utilities {
      */
     public function the_content() {
         $content = get_the_content( null, false, $this->get_event() );
+        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WordPress core hook
         $content = apply_filters( 'the_content', $content );
         $content = str_replace( ']]>', ']]&gt;', $content );
         $content = apply_filters( 'wfea_the_content', $content );
@@ -923,6 +928,22 @@ class Utilities {
             $prices->minimum_ticket_price->currency,
             $this->get_event()
         ) );
+    }
+
+    /**
+     * Helper function to check if user has legacy Gold plan (plan_id 7700)
+     * Gold plan was deleted but existing users should retain access
+     *
+     * @return bool
+     */
+    public static function is_legacy_gold_plan() {
+        /** @var \Freemius $wfea_fs Freemius global object. */
+        global $wfea_fs;
+        if ( !isset( $wfea_fs ) ) {
+            return false;
+        }
+        $license = $wfea_fs->_get_license();
+        return $license && isset( $license->plan_id ) && in_array( $license->plan_id, array(7700, 14687) );
     }
 
 }
