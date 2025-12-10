@@ -7,7 +7,9 @@ if ( $data->utilities->get_element( 'excerpt', $data->args ) ) {
 	?>
     <div class="eaw-summary">
 	    <?php
-	    echo wp_trim_words( apply_filters( 'eawp_excerpt', get_the_excerpt( $data->utilities->get_event() ) ), $data->utilities->get_element( 'length', $data->args ), ' &hellip;' );
+		// Use get_excerpt_text() which respects long_description setting
+		$wfea_excerpt_source = $data->utilities->get_excerpt_text();
+	    echo wp_trim_words( apply_filters( 'eawp_excerpt', $wfea_excerpt_source ), $data->utilities->get_element( 'length', $data->args ), ' &hellip;' );
 	    if ( $data->utilities->get_element( 'readmore', $data->args ) ) {
 		    printf( '<a href="%1$s" %3$s aria-label="%4$s" class="more-link">%2$s</a>',
 			    esc_url( $data->utilities->get_event_eb_url() ),

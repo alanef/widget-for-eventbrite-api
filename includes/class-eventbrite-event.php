@@ -154,6 +154,15 @@ class Eventbrite_Event {
 	public $music_properties;
 	public $filter;
 	public $long_description;
+
+	/**
+	 * The text to use for excerpt display.
+	 * Populated based on long_description setting - contains either summary or full description (HTML stripped).
+	 *
+	 * @var string
+	 */
+	public $wfea_excerpt_text;
+
 	public $original_system;
 
 	public $external_ticketing;

@@ -880,6 +880,24 @@ class Utilities {
     }
 
     /**
+     * Get the excerpt text for display, respecting long_description setting.
+     * Returns the appropriate source text (summary or full description) for truncation.
+     * Uses the dedicated wfea_excerpt_text property rather than WordPress post properties.
+     *
+     * @return string The excerpt source text (not yet truncated)
+     * @api
+     */
+    public function get_excerpt_text() {
+        $wfea_event = $this->get_event();
+        // Use new dedicated property if available
+        if ( isset( $wfea_event->wfea_excerpt_text ) && !empty( $wfea_event->wfea_excerpt_text ) ) {
+            return $wfea_event->wfea_excerpt_text;
+        }
+        // Fallback for backward compatibility
+        return ( isset( $wfea_event->summary ) ? $wfea_event->summary : '' );
+    }
+
+    /**
      * @param $args template $data->args
      * @param $url
      *
