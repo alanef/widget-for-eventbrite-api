@@ -165,9 +165,12 @@ class Eventbrite_Query extends WP_Query {
         // This provides a distinct property for excerpt display rather than overusing WP post properties
         foreach ( $this->api_results->events as $wfea_key => $wfea_event ) {
             if ( isset( $this->query_vars['long_description'] ) && true === $this->query_vars['long_description'] ) {
-                // Use full description (HTML stripped) for excerpt source
+                // Use full description (HTML stripped) with breaks between div elements
                 $wfea_full_text = ( isset( $wfea_event->long_description ) ? $wfea_event->long_description : $wfea_event->post_content );
-                $this->api_results->events[$wfea_key]->wfea_excerpt_text = wp_strip_all_tags( $wfea_full_text );
+                // Add space after block element boundaries before stripping tags
+                $wfea_full_text = str_replace( array('</div>', '</p>'), array('</div> ', '</p> '), $wfea_full_text );
+                $wfea_full_text = wp_strip_all_tags( $wfea_full_text );
+                $this->api_results->events[$wfea_key]->wfea_excerpt_text = $wfea_full_text;
             } else {
                 // Use summary for excerpt source
                 $this->api_results->events[$wfea_key]->wfea_excerpt_text = ( isset( $wfea_event->summary ) ? $wfea_event->summary : '' );
