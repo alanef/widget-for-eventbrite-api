@@ -424,11 +424,12 @@ class FrontEnd {
      */
     public function prevent_defer_on_calendar_scripts( $tag, $handle, $src ) {
         $no_defer_scripts = array(
-            $this->plugin_name . '-moment',
+            'moment',
+            // WordPress bundled moment.js
             $this->plugin_name . '-moment-tz',
             $this->plugin_name . '-fullcalendar',
             $this->plugin_name . '-locale',
-            $this->plugin_name . '-calendar'
+            $this->plugin_name . '-calendar',
         );
         if ( in_array( $handle, $no_defer_scripts, true ) ) {
             // Remove defer and async attributes that may have been added by optimizers.

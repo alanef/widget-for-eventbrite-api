@@ -95,7 +95,8 @@ class Admin {
             'ajax_url' => admin_url( 'admin-ajax.php' ),
             'spinner'  => includes_url( 'images/spinner-2x.gif' ),
         ) );
-        wp_enqueue_script( 'widget-for-eventbrite-api-moment' );
+        wp_enqueue_script( 'moment' );
+        // Use WordPress bundled moment.js
         wp_enqueue_script( 'widget-for-eventbrite-api-moment-tz' );
         wp_enqueue_script( 'widget-for-eventbrite-api-fullcalendar' );
         wp_enqueue_script( 'widget-for-eventbrite-api-locale' );
