@@ -25,6 +25,7 @@
  */
 namespace WidgetForEventbriteAPI\Includes;
 
+defined( 'ABSPATH' ) || exit;
 /**
  * Class Deactivator
  * @package WidgetForEventbriteAPI\Includes

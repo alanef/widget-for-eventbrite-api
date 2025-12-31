@@ -11,6 +11,7 @@ use WidgetForEventbriteAPI\Includes\Eventbrite_Query;
 use WidgetForEventbriteAPI\Includes\Utilities;
 use WP_Widget;
 use ActionScheduler_Store;
+defined( 'ABSPATH' ) || exit;
 class Widget extends WP_Widget {
     public function __construct() {
         $widget_ops = array(
@@ -134,7 +135,6 @@ class Widget extends WP_Widget {
         }
         ?>
 
-
         <div class="eaw-columns-2">
             <p>
                 <label for="<?php 
@@ -251,7 +251,6 @@ class Widget extends WP_Widget {
         ?></textarea>
             </p>
 
-
             <p>
                 <input id="<?php 
         echo esc_attr( $this->get_field_id( 'booknow' ) );
@@ -272,7 +271,6 @@ class Widget extends WP_Widget {
             </p>
 			<?php 
         ?>
-
 
             <p>
                 <label for="<?php 
@@ -317,7 +315,6 @@ class Widget extends WP_Widget {
                 </label>
             </p>
 
-
             <p>
                 <input id="<?php 
         echo esc_attr( $this->get_field_id( 'date' ) );
@@ -336,7 +333,6 @@ class Widget extends WP_Widget {
         ?>
                 </label>
             </p>
-
 
             <p>
                 <label for="<?php 
@@ -526,11 +522,9 @@ class Widget extends WP_Widget {
         ?>"/>
             </p>
 
-
         </div>
 
         <div class="clear"></div>
-
 
 		<?php 
     }

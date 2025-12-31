@@ -1,3 +1,8 @@
+= 6.5.4 =
+* Fix calendar not displaying when JS optimization plugins defer scripts
+* Add data attributes to prevent popular optimizers from deferring calendar scripts (SiteGround, WP Rocket, Cloudflare, Autoptimize)
+* Add runtime safety checks for moment.js and FullCalendar initialization
+
 = 6.5.3 =
 * Fix missing spacing between block elements when stripping HTML for excerpts
 

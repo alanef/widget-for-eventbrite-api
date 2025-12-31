@@ -9,6 +9,7 @@
  */
 namespace WidgetForEventbriteAPI\Admin;
 
+defined( 'ABSPATH' ) || exit;
 class Admin {
     /**
      * The ID of this plugin.

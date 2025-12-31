@@ -1,6 +1,7 @@
 <?php
-
 namespace WidgetForEventbriteAPI\Includes;
+
+defined( 'ABSPATH' ) || exit;
 
 class Eventbrite_Event {
 

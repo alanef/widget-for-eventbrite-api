@@ -18,6 +18,7 @@ use WidgetForEventbriteAPI\FrontEnd\FrontEnd;
 use WidgetForEventbriteAPI\Admin\Admin_Settings;
 use WidgetForEventbriteAPI\Admin\Admin_Setup_Wizard;
 use WidgetForEventbriteAPI\Shortcodes\Shortcodes;
+defined( 'ABSPATH' ) || exit;
 /**
  * Class Core
  *
@@ -231,6 +232,13 @@ class Core {
         );
         add_action( 'wp_enqueue_scripts', array($plugin_public, 'enqueue_styles') );
         add_action( 'wp_enqueue_scripts', array($plugin_public, 'enqueue_scripts') );
+        // Prevent JS optimizers from deferring calendar scripts (runs late to override optimizer filters).
+        add_filter(
+            'script_loader_tag',
+            array($plugin_public, 'prevent_defer_on_calendar_scripts'),
+            999,
+            3
+        );
         add_action( 'wp_head', array($plugin_public, 'wfea_generate_meta_for_social_media'), -1 );
     }
 

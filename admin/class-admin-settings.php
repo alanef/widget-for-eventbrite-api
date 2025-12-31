@@ -9,6 +9,7 @@
 namespace WidgetForEventbriteAPI\Admin;
 
 use WidgetForEventbriteAPI\Includes\Eventbrite_Manager;
+defined( 'ABSPATH' ) || exit;
 class Admin_Settings extends Admin_Pages {
     protected $settings_page;
 
@@ -399,7 +400,6 @@ class Admin_Settings extends Admin_Pages {
                     </p>
                 </td>
             </tr>
-
 
             </tbody>
         </table>

@@ -8,6 +8,7 @@
 namespace WidgetForEventbriteAPI\Shortcodes;
 
 use WidgetForEventbriteAPI\FrontEnd\FrontEnd;
+defined( 'ABSPATH' ) || exit;
 class Shortcodes {
     /**
      * The ID of this plugin.

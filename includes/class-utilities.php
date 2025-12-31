@@ -32,6 +32,7 @@ use DateTimeZone;
 use http\Url;
 use WidgetForEventbriteAPI\Admin\Admin_Settings;
 use WP_Query;
+defined( 'ABSPATH' ) || exit;
 class Utilities {
     protected static $instance;
 

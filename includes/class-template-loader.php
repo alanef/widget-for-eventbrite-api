@@ -6,6 +6,7 @@
 namespace WidgetForEventbriteAPI\Includes;
 
 use Fullworks_Template_Loader_Lib\BaseLoader;
+defined( 'ABSPATH' ) || exit;
 /**
  * Template loader
  *

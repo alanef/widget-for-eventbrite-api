@@ -13,6 +13,7 @@ namespace {
          */
         function eventbrite_event_eb_url(  $ext = null  ) {
             return get_post()->url . $ext;
+            defined( 'ABSPATH' ) || exit;
         }
 
     }

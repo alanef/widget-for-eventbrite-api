@@ -3,6 +3,7 @@
 namespace WidgetForEventbriteAPI\Includes;
 
 use WP_Query;
+defined( 'ABSPATH' ) || exit;
 class Eventbrite_Query extends WP_Query {
     /**
      * Results from the API call. Includes up to 50 objects plus pagination info.

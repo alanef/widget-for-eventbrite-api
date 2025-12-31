@@ -1,8 +1,7 @@
 <?php
-
-
 namespace WidgetForEventbriteAPI\Admin;
 
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Class Settings

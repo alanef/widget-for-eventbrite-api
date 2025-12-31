@@ -5,6 +5,7 @@ namespace WidgetForEventbriteAPI\Blocks;
 use WidgetForEventbriteAPI\FrontEnd\FrontEnd;
 use WidgetForEventbriteAPI\Includes\Utilities;
 use WidgetForEventbriteAPI\Includes\Widgets\Elementor\Eventbrite_Widget_Elementor_Helpers;
+defined( 'ABSPATH' ) || exit;
 class Blocks {
     private $plugin_name;
 

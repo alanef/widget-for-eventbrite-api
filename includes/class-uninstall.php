@@ -8,6 +8,7 @@
  */
 namespace WidgetForEventbriteAPI\Includes;
 
+defined( 'ABSPATH' ) || exit;
 class Uninstall {
     /**
      * Uninstall specific code

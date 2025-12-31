@@ -6,6 +6,7 @@
 namespace WidgetForEventbriteAPI\Includes;
 
 use WidgetForEventbriteAPI\Admin\Admin_Settings;
+defined( 'ABSPATH' ) || exit;
 class Freemius_Config {
     public function init() {
         /** @var \Freemius $wfea_fs Freemius global object. */

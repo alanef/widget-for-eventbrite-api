@@ -6,6 +6,7 @@ namespace WidgetForEventbriteAPI\Includes;
 use WidgetForEventbriteAPI\Admin\Admin_Settings;
 use WP_Error;
 use WidgetForEventbriteAPI\Includes\Widgets\Elementor\Eventbrite_Widget_Elementor_Helpers;
+defined( 'ABSPATH' ) || exit;
 class Eventbrite_Manager {
     const API_BASE = 'https://www.eventbriteapi.com/v3/';
 

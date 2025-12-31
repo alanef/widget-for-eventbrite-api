@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Fired during plugin activation
  *
@@ -15,7 +14,7 @@
 
 namespace WidgetForEventbriteAPI\Includes;
 
-
+defined( 'ABSPATH' ) || exit;
 class Activator {
 
 	/**

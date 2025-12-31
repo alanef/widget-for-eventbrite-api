@@ -17,6 +17,7 @@ use WidgetForEventbriteAPI\Includes\Twig;
 use WidgetForEventbriteAPI\Includes\Utilities;
 use WidgetForEventbriteAPI\Shortcodes\Shortcodes;
 use WP_Block_Type_Registry;
+defined( 'ABSPATH' ) || exit;
 class FrontEnd {
     /**
      * The ID of this plugin.
@@ -406,6 +407,47 @@ class FrontEnd {
             }
         }
         return $skip;
+    }
+
+    /**
+     * Prevent JS optimizers from deferring calendar scripts.
+     *
+     * Many JS optimization plugins (SiteGround Optimizer, WP Rocket, Autoptimize, etc.)
+     * defer or async JavaScript which breaks the moment.js → FullCalendar dependency chain.
+     * This filter removes defer/async and adds data attributes that tell optimizers to skip these scripts.
+     *
+     * @param string $tag    The script tag HTML.
+     * @param string $handle The script handle.
+     * @param string $src    The script source URL.
+     *
+     * @return string Modified script tag.
+     */
+    public function prevent_defer_on_calendar_scripts( $tag, $handle, $src ) {
+        $no_defer_scripts = array(
+            $this->plugin_name . '-moment',
+            $this->plugin_name . '-moment-tz',
+            $this->plugin_name . '-fullcalendar',
+            $this->plugin_name . '-locale',
+            $this->plugin_name . '-calendar'
+        );
+        if ( in_array( $handle, $no_defer_scripts, true ) ) {
+            // Remove defer and async attributes that may have been added by optimizers.
+            $tag = str_replace( ' defer', '', $tag );
+            $tag = str_replace( ' async', '', $tag );
+            $tag = str_replace( " defer='defer'", '', $tag );
+            $tag = str_replace( ' defer="defer"', '', $tag );
+            $tag = str_replace( " async='async'", '', $tag );
+            $tag = str_replace( ' async="async"', '', $tag );
+            // Add data attributes that popular optimizers respect:
+            // - data-cfasync="false" : Cloudflare Rocket Loader
+            // - data-no-defer="1"    : SiteGround Optimizer
+            // - data-no-optimize="1" : WP Rocket / Autoptimize
+            // - data-no-minify="1"   : Various minification plugins
+            if ( strpos( $tag, 'data-cfasync' ) === false ) {
+                $tag = str_replace( ' src=', ' data-cfasync="false" data-no-defer="1" data-no-optimize="1" data-no-minify="1" src=', $tag );
+            }
+        }
+        return $tag;
     }
 
     public function register_image_size() {
