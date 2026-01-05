@@ -1,4 +1,4 @@
-= 6.5.4-beta.3 =
+= 6.5.4 =
 * Fix calendar script loading issues with Elementor and shortcodes in themes like Astra
 * Fix missing hyphen in Elementor widget calendar script handle
 * Fix moment.js handle to use WordPress bundled version
