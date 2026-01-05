@@ -1,7 +1,8 @@
-= 6.5.4 =
-* Fix calendar not displaying when JS optimization plugins defer scripts
-* Add data attributes to prevent popular optimizers from deferring calendar scripts (SiteGround, WP Rocket, Cloudflare, Autoptimize)
-* Add runtime safety checks for moment.js and FullCalendar initialization
+= 6.5.4-beta.3 =
+* Fix calendar script loading issues with Elementor and shortcodes in themes like Astra
+* Fix missing hyphen in Elementor widget calendar script handle
+* Fix moment.js handle to use WordPress bundled version
+* Remove duplicate FullCalendar bundling in block editor scripts to prevent moment.js conflicts
 
 = 6.5.3 =
 * Fix missing spacing between block elements when stripping HTML for excerpts

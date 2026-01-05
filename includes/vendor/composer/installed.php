@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'fullworks/widget-for-eventbrite-api',
-        'pretty_version' => 'v6.5.4-beta.2',
-        'version' => '6.5.4.0-beta2',
-        'reference' => '93d79f3c83a11655becb9c5e1623bbdb157ff278',
+        'pretty_version' => '6.5.4-beta.3',
+        'version' => '6.5.4.0-beta3',
+        'reference' => 'c16a5894e500348fd5d4eea401ea1fb010886504',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../../',
         'aliases' => array(),
@@ -69,9 +69,9 @@
             'dev_requirement' => false,
         ),
         'fullworks/widget-for-eventbrite-api' => array(
-            'pretty_version' => 'v6.5.4-beta.2',
-            'version' => '6.5.4.0-beta2',
-            'reference' => '93d79f3c83a11655becb9c5e1623bbdb157ff278',
+            'pretty_version' => '6.5.4-beta.3',
+            'version' => '6.5.4.0-beta3',
+            'reference' => 'c16a5894e500348fd5d4eea401ea1fb010886504',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../../',
             'aliases' => array(),
