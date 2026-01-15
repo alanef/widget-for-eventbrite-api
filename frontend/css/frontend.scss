@@ -204,16 +204,6 @@ section.wfea.rows {
 .fc-list-item-title {
   position: relative;
 }
-.fc-event-container:hover, .fc-list-item-title:hover {
-  .wfea-help-tip {
-    visibility: visible;  /* make it visible */
-    opacity: 1;
-    position: absolute;
-    bottom: calc(100% + 10px);
-    left: 50%;
-    transform: translateX(-50%);
-  }
-}
 .fc-scroller {
   overflow: visible visible!important;
 }
