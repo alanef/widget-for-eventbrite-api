@@ -37,16 +37,18 @@ class Admin_Settings extends Admin_Pages {
         switch ( $option ) {
             case 'widget-for-eventbrite-api-settings':
                 return array(
-                    'cache_clear'    => 0,
-                    'cache_duration' => 86400,
-                    'plugin-css'     => 1,
-                    'background_api' => 0,
-                    'key'            => array(array(
+                    'cache_clear'     => 0,
+                    'cache_duration'  => 86400,
+                    'plugin-css'      => 1,
+                    'background_api'  => 0,
+                    'key'             => array(array(
                         'key'   => '',
                         'label' => 'API Key 1',
                     )),
-                    'webhook'        => '',
-                    'account_type'   => 'standard',
+                    'webhook'         => '',
+                    'webhook_dir'     => '',
+                    'webhook_version' => '',
+                    'account_type'    => 'standard',
                 );
             default:
                 return false;
@@ -670,6 +672,14 @@ Additional shortcode options are available in the  paid for version<br><br>
             return $settings;
         }
         $options = get_option( 'widget-for-eventbrite-api-settings' );
+        // Preserve webhook_dir from existing options (set via AJAX, not in form)
+        if ( !empty( $options['webhook_dir'] ) && !isset( $settings['webhook_dir'] ) ) {
+            $settings['webhook_dir'] = $options['webhook_dir'];
+        }
+        // Preserve webhook_version from existing options (set via upgrade, not in form)
+        if ( !empty( $options['webhook_version'] ) && !isset( $settings['webhook_version'] ) ) {
+            $settings['webhook_version'] = $options['webhook_version'];
+        }
         if ( !isset( $settings['plugin-css'] ) ) {
             $settings['plugin-css'] = 0;
             // always set checkboxes of they dont exist

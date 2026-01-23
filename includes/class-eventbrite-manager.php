@@ -290,7 +290,12 @@ class Eventbrite_Manager {
                         ),
                     ), true ) );
                 }
-                if ( in_array( $endpoint, array('organizations', 'user_owned_events') ) ) {
+                if ( in_array( $endpoint, array(
+                    'organizations',
+                    'user_owned_events',
+                    'destination/events',
+                    'collection_events'
+                ) ) ) {
                     $cached->cached = true;
                 }
                 return $cached;

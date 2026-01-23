@@ -1,5 +1,9 @@
+= 6.5.6 =
+* Fix webhook payload URL not persisting after generation (Pro Only)
+* Fix background API transient cache not clearing on webhook or manual clear (Pro Only)
+
 = 6.5.5 =
-* Minor fix for Calendar tip position out of bounds ( Pro Only )
+* Minor fix foryes  Calendar tip position out of bounds ( Pro Only )
 = 6.5.4 =
 * Fix calendar script loading issues with Elementor and shortcodes in themes like Astra
 * Fix missing hyphen in Elementor widget calendar script handle
