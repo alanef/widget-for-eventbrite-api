@@ -170,19 +170,12 @@ class Core {
         add_action( 'wp_ajax_wfea_dismiss_notice', array($plugin_admin, 'wfea_dismiss_notice') );
         add_filter( 'site_status_tests', array($plugin_admin, 'site_status_tests') );
         add_action( 'wp_ajax_update_widget_content', array($widget_helpers, 'update_elementor_widget_content') );
-        add_action( 'wp_ajax_nopriv_update_widget_content', array($widget_helpers, 'update_elementor_widget_content') );
         add_action( 'wp_ajax_fetch_organizations_for_key', array($widget_helpers, 'get_organizations_for_key') );
-        add_action( 'wp_ajax_nopriv_fetch_organizations_for_key', array($widget_helpers, 'get_organizations_for_key') );
         add_action( 'wp_ajax_fetch_events_for_key', array($widget_helpers, 'send_events_for_key') );
-        add_action( 'wp_ajax_nopriv_fetch_events_for_key', array($widget_helpers, 'send_events_for_key') );
         add_action( 'wp_ajax_fetch_organizers_for_key', array($widget_helpers, 'send_organizers_for_key') );
-        add_action( 'wp_ajax_nopriv_fetch_organizers_for_key', array($widget_helpers, 'send_organizers_for_key') );
         add_action( 'wp_ajax_fetch_venues_options', array($widget_helpers, 'send_venues_options') );
-        add_action( 'wp_ajax_nopriv_fetch_venues_options', array($widget_helpers, 'send_venues_options') );
         add_action( 'wp_ajax_fetch_api_key_options', array($widget_helpers, 'send_api_key_options') );
-        add_action( 'wp_ajax_nopriv_fetch_api_key_options', array($widget_helpers, 'send_api_key_options') );
         add_action( 'wp_ajax_validate_date', array($widget_helpers, 'validate_date') );
-        add_action( 'wp_ajax_nopriv_validate_date', array($widget_helpers, 'validate_date') );
         add_action( 'init', function () {
             new \WidgetForEventbriteAPI\Includes\Widgets();
         } );

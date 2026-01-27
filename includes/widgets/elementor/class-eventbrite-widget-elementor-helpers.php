@@ -191,34 +191,28 @@ class Eventbrite_Widget_Elementor_Helpers {
     }
 
     public function get_organizations_for_key() {
-        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- just a look up
+        check_ajax_referer( 'wfea-nonce', 'nonce' );
+        if ( !current_user_can( 'edit_posts' ) ) {
+            wp_die( -1 );
+        }
         $token = ( !empty( $_POST['token'] ) ? sanitize_text_field( wp_unslash( $_POST['token'] ) ) : '' );
         $token = $this->utilities->map_api_index_to_key( $token );
         wp_send_json( $this->get_organizations_list( $token ) );
     }
 
     public function send_events_for_key() {
-        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- just a look up
+        check_ajax_referer( 'wfea-nonce', 'nonce' );
+        if ( !current_user_can( 'edit_posts' ) ) {
+            wp_die( -1 );
+        }
         $token = ( !empty( $_POST['token'] ) ? sanitize_text_field( wp_unslash( $_POST['token'] ) ) : $this->get_default_api_key() );
         $token = $this->utilities->map_api_index_to_key( $token );
         $args = array(
             'token' => $token,
         );
-        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- just a look up
         if ( !empty( $_POST['organizationID'] ) ) {
-            // phpcs:ignore WordPress.Security.NonceVerification.Missing -- just a look up
             $args['organization_id'] = sanitize_text_field( wp_unslash( $_POST['organizationID'] ) );
         }
-        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- just a look up
-        //if ( ! empty( $_POST['organizerID'] ) ) {
-        //"{"status_code":400,"error_description":"There are errors with your arguments: organizer_id - Unknown parameter","error":"ARGUMENTS_ERROR"}"
-        // $args['organizer_id'] = sanitize_text_field( $_POST['organizerID'] );
-        //}
-        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- just a look up
-        //if ( ! empty( $_POST['venueID'] ) ) {
-        //"{"status_code":400,"error_description":"There are errors with your arguments: organizer_id - Unknown parameter","error":"ARGUMENTS_ERROR"}"
-        // $args['venue_id'] = sanitize_text_field( $_POST['venueID'] );
-        //}
         //"{"status_code":400,"error_description":"There are errors with your arguments: organizer_id - Unknown parameter","error":"ARGUMENTS_ERROR"}"
         $events = Eventbrite_Manager::$instance->get_organizations_events( $args, false );
         if ( !is_wp_error( $events ) ) {
@@ -228,22 +222,26 @@ class Eventbrite_Widget_Elementor_Helpers {
     }
 
     public function send_organizers_for_key() {
+        check_ajax_referer( 'wfea-nonce', 'nonce' );
+        if ( !current_user_can( 'edit_posts' ) ) {
+            wp_die( -1 );
+        }
         $organizers_options = $this->get_options( 'organizer' );
         wp_send_json( $organizers_options );
         die;
     }
 
     private function get_options( $option_type ) {
-        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- just a look up
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified in calling public methods (send_organizers_for_key, send_venues_options).
         $token = ( !empty( $_POST['token'] ) ? sanitize_text_field( wp_unslash( $_POST['token'] ) ) : '' );
         $token = $this->utilities->map_api_index_to_key( $token );
         $args = array();
         if ( !empty( $token ) ) {
             $args['token'] = $token;
         }
-        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- just a look up
+        // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified in calling public methods.
         if ( !empty( $_POST['organizationID'] ) ) {
-            // phpcs:ignore WordPress.Security.NonceVerification.Missing -- just a look up
+            // phpcs:ignore WordPress.Security.NonceVerification.Missing -- nonce verified in calling public methods.
             $args['organization_id'] = sanitize_text_field( wp_unslash( $_POST['organizationID'] ) );
         }
         $events = $this->get_events_list( $args );
@@ -261,12 +259,20 @@ class Eventbrite_Widget_Elementor_Helpers {
     }
 
     public function send_venues_options() {
+        check_ajax_referer( 'wfea-nonce', 'nonce' );
+        if ( !current_user_can( 'edit_posts' ) ) {
+            wp_die( -1 );
+        }
         $venue_options = $this->get_options( 'venue' );
         wp_send_json( $venue_options );
         die;
     }
 
     public function send_api_key_options() {
+        check_ajax_referer( 'wfea-nonce', 'nonce' );
+        if ( !current_user_can( 'edit_posts' ) ) {
+            wp_die( -1 );
+        }
         wp_send_json( $this->get_api_key_options() );
     }
 
@@ -589,6 +595,9 @@ class Eventbrite_Widget_Elementor_Helpers {
      */
     public function update_elementor_widget_content() {
         check_ajax_referer( 'wfea-nonce', 'nonce' );
+        if ( !current_user_can( 'edit_posts' ) ) {
+            wp_die( -1 );
+        }
         // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- $this->utilities->sanitize_text_or_array_field() sanitizes the input
         $params = ( isset( $_POST['params'] ) ? $this->utilities->sanitize_text_or_array_field( wp_unslash( $_POST['params'] ) ) : array() );
         // strip params that are conditional
@@ -651,6 +660,9 @@ class Eventbrite_Widget_Elementor_Helpers {
 
     public function validate_date() {
         check_ajax_referer( 'wfea-nonce', 'nonce' );
+        if ( !current_user_can( 'edit_posts' ) ) {
+            wp_die( -1 );
+        }
         if ( isset( $_POST['wfea_date_value'] ) ) {
             $date = sanitize_text_field( wp_unslash( $_POST['wfea_date_value'] ) );
             if ( strtotime( $date ) === false ) {
