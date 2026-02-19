@@ -1,3 +1,9 @@
+= 6.5.8 =
+* Fix thumb_width constraint incorrectly applied to card layout
+* Fix premium-only scripts (popup, calendar) incorrectly enqueued in free admin widget preview
+* Fix encoding of special characters in Calendar List layout
+* Enable ticket availability display in short_date layout ( Pro Only )
+
 = 6.5.7 =
 * Improve security for block editor and Elementor widget controls
 

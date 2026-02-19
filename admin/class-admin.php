@@ -95,20 +95,7 @@ class Admin {
             'ajax_url' => admin_url( 'admin-ajax.php' ),
             'spinner'  => includes_url( 'images/spinner-2x.gif' ),
         ) );
-        wp_enqueue_script( 'moment' );
-        // Use WordPress bundled moment.js
-        wp_enqueue_script( 'widget-for-eventbrite-api-moment-tz' );
-        wp_enqueue_script( 'widget-for-eventbrite-api-fullcalendar' );
-        wp_enqueue_script( 'widget-for-eventbrite-api-locale' );
-        wp_enqueue_script( 'widget-for-eventbrite-api-eb-script' );
-        wp_enqueue_script(
-            $this->plugin_name . '-eb-popup',
-            WIDGET_FOR_EVENTBRITE_API_PLUGIN_URL . 'frontend/js/eb_popup.js',
-            array('jquery'),
-            $this->version,
-            false
-        );
-        do_action( 'wfea_popup_scripts_enqueued' );
+        global $wfea_fs;
         wp_enqueue_style(
             $this->plugin_name . '-frontend',
             WIDGET_FOR_EVENTBRITE_API_PLUGIN_URL . 'frontend/css/frontend.css',
@@ -116,8 +103,6 @@ class Admin {
             $this->version,
             'all'
         );
-        wp_enqueue_style( 'widget-for-eventbrite-api-fullcalendar-css' );
-        wp_enqueue_style( 'widget-for-eventbrite-api-fullcalendar-print-css' );
     }
 
     public function set_options() {
