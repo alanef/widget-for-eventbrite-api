@@ -15,20 +15,20 @@ class Freemius_Config {
             // Include Freemius SDK.
             require_once WIDGET_FOR_EVENTBRITE_API_PLUGIN_DIR . '/includes/vendor/freemius/wordpress-sdk/start.php';
             $wfea_fs = fs_dynamic_init( array(
-                'id'             => '1330',
-                'slug'           => 'widget-for-eventbrite-api',
-                'type'           => 'plugin',
-                'public_key'     => 'pk_97d4242a859ccad67940512ad19ab',
-                'is_premium'     => false,
-                'premium_suffix' => '( Pro )',
-                'has_addons'     => false,
-                'has_paid_plans' => true,
-                'trial'          => array(
+                'id'               => '1330',
+                'slug'             => 'widget-for-eventbrite-api',
+                'type'             => 'plugin',
+                'public_key'       => 'pk_97d4242a859ccad67940512ad19ab',
+                'is_premium'       => false,
+                'premium_suffix'   => '( Pro )',
+                'has_addons'       => false,
+                'has_paid_plans'   => true,
+                'trial'            => array(
                     'days'               => 14,
                     'is_require_payment' => true,
                 ),
-                'navigation'     => 'tabs',
-                'menu'           => array(
+                'navigation'       => 'tabs',
+                'menu'             => array(
                     'slug'    => 'widget-for-eventbrite-api-settings',
                     'contact' => false,
                     'support' => false,
@@ -36,7 +36,8 @@ class Freemius_Config {
                         'slug' => 'options-general.php',
                     ),
                 ),
-                'is_live'        => true,
+                'is_live'          => true,
+                'is_org_compliant' => true,
             ) );
         }
         $options = get_option( 'widget-for-eventbrite-api-settings', Admin_Settings::option_defaults( 'widget-for-eventbrite-api-settings' ) );

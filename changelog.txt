@@ -1,3 +1,7 @@
+= 6.5.9 =
+* Fix calendar date showing wrong day in non-UTC timezones (e.g. Brisbane)
+* Fix event repetition after page 5 in paginated results (Pro Only)
+
 = 6.5.8 =
 * Fix thumb_width constraint incorrectly applied to card layout
 * Fix premium-only scripts (popup, calendar) incorrectly enqueued in free admin widget preview

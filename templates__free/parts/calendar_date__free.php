@@ -9,7 +9,7 @@ if ( $data->utilities->get_element( 'date', $data->args ) ): ?>
         <?php
             $wfea_timestamp = strtotime( $data->utilities->get_event_start()->local );
         ?>
-        <div class="eaw-calendar-date-month"><?php echo wp_date('M', $wfea_timestamp); ?></div>
-        <div class="eaw-calendar-date-day"><?php echo wp_date('j', $wfea_timestamp); ?></div>
+        <div class="eaw-calendar-date-month"><?php echo date_i18n('M', $wfea_timestamp); ?></div>
+        <div class="eaw-calendar-date-day"><?php echo date_i18n('j', $wfea_timestamp); ?></div>
     </div>
 <?php endif;
