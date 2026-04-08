@@ -1,6 +1,6 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
-  "apiVersion": 2,
+  "apiVersion": 3,
   "name": "widget-for-eventbrite-api/display-eventbrite-events",
   "version": "1.0",
   "title": "Display Eventbrite Layouts",

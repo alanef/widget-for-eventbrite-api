@@ -1,3 +1,9 @@
+= 6.5.10 =
+* Fix modal popup displaying garbled markup when optimization plugins duplicate frontend scripts (Pro Only)
+* Add safety guard against corrupted AJAX responses from server cache or error handlers (Pro Only)
+* WordPress 7.0 compatibility: update block apiVersion to 3 for iframe editor support
+* Update npm dependencies to align with React 18 and latest @wordpress packages
+
 = 6.5.9 =
 * Fix calendar date showing wrong day in non-UTC timezones (e.g. Brisbane)
 * Fix event repetition after page 5 in paginated results (Pro Only)

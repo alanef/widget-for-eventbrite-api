@@ -55,24 +55,10 @@ import {usePopulation} from '../common_scripts/initial-populate-controls.jsx';
 
 import {Toolbar} from '@wordpress/components';
 
-import {Fragment} from '@wordpress/element';
+import {Fragment, useEffect, useRef} from '@wordpress/element';
 
 import '../common_scripts/attribute-filters.js';
 import './premium__only/filters.js';
-
-
-function handleClick(e) {
-    const blockWrapper = e.target.closest('.block-editor-block-list__block.wp-block-widget-for-eventbrite-api-display-eventbrite-events');
-    if (!blockWrapper) {
-        return;
-    }
-    e.preventDefault();
-    const unusedHandleSearch = applyFilters('wfea-handle-search', blockWrapper, e);
-
-
-}
-
-document.addEventListener('click', handleClick);
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -83,6 +69,7 @@ document.addEventListener('click', handleClick);
  */
 export default function Edit(props) {
     const {attributes, setAttributes} = props
+    const blockRef = useRef();
     const layouts = applyFilters('wfea-block-layouts', [], setAttributes);
     const display = applyFilters('wfea-block-display', '', setAttributes, attributes);
     const filters = applyFilters('wfea-block-filters', '', setAttributes, attributes);
@@ -94,8 +81,20 @@ export default function Edit(props) {
 
     usePopulation(setAttributes, attributes);
 
+    // Handle click events within the block for apiVersion 3 iframe compatibility
+    useEffect(() => {
+        const el = blockRef.current;
+        if (!el) return;
+        const handleClick = (e) => {
+            e.preventDefault();
+            applyFilters('wfea-handle-search', el, e);
+        };
+        el.addEventListener('click', handleClick);
+        return () => el.removeEventListener('click', handleClick);
+    }, []);
+
     return (
-        <div {...useBlockProps()}>
+        <div {...useBlockProps({ref: blockRef})}>
             {
                 <BlockControls>
                     <Toolbar>
