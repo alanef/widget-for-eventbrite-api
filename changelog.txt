@@ -1,3 +1,7 @@
+= 6.5.11 =
+* Fix Eventbrite descriptions sometimes showing the current WordPress page content instead of the event description in modal and inline content layouts (Pro Only)
+* Fix modal image alt text and details button labels to use the event title instead of the current page title (Pro Only)
+
 = 6.5.10 =
 * Fix modal popup displaying garbled markup when optimization plugins duplicate frontend scripts (Pro Only)
 * Add safety guard against corrupted AJAX responses from server cache or error handlers (Pro Only)

@@ -508,7 +508,7 @@ class FrontEnd {
         }
     }
 
-    public function wfea_the_content( $content ) {
+    public function wfea_the_content( $content, $event = null ) {
         $strip = apply_filters( 'wfea_strip_eb_inline_style', true );
         if ( true === $strip ) {
             $content = preg_replace( '/(<[^>]+) style=".*?"/i', '$1', $content );

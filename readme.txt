@@ -2,7 +2,7 @@
 Contributors: fullworks
 Tags: eventbrite, widget, events, eventbrite widget, eventbrite shortcode
 Tested up to: 7.0
-Stable tag: 6.5.10
+Stable tag: 6.5.11-beta.1
 Requires PHP: 7.4
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
@@ -46,8 +46,8 @@ I'm sure you will find this plugin the best way of showing Eventbrite events on 
 
 Want to learn more about the many options of the best Eventbrite plugin for WordPress? Check out the [Display Eventbrite Events demo page](https://fullworksplugins.com/products/widget-for-eventbrite/eventbrite-shortcode-demo/)
 
-= PHP 8.3 compatible =
-Tested on PHP up to 8.3
+= PHP 8.5 compatible =
+Tested on PHP up to 8.5
 
 = Features Include =
 * Custom html or text before and/or after recent posts.

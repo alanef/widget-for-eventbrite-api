@@ -871,13 +871,30 @@ class Utilities {
      * @return mixed|null
      * @api
      */
-    public function the_content() {
-        $content = get_the_content( null, false, $this->get_event() );
-        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WordPress core hook
-        $content = apply_filters( 'the_content', $content );
+    public function get_long_description_html() {
+        $event = $this->get_event();
+        if ( isset( $event->long_description ) && !empty( $event->long_description ) ) {
+            $content = $event->long_description;
+        } elseif ( isset( $event->post_content ) ) {
+            $content = $event->post_content;
+        } else {
+            $content = '';
+        }
+        $content = wptexturize( $content );
+        $content = convert_smilies( $content );
+        $content = convert_chars( $content );
         $content = str_replace( ']]>', ']]&gt;', $content );
-        $content = apply_filters( 'wfea_the_content', $content );
+        $content = apply_filters( 'wfea_the_content', $content, $event );
         return $content;
+    }
+
+    /**
+     * Template function to diaply content
+     * @return mixed|null
+     * @api
+     */
+    public function the_content() {
+        return $this->get_long_description_html();
     }
 
     /**
