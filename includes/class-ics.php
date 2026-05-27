@@ -1,4 +1,11 @@
 <?php
+
+namespace WidgetForEventbriteAPI\Includes;
+
+use DateTime;
+
+defined( 'ABSPATH' ) || exit;
+
 /**
  * This is free and unencumbered software released into the public domain.
  *
@@ -68,12 +75,6 @@
 /**
  * https://gist.github.com/jakebellacera/635416
  */
-
-namespace WidgetForEventbriteAPI\Includes;
-
-use DateTime;
-
-defined( 'ABSPATH' ) || exit;
 class ICS {
 	const DT_FORMAT = 'Ymd\THis\Z';
 
