@@ -353,7 +353,18 @@ class FrontEnd {
     }
 
     private function get_debug_output( $events ) {
-        return '<h2>' . esc_html__( '--- DEBUG OUTPUT ---', 'widget-for-eventbrite-api' ) . '</h2><pre>' . print_r( $events->api_results, true ) . '</pre>';
+        $output = '<h2>' . esc_html__( '--- DEBUG OUTPUT ---', 'widget-for-eventbrite-api' ) . '</h2>';
+        // A filter_by_attrs condition that cannot be parsed excludes nothing, so without this the
+        // only symptom is that the filter appears to do nothing at all.
+        if ( !empty( $events->filter_parse_errors ) ) {
+            $output .= '<h3>' . esc_html__( 'Ignored filter_by_attrs conditions', 'widget-for-eventbrite-api' ) . '</h3>';
+            $output .= '<p>' . esc_html__( 'These conditions could not be parsed and were ignored, so they excluded nothing. Check for curly quotes or a missing field:operator:value part.', 'widget-for-eventbrite-api' ) . '</p><ul>';
+            foreach ( $events->filter_parse_errors as $wfea_bad_filter ) {
+                $output .= '<li><code>' . esc_html( $wfea_bad_filter ) . '</code></li>';
+            }
+            $output .= '</ul>';
+        }
+        return $output . '<pre>' . print_r( $events->api_results, true ) . '</pre>';
     }
 
     /**

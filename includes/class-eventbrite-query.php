@@ -13,6 +13,16 @@ class Eventbrite_Query extends WP_Query {
     public $api_results;
 
     /**
+     * Conditions in `filter_by_attrs` that could not be parsed and were therefore ignored.
+     *
+     * An unparseable condition does not exclude anything, so without this the whole filter
+     * silently behaves as if it were absent. Surfaced via the `debug` shortcode attribute.
+     *
+     * @var array
+     */
+    public $filter_parse_errors = array();
+
+    /**
      * Constructor.
      *
      * Sets up the Eventbrite query.

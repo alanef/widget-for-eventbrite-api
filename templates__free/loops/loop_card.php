@@ -18,6 +18,7 @@ global $wfea_fs;
                 <?php $data->template_loader->get_template_part( 'date_widget'  ); ?>
 	            <?php $data->template_loader->get_template_part( 'venue' . $data->event->plan ); ?>
 	            <?php $data->template_loader->get_template_part( 'location' . $data->event->plan ); ?>
+	            <?php $data->template_loader->get_template_part( 'prices' . $data->event->plan ); ?>
                 <div class="eaw-buttons">
                     <?php if ( $wfea_fs->can_use_premium_code() && $data->utilities->get_element('long_description_modal', $data->args) ) {
                         $data->template_loader->get_template_part( 'full_modal_details_button' );

@@ -1,3 +1,12 @@
+= 6.6.0 =
+* Fix collection_id showing a repeating event as a single long event instead of its individual dates (Pro Only)
+* Fix series_id shortcode option returning no events (Pro Only)
+* Fix filter_by_attrs being silently ignored when the editor saved `&&` as `&amp;&amp;` - chained conditions now work however the editor stores them (Pro Only)
+* Filter conditions that cannot be parsed are now logged and listed in the debug output instead of being dropped without trace, so a filter that does nothing no longer looks like a working one (Pro Only)
+* Avoid a PHP 8 warning, and an event being wrongly shown as unavailable, when the Eventbrite API returns no ticket availability data for an event (Pro Only)
+* Show event prices on the Card and Slider layouts when Prices is enabled - previously the setting had no effect on these two layouts (Pro Only)
+* Reduce package size by excluding unused FullCalendar source/build files (src, tests, demos, tasks, plugins, locale, build config) from the distribution — only dist/ assets are loaded at runtime
+
 = 6.5.12 =
 * Fix calendar failing to load (FullCalendar styles and scripts blocked) due to packaging excluding bundled vendor assets (Pro Only)
 * Raise minimum WordPress version to 5.9

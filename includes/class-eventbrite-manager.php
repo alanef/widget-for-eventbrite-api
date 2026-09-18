@@ -150,6 +150,8 @@ class Eventbrite_Manager {
                 }
             }
         }
+        // Collections return a series as its parent record, expand to occurrences.
+        $merged_results->events = $this->expand_series_parents( $merged_results->events, $params, $force );
         // Apply status filter post-query if it was provided
         if ( $status_filter && !empty( $merged_results->events ) ) {
             $filtered_events = array();
@@ -171,6 +173,70 @@ class Eventbrite_Manager {
             $merged_results->pagination->has_more_items = false;
         }
         return $merged_results;
+    }
+
+    /**
+     * Replace any series parent events with their individual occurrences.
+     *
+     * Eventbrite's collections endpoint returns a repeating event as a single
+     * parent record whose start is the first occurrence and whose end is the
+     * last, so the front end renders one row spanning the whole run. The
+     * organisations endpoint returns the occurrences instead. This brings the
+     * collection path into line with it.
+     *
+     * @param array $events Mapped event objects.
+     * @param array $params Params to pass through to the API (token etc).
+     * @param bool  $force  Force a fresh API call.
+     *
+     * @return array
+     */
+    private function expand_series_parents( $events, $params = array(), $force = false ) {
+        if ( empty( $events ) ) {
+            return $events;
+        }
+        $expanded = array();
+        foreach ( $events as $event ) {
+            if ( empty( $event->is_series_parent ) ) {
+                $expanded[] = $event;
+                continue;
+            }
+            $children = $this->get_series_events( $event->ID, $params, $force );
+            // On any failure keep the parent so behaviour is no worse than before.
+            if ( is_wp_error( $children ) || empty( $children ) ) {
+                $expanded[] = $event;
+                continue;
+            }
+            $expanded = array_merge( $expanded, $children );
+        }
+        return $expanded;
+    }
+
+    /**
+     * Get the individual occurrences of a series.
+     *
+     * @param string $series_id Series parent event ID.
+     * @param array  $params    Params to be passed during the API call.
+     * @param bool   $force     Force a fresh API call.
+     *
+     * @return array|WP_Error Mapped event objects.
+     */
+    private function get_series_events( $series_id, $params = array(), $force = false ) {
+        // Not accepted by this endpoint (HTTP 400), and removing it here keeps
+        // the transient key independent of the status attribute.
+        unset($params['status']);
+        $results = $this->request(
+            'series_events',
+            $params,
+            $series_id,
+            $force
+        );
+        if ( is_wp_error( $results ) ) {
+            return $results;
+        }
+        if ( empty( $results ) || !property_exists( $results, 'events' ) || empty( $results->events ) ) {
+            return array();
+        }
+        return array_map( array($this, 'map_event_keys'), $results->events );
     }
 
     /**
@@ -294,7 +360,8 @@ class Eventbrite_Manager {
                     'organizations',
                     'user_owned_events',
                     'destination/events',
-                    'collection_events'
+                    'collection_events',
+                    'series_events'
                 ) ) ) {
                     $cached->cached = true;
                 }
@@ -428,6 +495,7 @@ class Eventbrite_Manager {
             'organizers'        => 'organizers/' . $object_id,
             'events'            => 'events/',
             'collection_events' => 'collections/' . $object_id . '/events',
+            'series_events'     => 'series/' . $object_id . '/events',
         );
         $endpoint_base = trailingslashit( self::API_BASE . $endpoint_map[$endpoint] );
         $endpoint_url = $endpoint_base;
@@ -463,6 +531,23 @@ class Eventbrite_Manager {
                 $object_id
             );
             $endpoint_url = $this->safe_add_query_arg( $query_params, $endpoint_url );
+        } elseif ( 'series_events' == $endpoint ) {
+            // The series events endpoint rejects `status` with a 400.
+            if ( isset( $query_params['status'] ) ) {
+                unset($query_params['status']);
+            }
+            if ( !isset( $query_params['time_filter'] ) ) {
+                $query_params['time_filter'] = 'current_future';
+            }
+            // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Plugin's custom filter hook
+            $query_params['expand'] = apply_filters(
+                'eventbrite_api_expansions',
+                'venue,event_sales_status,ticket_availability,external_ticketing,music_properties,logo,organizer,ticket_classes,format,category,subcategory',
+                $endpoint,
+                $query_params,
+                $object_id
+            );
+            $endpoint_url = $this->safe_add_query_arg( $query_params, $endpoint_url );
         } elseif ( 'organizations' == $endpoint ) {
             $url = explode( '?', esc_url_raw( $endpoint_base ) );
             $endpoint_url = $url[0];
@@ -486,7 +571,7 @@ class Eventbrite_Manager {
                     if ( !empty( $token_response->organizations ) && is_array( $token_response->organizations ) ) {
                         $items = array_merge( $items, $token_response->organizations );
                     }
-                } elseif ( 'user_owned_events' === $endpoint || 'events' === $endpoint || 'collection_events' === $endpoint ) {
+                } elseif ( 'user_owned_events' === $endpoint || 'events' === $endpoint || 'collection_events' === $endpoint || 'series_events' === $endpoint ) {
                     if ( !empty( $token_response->events ) && is_array( $token_response->events ) ) {
                         $items = array_merge( $items, $token_response->events );
                     }
@@ -514,7 +599,7 @@ class Eventbrite_Manager {
             $response = $token_response;
         } elseif ( 'organizations' === $endpoint ) {
             $response->organizations = $items;
-        } elseif ( 'user_owned_events' === $endpoint || 'events' === $endpoint || 'collection_events' === $endpoint ) {
+        } elseif ( 'user_owned_events' === $endpoint || 'events' === $endpoint || 'collection_events' === $endpoint || 'series_events' === $endpoint ) {
             $response->events = $items;
         }
         // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Plugin's custom action hook
