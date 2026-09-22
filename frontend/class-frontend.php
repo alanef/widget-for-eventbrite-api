@@ -367,10 +367,6 @@ class FrontEnd {
         return $output . '<pre>' . print_r( $events->api_results, true ) . '</pre>';
     }
 
-    /**
-     * Register the JavaScript for the public-facing side of the site.
-     *
-     */
     public function enqueue_scripts() {
         /**  @var \Freemius $wfea_fs freemius SDK. */
         global $wfea_fs;

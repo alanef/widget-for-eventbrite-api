@@ -143,6 +143,17 @@ class Eventbrite_Event {
 	public $organizer;
 	public $tickets;
 	public $series_id;
+
+	/**
+	 * Whether this event is the first occurrence of its series.
+	 *
+	 * Not produced by map_event_keys(); assigned by Eventbrite_Query when the first_of_series
+	 * option is used. Declared here because PHP 8.2 deprecates creating it dynamically, and
+	 * PHP 9 makes it an Error.
+	 *
+	 * @var bool
+	 */
+	public $series_first;
 	public $is_series;
 	public $is_free;
 	public $is_series_parent;

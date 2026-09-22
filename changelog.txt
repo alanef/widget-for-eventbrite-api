@@ -1,3 +1,10 @@
+= 6.7.0 =
+* New: option to hold back the Eventbrite embedded checkout until the visitor has given cookie consent, so no advertising or social cookies are set beforehand - works with any consent plugin supporting the WP Consent API, and Book Now links through to Eventbrite while consent is withheld (Pro Only)
+* Fix Eventbrite's script being loaded from eventbrite.com on every calendar page through a script dependency, whether or not the popup was used (Pro Only)
+* Fix corrupted markup in the How to Use settings box that broke the two-column settings layout, hiding the Save and Shortcode Builder panels
+* Fix a PHP deprecation notice filling the debug log when the first_of_series option is used, which would become a fatal error on PHP 9 (Pro Only)
+* Developers: wfea_consent_gate_enabled, wfea_consent_force_block and wfea_consent_categories filters to bypass, force or retune the consent gate, plus window.wfeaGrantConsent() for banners that do not support the WP Consent API (Pro Only)
+
 = 6.6.0 =
 * Fix collection_id showing a repeating event as a single long event instead of its individual dates (Pro Only)
 * Fix series_id shortcode option returning no events (Pro Only)

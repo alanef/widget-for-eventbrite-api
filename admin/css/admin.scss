@@ -223,3 +223,10 @@ $brand_darkgrey: #2E3744;
   from {background-color: lightgrey;}
   to {background-color: black;}
 }
+
+// The settings meta boxes size to their content, so a long description used to widen the
+// whole column until it overlapped the sidebar. Cap the text so it wraps instead. Applies to
+// every box, not just new ones - a translated string can be far longer than the English.
+.wfea-settings .form-table td p {
+  max-width: 55em;
+}

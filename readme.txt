@@ -3,7 +3,7 @@ Contributors: fullworks
 Tags: eventbrite, widget, events, eventbrite widget, eventbrite shortcode
 Requires at least: 5.9
 Tested up to: 7.1
-Stable tag: 6.6.0
+Stable tag: 6.7.0
 Requires PHP: 7.4
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
@@ -176,6 +176,7 @@ Or review a full description of all options in the free and paid for plans. [Fre
 
 
 * filter events by Eventbrite collections
+* cookie consent aware embedded checkout - nothing loads from Eventbrite, and no Eventbrite advertising or social cookies are set, until your visitor has given consent through your cookie banner. Works with any consent plugin that supports the WP Consent API, such as Complianz, CookieYes or Cookiebot
 * choice of pre built shortcode templates tested on popular themes such as Divi, Astra, OceanpWP, Enfold, Genesis and WP themes
 * pre-built calendar page template with grid layout
 * pre-built calendar view in month list format, and custom periods

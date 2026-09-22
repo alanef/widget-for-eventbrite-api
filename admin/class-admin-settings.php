@@ -41,6 +41,7 @@ class Admin_Settings extends Admin_Pages {
                     'cache_duration'  => 86400,
                     'plugin-css'      => 1,
                     'background_api'  => 0,
+                    'consent_gate'    => 0,
                     'key'             => array(array(
                         'key'   => '',
                         'label' => 'API Key 1',
@@ -240,11 +241,6 @@ class Admin_Settings extends Admin_Pages {
                     <p><?php 
         esc_html_e( 'You can also use a Shortcode if preferred.', 'widget-for-eventbrite-api' );
         ?></p>
-                </div>
-
-            </div>
-        </div>;
-						?></p>
                 </div>
 
             </div>
@@ -693,6 +689,7 @@ Additional shortcode options are available in the  paid for version<br><br>
             // always set if they dont exist
         }
         $settings['background_api'] = 0;
+        $settings['consent_gate'] = 0;
         if ( 1 == $settings['cache_clear'] ) {
             list( $display_eventbrite, $settings ) = $this->clear_cache( $settings );
         }
