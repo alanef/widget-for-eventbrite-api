@@ -1,3 +1,6 @@
+= 6.7.1 =
+* Fix fatal error on every front end page of the free plugin in 6.7.0 - a hook registered in the shared code pointed at a Pro-only method that is removed from the free build. Pro was unaffected
+
 = 6.7.0 =
 * New: option to hold back the Eventbrite embedded checkout until the visitor has given cookie consent, so no advertising or social cookies are set beforehand - works with any consent plugin supporting the WP Consent API, and Book Now links through to Eventbrite while consent is withheld (Pro Only)
 * Fix Eventbrite's script being loaded from eventbrite.com on every calendar page through a script dependency, whether or not the popup was used (Pro Only)

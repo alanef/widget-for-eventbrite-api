@@ -224,10 +224,6 @@ class Core {
             2
         );
         add_action( 'wp_enqueue_scripts', array($plugin_public, 'enqueue_styles') );
-        // Belt and braces: whatever enqueued Eventbrite's remote script, drop it on the front end
-        // while the consent gate is on. The individual enqueues are already gated, but this
-        // guarantees the outcome that matters - no request to eventbrite.com before consent.
-        add_action( 'wp_enqueue_scripts', array($plugin_public, 'dequeue_eb_script_for_consent__premium_only'), 999 );
         add_action( 'wp_enqueue_scripts', array($plugin_public, 'enqueue_scripts') );
         // Prevent JS optimizers from deferring calendar scripts (runs late to override optimizer filters).
         add_filter(
