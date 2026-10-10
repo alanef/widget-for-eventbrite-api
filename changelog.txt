@@ -1,3 +1,9 @@
+= 6.7.2 =
+* Fix the settings page refusing to save a new API key after the saved one expired (for example after an Eventbrite password change) - the key check disabled Save as soon as the page loaded and often never re-enabled it. The check is now a warning only and the key is still validated when you save
+* Fix readmore doing nothing on the Short Date layout - with the details popup turned off (long_description_modal="false") a Read More link to the Eventbrite page is now shown when readmore is on. With the popup on, its button remains the read more and is hidden with long_description_modal="false" (Pro Only)
+* Fix a stray quote mark printed after the details button, and in its accessible label, for events not from Eventbrite (Pro Only)
+* Developers: the custom layout documentation now links to a public example plugin, github.com/alanef/display-eventbrite-custom-layout-example - the previous example link returned a 404
+
 = 6.7.1 =
 * Fix fatal error on every front end page of the free plugin in 6.7.0 - a hook registered in the shared code pointed at a Pro-only method that is removed from the free build. Pro was unaffected
 

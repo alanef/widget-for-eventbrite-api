@@ -36,43 +36,6 @@
 
         $(function () {
 
-            function wfea_lookup_apikey(apikey) {
-                if (apikey) {
-                    $('#widget-for-eventbrite-api-settings-api-key').removeClass("invalid").addClass("valid");
-                    $.ajax({
-                        url: "https://www.eventbriteapi.com/v3/users/me/organizations/?token=" + apikey,
-                        statusCode: {
-                            401: function () {
-                                $('#widget-for-eventbrite-api-settings-api-key').removeClass("valid").addClass("invalid");
-                                $('.api-key-status').replaceWith('<p class="api-key-status error">' + wfea_data.StringInvalidAPI + '</p>');
-                                $("#submit").prop("disabled", true);
-                                $('.wfea-key-needed').show();
-                                $('.wfea-api-orgs').hide();
-                            }
-                        }
-                    }).then(function (data) {
-                        $("#submit").prop("disabled", false);
-                        $('.api-key-status').replaceWith('<p class="api-key-status connected">' + wfea_data.StringConnected + '</p>');
-                        let orgid = data.organizations[0].id;
-                        $('.api-key-result').empty().append('<div class="wfea-api-orgs"><h4>' + wfea_data.StringOrganisations + '</h4><ul>')
-                        var arrayLength = data.organizations.length;
-                        for (var i = 0; i < arrayLength; i++) {
-                            $('.api-key-result ul').append('<li class="api-key-org">' + data.organizations[i].name +
-                                ' ID: ' + data.organizations[i].id
-                                + '</li>');
-                        }
-                        $('.api-key-result').append('</ul></div>')
-                        $('.wfea-key-needed').hide();
-                        $('.wfea-api-orgs').show();
-                    });
-                } else {
-                    $('#widget-for-eventbrite-api-settings-api-key').removeClass("valid").addClass("invalid");
-                    $('.wfea-key-needed').show();
-                    $('.wfea-api-orgs').hide();
-                }
-            }
-
-            wfea_lookup_apikey($('#widget-for-eventbrite-api-settings-api-key').val())  // onload
             $(document).on('click', '.wfea_notice .notice-dismiss', function (event) {
                 let data = {
                     action: 'wfea_dismiss_notice',
@@ -86,11 +49,6 @@
             });
 
 
-            $('#widget-for-eventbrite-api-settings-api-key').on('input', function () {
-                let input = $(this);
-                let apikey = input.val();
-                wfea_lookup_apikey(apikey)
-            });
             $('#widget-for-eventbrite-api-setup-api-key').on('input', function () {
                 $('#wfea-wizard .api-key-result').replaceWith('<p class="api-key-result active connecting"><span class="progress"></span>' + wfea_data.StringConnecting + '</p>');
                 let input = $(this);
@@ -123,7 +81,9 @@
                 }
             });
 
-            const wfeaCheckApikey = (input, onload = false) => {
+            // The status is advisory only and never disables Save: the server validates the key
+            // on save, and blocking here left an expired saved key impossible to replace.
+            const wfeaCheckApikey = (input) => {
                 const key = input.value;
                 if (!key) {
                     return;
@@ -131,21 +91,22 @@
                 const row = $(input).closest('.wfea-api-key-row');
 
                 $.ajax({
-                    url: "https://www.eventbriteapi.com/v3/users/me/organizations/?token=" + key,
-                    statusCode: {
-                        401: function () {
-                            $(input).removeClass("valid").addClass("invalid");
-
-                            row.find('.api-key-status').replaceWith('<p class="api-key-status error">' + wfea_data.StringInvalidAPI + '</p>');
-                            $("#submit").prop("disabled", true);
-                        }
+                    url: "https://www.eventbriteapi.com/v3/users/me/organizations/?token=" + key
+                }).fail(function (jqXHR) {
+                    // Responses arrive out of order while typing; ignore any for a value since replaced.
+                    if (input.value !== key || 401 !== jqXHR.status) {
+                        return;
                     }
-                }).then(function (data) {
-                    $("#submit").prop("disabled", false);
-
+                    $(input).removeClass("valid").addClass("invalid");
+                    row.find('.api-key-status').replaceWith('<p class="api-key-status error">' + wfea_data.StringInvalidAPI + '</p>');
+                    row.find('.api-key-result').empty();
+                }).done(function (data) {
+                    if (input.value !== key) {
+                        return;
+                    }
+                    $(input).removeClass("invalid").addClass("valid");
                     row.find('.api-key-status').replaceWith('<p class="api-key-status connected">' + wfea_data.StringConnected + '</p>');
 
-                    let orgid = data.organizations[0].id;
                     row.find('.api-key-result').empty().append('<h4>' + wfea_data.StringOrganisations + '</h4>')
                     var arrayLength = data.organizations.length;
                     for (var i = 0; i < arrayLength; i++) {
@@ -180,7 +141,7 @@
             maybeToggleAddApiKeyButtonState();
 
             $('input[id^="widget-for-eventbrite-api-settings-api-key_"]').each((index, target) => {
-                wfeaCheckApikey(target, true)
+                wfeaCheckApikey(target)
             });
 
             

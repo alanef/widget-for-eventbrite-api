@@ -834,7 +834,19 @@ class Utilities {
     /**
      * This function is used when creating a plugin for a custom template
      *
-     * @link https://github.com/alanef/custom-template-example/blob/master/index.php  for example use
+     * Adds $dir/templates, $dir/templates/loops and $dir/templates/parts to the front of the
+     * template search path, so a plugin can add new layouts (templates/layout_{name}.php, used with
+     * [wfea layout="{name}"]) or override any template part of the same name.
+     *
+     * ```php
+     * add_action( 'plugins_loaded', function () {
+     *     if ( class_exists( '\WidgetForEventbriteAPI\Includes\Utilities' ) ) {
+     *         \WidgetForEventbriteAPI\Includes\Utilities::get_instance()->register_template_dirs( plugin_dir_path( __FILE__ ) );
+     *     }
+     * } );
+     * ```
+     *
+     * @link https://github.com/alanef/display-eventbrite-custom-layout-example  a complete example plugin
      *
      * @param $dir
      *
