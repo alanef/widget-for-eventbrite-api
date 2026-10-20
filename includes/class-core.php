@@ -113,6 +113,7 @@ class Core {
         }
         $this->define_component_hooks();
         $this->define_endpoints_hooks();
+        EventKiln_Source::get_instance()->hooks();
     }
 
     /**
@@ -134,7 +135,7 @@ class Core {
         $settings = new Admin_Settings($this->get_plugin_name(), $this->get_version(), $this->freemius);
         add_action( 'admin_menu', array($settings, 'settings_setup') );
         $options = get_option( 'widget-for-eventbrite-api-settings', Admin_Settings::option_defaults( 'widget-for-eventbrite-api-settings' ) );
-        if ( empty( $options['key'][0]['key'] ) ) {
+        if ( empty( $options['key'][0]['key'] ) && !EventKiln_Source::get_instance()->is_configured() ) {
             $setup = new Admin_Setup_Wizard();
             add_action( 'admin_menu', array($setup, 'settings_setup') );
         }

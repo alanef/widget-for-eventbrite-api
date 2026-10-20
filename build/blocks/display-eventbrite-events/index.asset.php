@@ -1,1 +1,1 @@
-<?php return array('dependencies' => array('jquery', 'react-jsx-runtime', 'wp-api-fetch', 'wp-block-editor', 'wp-blocks', 'wp-components', 'wp-element', 'wp-hooks', 'wp-i18n', 'wp-primitives', 'wp-server-side-render'), 'version' => '89d0f7a764e03ca692a1');
+<?php return array('dependencies' => array('jquery', 'react-jsx-runtime', 'wp-api-fetch', 'wp-block-editor', 'wp-blocks', 'wp-components', 'wp-element', 'wp-hooks', 'wp-i18n', 'wp-primitives', 'wp-server-side-render'), 'version' => '3ce07840f80a46a4d2d5');

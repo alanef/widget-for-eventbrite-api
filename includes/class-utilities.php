@@ -548,6 +548,86 @@ class Utilities {
     }
 
     /**
+     * Where Read More goes: the event page. For EventKiln events url is the ticket selector
+     * (#tickets), which is right for Book Now but not for reading more.
+     *
+     * @return string
+     * @api
+     */
+    public function get_event_details_url() {
+        if ( $this->is_eventkiln_event() && !empty( $this->get_event()->eventkiln->public_url ) ) {
+            return apply_filters( 'wfea_event_details_url', $this->get_event()->eventkiln->public_url, $this->get_event() );
+        }
+        return apply_filters( 'wfea_event_details_url', $this->get_event_eb_url(), $this->get_event() );
+    }
+
+    /**
+     * @return bool
+     * @api
+     */
+    public function is_eventkiln_event() {
+        $post = $this->get_event();
+        return isset( $post->original_system ) && 'eventkiln' === $post->original_system;
+    }
+
+    /**
+     * One of the ready-made links EventKiln sends with each event (calendar_url,
+     * google_calendar_url, outlook_calendar_url, yahoo_calendar_url, map_url), or ''.
+     *
+     * @param string $key
+     *
+     * @return string
+     * @internal
+     */
+    public function get_eventkiln_link( $key ) {
+        if ( !$this->is_eventkiln_event() || empty( $this->get_event()->eventkiln->{$key} ) ) {
+            return '';
+        }
+        return (string) $this->get_event()->eventkiln->{$key};
+    }
+
+    /**
+     * Address of a ready-made .ics file for the event, or '' when the plugin builds one itself.
+     *
+     * @return string
+     * @api
+     */
+    public function get_ics_url() {
+        return apply_filters( 'wfea_ics_url', $this->get_eventkiln_link( 'calendar_url' ), $this->get_event() );
+    }
+
+    /**
+     * Map link for the event's venue, or '' (online events, and Eventbrite events by default).
+     *
+     * @return string
+     * @api
+     */
+    public function get_map_url() {
+        return apply_filters( 'wfea_map_url', $this->get_eventkiln_link( 'map_url' ), $this->get_event() );
+    }
+
+    /**
+     * Screen reader text between the button text and the event title: "on Eventbrite for".
+     *
+     * @return string not escaped
+     * @internal
+     */
+    public function get_on_source_label() {
+        return ( $this->is_eventkiln_event() ? __( 'on EventKiln for', 'widget-for-eventbrite-api' ) : __( 'on Eventbrite for', 'widget-for-eventbrite-api' ) );
+    }
+
+    /**
+     * sprintf format for the title link's title attribute, %1$s being the event title.
+     *
+     * @return string not escaped
+     * @internal
+     */
+    public function get_link_to_label() {
+        // translators: placeholder is the event title
+        return ( $this->is_eventkiln_event() ? __( 'EventKiln link to %1$s', 'widget-for-eventbrite-api' ) : __( 'Eventbrite link to %1$s', 'widget-for-eventbrite-api' ) );
+    }
+
+    /**
      * Get event end date object
      * @filter wfea_eventbrite_event_end<br>
      *  <em>example<em><br>
@@ -661,6 +741,28 @@ class Utilities {
      */
     public function get_gcal_href( $args ) {
         return '';
+    }
+
+    /**
+     * Start and end of the current event for calendar links, in UTC (Ymd\THis\Z).
+     *
+     * Taken from start->utc / end->utc: the local times carry no offset, so labelling them
+     * UTC puts the event at the wrong time outside UTC. With no end time, one hour.
+     *
+     * @return array start, end
+     * @internal
+     */
+    public function get_calendar_utc_times() {
+        $event = $this->get_event();
+        $start = ( !empty( $event->start->utc ) ? strtotime( $event->start->utc ) : false );
+        if ( false === $start ) {
+            return array('', '');
+        }
+        $end = ( !empty( $event->end->utc ) ? strtotime( $event->end->utc ) : false );
+        if ( false === $end || $end < $start ) {
+            $end = $start + HOUR_IN_SECONDS;
+        }
+        return array(gmdate( 'Ymd\\THis\\Z', $start ), gmdate( 'Ymd\\THis\\Z', $end ));
     }
 
     /**
@@ -937,6 +1039,24 @@ class Utilities {
     private function format_booknow_link( $args, $url ) {
         $link = 'href="' . esc_url( $url ) . '"';
         return $link;
+    }
+
+    /**
+     * Address of EventKiln's checkout widget script for the current event, or '' if it has none.
+     *
+     * Taken from the event's embed_checkout_url rather than the settings, because that is the
+     * address EventKiln publishes to browsers ({base}/embed/events/{id}).
+     *
+     * @return string
+     * @internal
+     */
+    public function get_eventkiln_widget_src() {
+        $event = $this->get_event();
+        if ( empty( $event->eventkiln->embed_checkout_url ) ) {
+            return '';
+        }
+        $base = preg_replace( '#/embed/events/[^/]+/?$#', '', $event->eventkiln->embed_checkout_url );
+        return apply_filters( 'wfea_eventkiln_widget_src', $base . '/widgets/ek_widgets.js', $event );
     }
 
     /**

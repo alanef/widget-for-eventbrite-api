@@ -39,6 +39,7 @@ class Deactivator {
          * @var \Freemius $wfea_fs Object for freemius.
          */
         global $wfea_fs;
+        wp_clear_scheduled_hook( EventKiln_Source::CRON_HOOK );
     }
 
 }

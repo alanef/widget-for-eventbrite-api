@@ -9,6 +9,8 @@
 namespace WidgetForEventbriteAPI\Admin;
 
 use WidgetForEventbriteAPI\Includes\Eventbrite_Manager;
+use WidgetForEventbriteAPI\Includes\EventKiln_Source;
+use WidgetForEventbriteAPI\Includes\Utilities;
 defined( 'ABSPATH' ) || exit;
 class Admin_Settings extends Admin_Pages {
     protected $settings_page;
@@ -50,6 +52,8 @@ class Admin_Settings extends Admin_Pages {
                     'webhook_dir'     => '',
                     'webhook_version' => '',
                     'account_type'    => 'standard',
+                    'eventkiln_url'   => '',
+                    'eventkiln_key'   => '',
                 );
             default:
                 return false;
@@ -76,6 +80,19 @@ class Admin_Settings extends Admin_Pages {
             esc_html__( 'Eventbrite API Key', 'widget-for-eventbrite-api' ),
             /* Title */
             array($this, 'meta_box_4'),
+            /* Function Callback */
+            $this->settings_page_id,
+            /* Screen: Our Settings Page */
+            'normal',
+            /* Context */
+            'default'
+        );
+        add_meta_box(
+            'eventkiln',
+            /* Meta Box ID */
+            '<span><img class="wfea-ek-logo" src="' . esc_url( WIDGET_FOR_EVENTBRITE_API_PLUGIN_URL . 'admin/images/eventkiln-logo.png' ) . '" width="160" height="27" alt="EventKiln">' . esc_html__( '(optional)', 'widget-for-eventbrite-api' ) . '</span>',
+            /* Title */
+            array($this, 'meta_box_eventkiln'),
             /* Function Callback */
             $this->settings_page_id,
             /* Screen: Our Settings Page */
@@ -502,8 +519,7 @@ Additional shortcode options are available in the  paid for version<br><br>
                                     id="widget-for-eventbrite-api-settings-api-key_<?php 
             echo esc_attr( $index );
             ?>"
-                                    class="wfea-key regular-text required"
-                                    required
+                                    class="wfea-key regular-text"
                                     value="<?php 
             echo esc_attr( $key );
             ?>"
@@ -531,7 +547,7 @@ Additional shortcode options are available in the  paid for version<br><br>
                     <p class="wfea-api-key-notice">
 						<span
                                 class="description"><?php 
-        esc_html_e( 'The key is required to connect to Eventbrite', 'widget-for-eventbrite-api' );
+        esc_html_e( 'The key is required to connect to Eventbrite. Leave it empty if you only show EventKiln events.', 'widget-for-eventbrite-api' );
         ?>
 								- <a href="https://www.eventbrite.co.uk/platform/api-keys/"
                                      target="_blank"><?php 
@@ -547,6 +563,247 @@ Additional shortcode options are available in the  paid for version<br><br>
             </tbody>
         </table>
 		<?php 
+    }
+
+    public function meta_box_eventkiln() {
+        $options = get_option( 'widget-for-eventbrite-api-settings', Admin_Settings::option_defaults( 'widget-for-eventbrite-api-settings' ) );
+        $url = ( isset( $options['eventkiln_url'] ) ? $options['eventkiln_url'] : '' );
+        $key = ( isset( $options['eventkiln_key'] ) ? $options['eventkiln_key'] : '' );
+        $source = EventKiln_Source::get_instance();
+        $status = $source->get_status();
+        $cache = get_option( EventKiln_Source::CACHE_OPTION );
+        // Events fetched from a different EventKiln are not shown, so don't report them either.
+        if ( is_array( $cache ) && isset( $cache['source'] ) && $cache['source'] !== $source->get_settings()['url'] ) {
+            $cache = false;
+        }
+        $datetime = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );
+        $ek_link = function ( $path ) {
+            return add_query_arg( array(
+                'utm_source'   => 'dee',
+                'utm_medium'   => 'plugin',
+                'utm_campaign' => 'settings',
+            ), EventKiln_Source::DEFAULT_URL . $path );
+        };
+        $is_pro = $this->freemius->can_use_premium_code();
+        if ( !$source->is_configured() ) {
+            ?>
+            <div class="wfea-ek-pitch">
+                <h3><?php 
+            esc_html_e( 'Sell tickets on your own website, with or without Eventbrite', 'widget-for-eventbrite-api' );
+            ?></h3>
+                <p><?php 
+            esc_html_e( 'EventKiln is ticketing from Fullworks, the team behind Display Eventbrite Events. Connect it below and your EventKiln events appear in the layouts and calendar you already use: next to your Eventbrite events, or on their own without an Eventbrite account.', 'widget-for-eventbrite-api' );
+            ?></p>
+                <ul>
+                    <li><strong><?php 
+            esc_html_e( 'Use it alongside Eventbrite, or without it.', 'widget-for-eventbrite-api' );
+            ?></strong> <?php 
+            esc_html_e( 'Visitors see one list, in date order.', 'widget-for-eventbrite-api' );
+            ?></li>
+                    <li><strong><?php 
+            esc_html_e( 'Built for gigs and comedy nights.', 'widget-for-eventbrite-api' );
+            ?></strong> <?php 
+            esc_html_e( 'Doors and show times, line-up, age limits and "presented by" on every event.', 'widget-for-eventbrite-api' );
+            ?></li>
+                    <li><strong><?php 
+            esc_html_e( 'Repeating events.', 'widget-for-eventbrite-api' );
+            ?></strong> <?php 
+            esc_html_e( 'Set up a weekly or monthly night once. Each date sells its own tickets.', 'widget-for-eventbrite-api' );
+            ?></li>
+                    <li><strong><?php 
+            esc_html_e( 'Selling some tickets somewhere else?', 'widget-for-eventbrite-api' );
+            ?></strong> <?php 
+            esc_html_e( 'List those events too, with a link to wherever the tickets are sold (Pro plan).', 'widget-for-eventbrite-api' );
+            ?></li>
+                    <li><strong><?php 
+            esc_html_e( 'Your money, your Stripe.', 'widget-for-eventbrite-api' );
+            ?></strong> <?php 
+            esc_html_e( 'Payouts go straight to your own Stripe account. 2.5% + 30p per paid ticket in the UK (the fixed part varies by currency), and nothing on free tickets.', 'widget-for-eventbrite-api' );
+            ?></li>
+                    <li><strong><?php 
+            esc_html_e( 'Starter plan is free,', 'widget-for-eventbrite-api' );
+            ?></strong> <?php 
+            esc_html_e( 'with unlimited paid events.', 'widget-for-eventbrite-api' );
+            ?></li>
+                    <li><strong><?php 
+            esc_html_e( 'Pop-up checkout on your page,', 'widget-for-eventbrite-api' );
+            ?></strong> <?php 
+            ( $is_pro ? esc_html_e( 'included in your Pro plan.', 'widget-for-eventbrite-api' ) : esc_html_e( 'with Display Eventbrite Events Pro.', 'widget-for-eventbrite-api' ) );
+            ?></li>
+                    <li><strong><?php 
+            esc_html_e( 'QR check-in', 'widget-for-eventbrite-api' );
+            ?></strong> <?php 
+            esc_html_e( 'from any phone.', 'widget-for-eventbrite-api' );
+            ?></li>
+                </ul>
+                <p class="wfea-ek-actions">
+                    <a class="button button-primary" href="<?php 
+            echo esc_url( $ek_link( '/request-access' ) );
+            ?>" target="_blank" rel="noopener"><?php 
+            esc_html_e( 'Request access', 'widget-for-eventbrite-api' );
+            ?></a>
+                    <a href="<?php 
+            echo esc_url( $ek_link( '/wordpress' ) );
+            ?>" target="_blank" rel="noopener"><?php 
+            esc_html_e( 'Find out more', 'widget-for-eventbrite-api' );
+            ?></a>
+                    <a href="<?php 
+            echo esc_url( $ek_link( '/pricing' ) );
+            ?>" target="_blank" rel="noopener"><?php 
+            esc_html_e( 'Pricing', 'widget-for-eventbrite-api' );
+            ?></a>
+                    <a href="<?php 
+            echo esc_url( $ek_link( '/venues' ) );
+            ?>" target="_blank" rel="noopener"><?php 
+            esc_html_e( 'For venues', 'widget-for-eventbrite-api' );
+            ?></a>
+                </p>
+            </div>
+			<?php 
+        }
+        ?>
+        <p><?php 
+        ( $source->is_configured() ? esc_html_e( 'Show events from EventKiln alongside your Eventbrite events, or on their own. Leave the API key empty to turn EventKiln off.', 'widget-for-eventbrite-api' ) : esc_html_e( 'Leave the API key empty to turn EventKiln off.', 'widget-for-eventbrite-api' ) );
+        ?></p>
+        <table class="form-table">
+            <tbody>
+			<?php 
+        if ( EventKiln_Source::is_development_site() ) {
+            ?>
+                <tr valign="top">
+                    <th scope="row"><label for="wfea-eventkiln-url"><?php 
+            esc_html_e( 'EventKiln site URL', 'widget-for-eventbrite-api' );
+            ?></label></th>
+                    <td>
+                        <input type="url" class="regular-text" id="wfea-eventkiln-url"
+                               name="widget-for-eventbrite-api-settings[eventkiln_url]"
+                               placeholder="<?php 
+            echo esc_attr( EventKiln_Source::DEFAULT_URL );
+            ?>"
+                               value="<?php 
+            echo esc_attr( $url );
+            ?>"/>
+                        <p class="description"><?php 
+            printf( 
+                /* translators: %s: the EventKiln address live sites use */
+                esc_html__( 'Development sites only, for testing against another EventKiln. Leave empty to use %s, which is what live sites always use.', 'widget-for-eventbrite-api' ),
+                '<code>' . esc_html( EventKiln_Source::DEFAULT_URL ) . '</code>'
+             );
+            ?></p>
+                    </td>
+                </tr>
+			<?php 
+        }
+        ?>
+            <tr valign="top">
+                <th scope="row"><label for="wfea-eventkiln-key"><?php 
+        esc_html_e( 'EventKiln API key', 'widget-for-eventbrite-api' );
+        ?></label></th>
+                <td>
+                    <input type="password" class="regular-text" id="wfea-eventkiln-key" autocomplete="off"
+                           name="widget-for-eventbrite-api-settings[eventkiln_key]"
+                           value="<?php 
+        echo esc_attr( $key );
+        ?>"/>
+                    <p class="description"><?php 
+        ( $is_pro ? esc_html_e( 'In EventKiln, open your organisation, go to API tokens and create a token with only the events:read and webhooks permissions.', 'widget-for-eventbrite-api' ) : esc_html_e( 'In EventKiln, open your organisation, go to API tokens and create a token with only the events:read permission.', 'widget-for-eventbrite-api' ) );
+        ?>
+						<?php 
+        if ( !$source->is_configured() ) {
+            ?>
+							<?php 
+            esc_html_e( 'No account yet?', 'widget-for-eventbrite-api' );
+            ?>
+                            <a href="<?php 
+            echo esc_url( $ek_link( '/request-access' ) );
+            ?>" target="_blank" rel="noopener"><?php 
+            esc_html_e( 'Request free access to EventKiln', 'widget-for-eventbrite-api' );
+            ?></a>
+						<?php 
+        }
+        ?></p>
+					<?php 
+        $this->eventkiln_banner( $source, $status, $cache );
+        ?>
+                </td>
+            </tr>
+			<?php 
+        if ( $source->is_configured() ) {
+            ?>
+                <tr valign="top">
+                    <th scope="row"><?php 
+            esc_html_e( 'Status', 'widget-for-eventbrite-api' );
+            ?></th>
+                    <td>
+						<?php 
+            if ( is_array( $cache ) && !empty( $cache['fetched_at'] ) ) {
+                printf(
+                    /* translators: 1: organisation name 2: number of events 3: date and time */
+                    esc_html__( 'Connected to %1$s. %2$d upcoming events, last fetched %3$s.', 'widget-for-eventbrite-api' ),
+                    '<strong>' . esc_html( $cache['organisation'] ) . '</strong>',
+                    (int) count( $cache['events'] ),
+                    esc_html( wp_date( $datetime, $cache['fetched_at'] ) )
+                );
+            } else {
+                esc_html_e( 'No events fetched yet.', 'widget-for-eventbrite-api' );
+            }
+            if ( '' !== $status['last_error'] && $status['last_error_at'] >= $status['last_success'] ) {
+                echo '<br><span style="color:#b32d2e">' . esc_html( $status['last_error'] ) . '</span>';
+            }
+            ?>
+                        <p class="description"><?php 
+            esc_html_e( 'EventKiln events are refreshed in the background as often as your Eventbrite events are cached, once a day unless changed. Save these settings to refresh them now.', 'widget-for-eventbrite-api' );
+            ?></p>
+                        <p><a href="<?php 
+            echo esc_url( $source->get_settings()['url'] . '/manage' );
+            ?>" target="_blank" rel="noopener"><?php 
+            esc_html_e( 'Manage your events in EventKiln', 'widget-for-eventbrite-api' );
+            ?> &rarr;</a></p>
+                        <p class="description"><?php 
+            printf( 
+                /* translators: %s: this website's address */
+                esc_html__( 'To let visitors buy tickets in a pop-up without leaving this website (Pro, popup option), add %s in EventKiln under Settings, Checkout on your own website. If your site sends a Content Security Policy, allow the EventKiln site in script-src and frame-src.', 'widget-for-eventbrite-api' ),
+                '<code>' . esc_html( untrailingslashit( home_url( '', ( is_ssl() ? 'https' : 'http' ) ) ) ) . '</code>'
+             );
+            ?></p>
+                    </td>
+                </tr>
+				<?php 
+            /** Pro adds its EventKiln rows here. */
+            do_action( 'wfea_eventkiln_settings_rows', $source );
+        }
+        ?>
+            </tbody>
+        </table>
+		<?php 
+    }
+
+    /**
+     * The same green / red banner the Eventbrite key gets, for the EventKiln connection.
+     *
+     * A failed save keeps the previous settings, so its error (from this request's settings
+     * errors) is shown ahead of the stored status.
+     */
+    private function eventkiln_banner( $source, $status, $cache ) {
+        $message = '';
+        foreach ( get_settings_errors( 'wfea-eventkiln' ) as $error ) {
+            if ( 'error' === $error['type'] ) {
+                $message = $error['message'];
+            }
+        }
+        if ( '' === $message && $source->is_configured() && '' !== $status['last_error'] && $status['last_error_at'] >= $status['last_success'] ) {
+            $message = $status['last_error'];
+        }
+        if ( '' !== $message ) {
+            echo '<p class="api-key-status error">' . esc_html( wp_strip_all_tags( $message ) ) . '</p>';
+        } elseif ( $source->is_configured() && is_array( $cache ) && !empty( $cache['fetched_at'] ) ) {
+            printf( '<p class="api-key-status connected">%s</p>', sprintf( 
+                /* translators: 1: organisation name 2: number of events */
+                esc_html__( 'Connected to %1$s. %2$d upcoming events.', 'widget-for-eventbrite-api' ),
+                esc_html( $cache['organisation'] ),
+                (int) count( $cache['events'] )
+             ) );
+        }
     }
 
     public function meta_box_5() {
@@ -698,6 +955,28 @@ Additional shortcode options are available in the  paid for version<br><br>
         }
         flush_rewrite_rules();
         $options = get_option( 'widget-for-eventbrite-api-settings' );
+        $settings = $this->sanitize_eventkiln( $settings, $options );
+        if ( isset( $settings['key'] ) && $this->has_no_eventbrite_key( $settings['key'] ) ) {
+            // An EventKiln-only site needs no Eventbrite key, so there is nothing to validate.
+            if ( !empty( $settings['eventkiln_key'] ) ) {
+                if ( !empty( $options['key'] ) && !$this->has_no_eventbrite_key( $options['key'] ) ) {
+                    list( $display_eventbrite, $settings ) = $this->clear_cache( $settings );
+                }
+                $settings['key'] = array(array(
+                    'key'   => '',
+                    'label' => 'API Key 1',
+                ));
+                return $settings;
+            }
+            add_settings_error(
+                'wfea-api-key',
+                'wfea-api-key',
+                esc_html__( 'An Eventbrite API key or an EventKiln connection is required', 'widget-for-eventbrite-api' ),
+                'error'
+            );
+            $settings['key'] = ( isset( $options['key'] ) ? $options['key'] : $settings['key'] );
+            return $settings;
+        }
         if ( isset( $settings['key'] ) ) {
             if ( empty( $settings['key'] ) || empty( $options['key'] ) ) {
                 add_settings_error(
@@ -795,6 +1074,139 @@ Additional shortcode options are available in the  paid for version<br><br>
                 }
             }
         }
+        return $settings;
+    }
+
+    /**
+     * True when no Eventbrite key has been entered, in any of the stored formats.
+     */
+    private function has_no_eventbrite_key( $keys ) {
+        if ( is_string( $keys ) ) {
+            return '' === trim( $keys );
+        }
+        if ( !is_array( $keys ) ) {
+            return true;
+        }
+        foreach ( $keys as $key ) {
+            if ( is_array( $key ) && isset( $key['key'] ) && '' !== trim( $key['key'] ) ) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Check the EventKiln connection on save and fetch its events straight away.
+     *
+     * A connection that fails its check is not saved, so a typo never replaces a working setup.
+     * Saving again with a working connection refreshes the events, which doubles as "refresh now".
+     */
+    private function sanitize_eventkiln( $settings, $options ) {
+        // The URL field only exists on development sites. Everywhere else nothing is stored and
+        // EventKiln_Source::effective_url() gives eventkiln.com.
+        $old_stored = ( isset( $options['eventkiln_url'] ) ? $options['eventkiln_url'] : '' );
+        $old_key = ( isset( $options['eventkiln_key'] ) ? $options['eventkiln_key'] : '' );
+        $submitted = ( EventKiln_Source::is_development_site() && isset( $settings['eventkiln_url'] ) ? trim( $settings['eventkiln_url'] ) : '' );
+        $stored = EventKiln_Source::sanitize_url( $submitted );
+        $old_url = EventKiln_Source::effective_url( $old_stored );
+        $url = EventKiln_Source::effective_url( $stored );
+        $key = ( isset( $settings['eventkiln_key'] ) ? trim( sanitize_text_field( $settings['eventkiln_key'] ) ) : '' );
+        $source = EventKiln_Source::get_instance();
+        if ( '' !== $submitted && '' === $stored ) {
+            add_settings_error(
+                'wfea-eventkiln',
+                'wfea-eventkiln-url',
+                esc_html__( 'The EventKiln site URL is not a valid address. The EventKiln settings were not saved.', 'widget-for-eventbrite-api' ),
+                'error'
+            );
+            $settings['eventkiln_url'] = $old_stored;
+            $settings['eventkiln_key'] = $old_key;
+            return $settings;
+        }
+        // Pro's EventKiln webhooks checkbox: on unless turned off.
+        if ( isset( $settings['eventkiln_webhooks'] ) ) {
+            $settings['eventkiln_webhooks'] = (int) (bool) $settings['eventkiln_webhooks'];
+        } else {
+            $settings['eventkiln_webhooks'] = ( isset( $options['eventkiln_webhooks'] ) ? (int) $options['eventkiln_webhooks'] : 1 );
+        }
+        if ( '' === $key ) {
+            if ( '' !== $old_key ) {
+                $source->forget();
+                Utilities::get_instance()->clear_all_caches_for_posts_with_shortcode();
+            }
+            $settings['eventkiln_url'] = $stored;
+            $settings['eventkiln_key'] = '';
+            /** Fires after the EventKiln settings are checked, before they are stored. */
+            do_action(
+                'wfea_eventkiln_settings_saved',
+                $url,
+                '',
+                $settings
+            );
+            return $settings;
+        }
+        $organisation = $source->get_organisation( $url, $key );
+        if ( is_wp_error( $organisation ) ) {
+            add_settings_error(
+                'wfea-eventkiln',
+                'wfea-eventkiln-failed',
+                sprintf( 
+                    /* translators: %s: reason from EventKiln */
+                    esc_html__( 'The EventKiln settings were not saved: %s', 'widget-for-eventbrite-api' ),
+                    $organisation->get_error_message()
+                 ),
+                'error'
+            );
+            $settings['eventkiln_url'] = $old_stored;
+            $settings['eventkiln_key'] = $old_key;
+            return $settings;
+        }
+        $settings['eventkiln_url'] = $stored;
+        $settings['eventkiln_key'] = $key;
+        $abilities = ( isset( $organisation['token_abilities'] ) && is_array( $organisation['token_abilities'] ) ? $organisation['token_abilities'] : array() );
+        if ( array_diff( $abilities, array('events:read', 'webhooks') ) ) {
+            add_settings_error(
+                'wfea-eventkiln',
+                'wfea-eventkiln-abilities',
+                esc_html__( 'This EventKiln API key can do more than read events. It works, but for safety create one with only the events:read permission (and webhooks, in Pro).', 'widget-for-eventbrite-api' ),
+                'warning'
+            );
+        }
+        if ( $url !== $old_url ) {
+            $source->forget();
+        }
+        $refreshed = $source->refresh( $url, $key );
+        if ( is_wp_error( $refreshed ) ) {
+            add_settings_error(
+                'wfea-eventkiln',
+                'wfea-eventkiln-fetch',
+                sprintf( 
+                    /* translators: %s: reason from EventKiln */
+                    esc_html__( 'Connected to EventKiln, but fetching events failed: %s', 'widget-for-eventbrite-api' ),
+                    $refreshed->get_error_message()
+                 ),
+                'warning'
+            );
+        } else {
+            $cache = get_option( EventKiln_Source::CACHE_OPTION );
+            add_settings_error(
+                'wfea-eventkiln',
+                'wfea-eventkiln-ok',
+                sprintf( 
+                    /* translators: 1: organisation name 2: number of events */
+                    esc_html__( 'Connected to EventKiln as %1$s and fetched %2$d upcoming events.', 'widget-for-eventbrite-api' ),
+                    esc_html( ( isset( $organisation['name'] ) ? $organisation['name'] : '' ) ),
+                    ( is_array( $cache ) ? count( $cache['events'] ) : 0 )
+                 ),
+                'success'
+            );
+        }
+        do_action(
+            'wfea_eventkiln_settings_saved',
+            $url,
+            $key,
+            $settings
+        );
         return $settings;
     }
 

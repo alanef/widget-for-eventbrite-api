@@ -4,6 +4,7 @@ namespace WidgetForEventbriteAPI\Includes\Widgets\Elementor;
 
 use WidgetForEventbriteAPI\Admin\Admin_Settings;
 use WidgetForEventbriteAPI\Includes\Eventbrite_Manager;
+use WidgetForEventbriteAPI\Includes\EventKiln_Source;
 use WidgetForEventbriteAPI\Includes\Utilities;
 defined( 'ABSPATH' ) || die;
 /**
@@ -506,6 +507,22 @@ class Eventbrite_Widget_Elementor_Helpers {
                 ),
             ),
         );
+        // Only worth offering once there is a second source to choose from.
+        if ( EventKiln_Source::get_instance()->is_configured() ) {
+            $controls_meta['selection']['free'][] = array(
+                'name'  => 'wfea_source',
+                'label' => __( 'Show Events From', 'widget-for-eventbrite-api' ),
+                'type'  => 'select2',
+                'args'  => array(
+                    'options' => array(
+                        'all'        => __( 'Eventbrite and EventKiln', 'widget-for-eventbrite-api' ),
+                        'eventbrite' => __( 'Eventbrite only', 'widget-for-eventbrite-api' ),
+                        'eventkiln'  => __( 'EventKiln only', 'widget-for-eventbrite-api' ),
+                    ),
+                    'default' => 'all',
+                ),
+            );
+        }
         return $controls_meta;
     }
 

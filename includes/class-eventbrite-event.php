@@ -181,6 +181,12 @@ class Eventbrite_Event {
 
 	public $tags;
 
+	// Music line-up, from Eventbrite's performances endpoint or EventKiln's lineup.
+	public $performances;
+
+	// EventKiln-only details (id, public_url, checkout_url, embed_checkout_url, checkout_mode).
+	public $eventkiln;
+
 
 
 		/**

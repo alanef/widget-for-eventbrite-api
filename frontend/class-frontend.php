@@ -13,6 +13,7 @@ use WidgetForEventbriteAPI\Admin\Admin_Settings;
 use WidgetForEventbriteAPI\Includes\Template_Loader;
 use WidgetForEventbriteAPI\Includes\ICS;
 use WidgetForEventbriteAPI\Includes\Eventbrite_Query;
+use WidgetForEventbriteAPI\Includes\EventKiln_Source;
 use WidgetForEventbriteAPI\Includes\Twig;
 use WidgetForEventbriteAPI\Includes\Utilities;
 use WidgetForEventbriteAPI\Shortcodes\Shortcodes;
@@ -91,9 +92,18 @@ class FrontEnd {
             'thumb_width'    => 300,
             'widgetwrap'     => 'true',
             'api_key'        => '',
+            'source'         => 'all',
         );
         // Allow plugins/themes developer to filter the default arguments.
         return apply_filters( 'eawp_shortcode_default_args', $defaults );
+    }
+
+    /**
+     * Which systems a list shows events from: all (the default), eventbrite or eventkiln.
+     */
+    public static function sanitize_source( $source ) {
+        $source = strtolower( trim( (string) $source ) );
+        return ( in_array( $source, array('eventbrite', 'eventkiln'), true ) ? $source : 'all' );
     }
 
     public static function get_cal_locale() {
@@ -184,6 +194,7 @@ class FrontEnd {
         $atts['readmore'] = $this->atts_bool( $sc_atts['readmore'] );
         $atts['readmore_text'] = wp_kses_post( urldecode( $sc_atts['readmore_text'] ) );
         $atts['status'] = sanitize_text_field( $sc_atts['status'] );
+        $atts['source'] = self::sanitize_source( $sc_atts['source'] );
         $atts['thumb'] = $this->atts_bool( $sc_atts['thumb'] );
         $atts['thumb_align'] = sanitize_text_field( $sc_atts['thumb_align'] );
         $atts['thumb_default'] = esc_url( $sc_atts['thumb_default'] );
@@ -241,6 +252,10 @@ class FrontEnd {
                 }
             }
         }
+        // Blocks and Elementor arrive here without sanitize_atts(), so check it again.
+        if ( isset( $atts['source'] ) && 'all' !== self::sanitize_source( $atts['source'] ) ) {
+            $query['source'] = self::sanitize_source( $atts['source'] );
+        }
         if ( !empty( $atts['status'] ) ) {
             $atts['status'] = strtolower( $atts['status'] );
             $atts['status'] = str_replace( 'cancelled', 'canceled', $atts['status'] );
@@ -295,6 +310,7 @@ class FrontEnd {
         $atts['readmore'] = $this->atts_bool( $sc_atts['readmore'] );
         $atts['readmore_text'] = wp_kses_post( urldecode( $sc_atts['readmore_text'] ) );
         $atts['status'] = sanitize_text_field( $sc_atts['status'] );
+        $atts['source'] = self::sanitize_source( $sc_atts['source'] );
         $atts['thumb'] = $this->atts_bool( $sc_atts['thumb'] );
         $atts['thumb_align'] = sanitize_text_field( $sc_atts['thumb_align'] );
         $atts['thumb_default'] = esc_url( $sc_atts['thumb_default'] );
@@ -307,6 +323,10 @@ class FrontEnd {
             'limit'    => $atts['limit'],
             'layout'   => $atts['layout'],
         );
+        // Blocks and Elementor arrive here without sanitize_atts(), so check it again.
+        if ( isset( $atts['source'] ) && 'all' !== self::sanitize_source( $atts['source'] ) ) {
+            $query['source'] = self::sanitize_source( $atts['source'] );
+        }
         if ( !empty( $atts['status'] ) ) {
             $atts['status'] = strtolower( $atts['status'] );
             $atts['status'] = str_replace( 'cancelled', 'canceled', $atts['status'] );

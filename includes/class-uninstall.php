@@ -18,6 +18,7 @@ class Uninstall {
         delete_option( 'widget-for-eventbrite-api-settings' );
         delete_option( 'wfea_transients' );
         delete_option( 'widget-for-eventbrite-api-version' );
+        EventKiln_Source::get_instance()->forget();
     }
 
 }

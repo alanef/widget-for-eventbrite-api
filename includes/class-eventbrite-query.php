@@ -76,7 +76,16 @@ class Eventbrite_Query extends WP_Query {
         // remove paged if a search query
         // Set any required parameters for the API request based on the query vars.
         $params = $this->set_api_params();
-        for ($i = 1; $i <= 5; $i++) {
+        // An EventKiln-only site has no Eventbrite key, so there is nothing to ask Eventbrite for.
+        // Without this every query would fail with the missing key error, five times over.
+        // A list set to source="eventkiln" doesn't ask Eventbrite either.
+        $eventbrite_off = empty( $params['token'] ) && '' === EventKiln_Source::default_eventbrite_key() && EventKiln_Source::get_instance()->is_configured() || isset( $this->query_vars['source'] ) && 'eventkiln' === $this->query_vars['source'] || $this->only_eventkiln_ids();
+        if ( $eventbrite_off ) {
+            $this->api_results = (object) array(
+                'events' => array(),
+            );
+        }
+        for ($i = 1; $i <= 5 && !$eventbrite_off; $i++) {
             $this->api_results = Eventbrite_Manager::$instance->get_organizations_events( $params );
             if ( !is_wp_error( $this->api_results ) ) {
                 break;
@@ -167,11 +176,30 @@ class Eventbrite_Query extends WP_Query {
      *
      * @access protected
      */
+    /**
+     * True when the query asks for specific events and every one is an EventKiln one, so
+     * there is nothing to ask Eventbrite for (and get_single_event() would fail on "ek-4").
+     */
+    protected function only_eventkiln_ids() {
+        if ( empty( $this->query_vars['ID'] ) ) {
+            return false;
+        }
+        foreach ( explode( ',', $this->query_vars['ID'] ) as $id ) {
+            if ( 0 !== strpos( trim( $id ), EventKiln_Source::ID_PREFIX ) ) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     protected function post_api_filters() {
         /**
          * @var \Freemius $wfea_fs Object for freemius.
          */
         global $wfea_fs;
+        // Merge EventKiln events after the per-event Eventbrite calls above, which would otherwise
+        // send EventKiln IDs to Eventbrite, and before every filter, sort and page below.
+        $this->api_results->events = array_merge( $this->api_results->events, EventKiln_Source::get_instance()->get_events_for_query( $this->query_vars ) );
         // Set wfea_excerpt_text based on long_description setting
         // This provides a distinct property for excerpt display rather than overusing WP post properties
         foreach ( $this->api_results->events as $wfea_key => $wfea_event ) {

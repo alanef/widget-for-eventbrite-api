@@ -14,6 +14,7 @@ jQuery( function( $ ) {
                     wfea_render_calendar();
                 }
                 widgetPreviewElement.find( '[data-eb-id]' ).wfeaBindLinksToEB();
+                widgetPreviewElement.find( '[data-ek-id]' ).wfeaBindLinksToEK();
             }
         });
     };

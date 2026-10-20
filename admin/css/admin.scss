@@ -230,3 +230,34 @@ $brand_darkgrey: #2E3744;
 .wfea-settings .form-table td p {
   max-width: 55em;
 }
+
+// EventKiln box: logo in the header, and the sales block shown until EventKiln is connected.
+#eventkiln .hndle .wfea-ek-logo {
+  width: 160px;
+  height: auto;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.wfea-ek-pitch {
+  max-width: 55em;
+  padding: 4px 0 12px;
+  border-bottom: 1px solid #dcdcde;
+
+  h3 {
+    margin: 0.5em 0;
+    font-size: 1.3em;
+  }
+
+  ul {
+    list-style: disc;
+    margin-left: 1.5em;
+  }
+
+  .wfea-ek-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 16px;
+  }
+}

@@ -79,6 +79,10 @@
       "type": "boolean",
       "default": false
     },
+    "source": {
+      "type": "string",
+      "default": "all"
+    },
     "display_private": {
       "type": "boolean",
       "default": true
@@ -245,9 +249,9 @@
       "type": "integer",
       "default": 5
     },
-    "show_availability'": {
+    "show_availability": {
       "type": "integer",
-      "default": 10
+      "default": 0
     },
     "events_per_page": {
       "type": "integer"

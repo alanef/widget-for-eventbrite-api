@@ -3,7 +3,7 @@ Contributors: fullworks
 Tags: eventbrite, widget, events, eventbrite widget, eventbrite shortcode
 Requires at least: 5.9
 Tested up to: 7.1
-Stable tag: 6.7.2
+Stable tag: 6.8.0-beta.1
 Requires PHP: 7.4
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
@@ -28,6 +28,9 @@ The plugin has 3 methods of displaying events:
 * Shortcode
 
 The WordPress Block and Elementor widget enable you to get a realistic display of the layouts and settings within the editor.
+
+= Not everything on Eventbrite? =
+Display Eventbrite Events can also show events from EventKiln, the ticketing service from Fullworks, the team behind this plugin. Your EventKiln events, including events whose tickets you sell elsewhere, appear in the same layouts and calendar, next to your Eventbrite events or on their own, with no Eventbrite account needed. [Find out about EventKiln](https://eventkiln.com/wordpress?utm_source=wporg&utm_medium=readme&utm_campaign=dee)
 
 The best part? Every time you add or update an Eventbrite listing, all the changes will appear on your WordPress website - no duplication of work or coding skills required.
 
@@ -57,6 +60,7 @@ Tested on PHP up to 8.5
 * Exclude current event post
 * Read more option, with a link direct to the Eventbrite page.
 * Book now option with a link direct to the Eventbrite page.
+* Show EventKiln events alongside your Eventbrite events, or on their own
 * Decide if you want Eventbrite to open in a new tab, or not
 * Easy to customise CSS.
 * Total of 22 options for the free version
@@ -84,6 +88,7 @@ Now the free version is used by many thousands of users and the Pro version is u
 == Screenshots ==
 1. Widget Layout
 2. Card Layout
+3. Eventbrite and EventKiln events in one list
 
 
 == Installation ==
@@ -136,6 +141,9 @@ Also some page builders and other plugins allow you to set up widgets on pages.
 = I installed it and it looks ugly? =
 Every theme is different so if is close to impossible to style that will work with every theme. Normally a few simple tweaks to CSS will sort out issues like bullet points where you don't expect them, or font sizes.
 See also [the knowledge base articles here](https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/styling/)
+
+= Can I show events that aren't on Eventbrite? =
+Yes. Connect EventKiln under Settings, EventKiln, and its events show alongside your Eventbrite events. To show just one kind, use source="eventkiln" or source="eventbrite" on the shortcode, or Show Events From on the block or Elementor widget. [Find out about EventKiln](https://eventkiln.com/wordpress?utm_source=wporg&utm_medium=readme&utm_campaign=dee)
 
 = Where can I find full documentation? =
 There is a detailed [knowledge base here](https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress)
@@ -194,6 +202,14 @@ Or review a full description of all options in the free and paid for plans. [Fre
 * listing only past events or only future events
 * customise with developer friendly templates
 * manage Eventbrite API cache time to optimise performance
+
+== External services ==
+
+This plugin connects to the following services. No website visitor personal data is sent to either.
+
+**Eventbrite** - to fetch your events, using the Eventbrite API key you enter in the settings. Requests go from your server to www.eventbriteapi.com and include your API key, plus the organization, event and collection IDs being displayed. In the Pro plugin, the optional on-site checkout loads Eventbrite's checkout script from www.eventbrite.com in the visitor's browser. [Eventbrite API terms of use](https://www.eventbrite.com/platform/terms), [Eventbrite privacy policy](https://www.eventbrite.com/help/en-us/articles/460838/eventbrite-privacy-policy/).
+
+**EventKiln (optional)** - only if you enter an EventKiln API key in the settings. Your server then fetches your organisation's published, public, upcoming events from EventKiln (https://eventkiln.com) once a day (as often as your Eventbrite events are refreshed), and when you save the settings. Each request includes your EventKiln API key. In the Pro plugin, the optional on-site checkout loads EventKiln's checkout script and checkout page from eventkiln.com in the visitor's browser; EventKiln says these set no cookies and use no browser storage. In the Pro plugin, if your EventKiln API key has the webhooks permission, your server also registers this website's webhook address with EventKiln so EventKiln can tell it when your events change; turn this off with the Instant updates setting. Nothing is sent to EventKiln until it is set up. EventKiln terms: https://eventkiln.com/terms - privacy policy: https://eventkiln.com/privacy
 
 == Privacy and GDPR ==
 
