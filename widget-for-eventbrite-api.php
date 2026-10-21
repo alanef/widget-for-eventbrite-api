@@ -6,7 +6,7 @@
  * Plugin Name:       Display Eventbrite Events
  * Plugin URI:        https://fullworksplugins.com/products/widget-for-eventbrite/
  * Description:       Easily display Eventbrite events on your WordPress site
- * Version:           6.8.0-beta.2
+ * Version:           6.8.0-beta.3
  * Requires at least: 5.9
  * Requires PHP:      7.4
  * Author:            Fullworks
@@ -37,12 +37,20 @@ use WidgetForEventbriteAPI\Includes\Utilities;
 if ( !defined( 'WPINC' ) ) {
     die;
 }
+// Free and Pro both load on the request that activates one while the other is active. If the other
+// copy is already running, hand over to Freemius (which deactivates the free one) and stop before
+// defining anything, or the repeated define()s are counted as unexpected output during activation.
+global $wfea_fs;
+if ( isset( $wfea_fs ) && function_exists( 'WidgetForEventbriteAPI\\run_wfea' ) ) {
+    $wfea_fs->set_basename( true, __FILE__ );
+    return;
+}
 // define some useful constants
 define( 'WIDGET_FOR_EVENTBRITE_API_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'WIDGET_FOR_EVENTBRITE_API_PLUGIN_NAME', basename( WIDGET_FOR_EVENTBRITE_API_PLUGIN_DIR ) );
 define( 'WIDGET_FOR_EVENTBRITE_API_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'WIDGET_FOR_EVENTBRITE_API_PLUGINS_TOP_DIR', plugin_dir_path( __DIR__ ) );
-define( 'WIDGET_FOR_EVENTBRITE_API_PLUGIN_VERSION', '6.8.0-beta.2' );
+define( 'WIDGET_FOR_EVENTBRITE_API_PLUGIN_VERSION', '6.8.0-beta.3' );
 // Tell WP Consent API aware cookie banners that this plugin honours consent, so they can
 // report it rather than flagging the Eventbrite checkout as an unmanaged third party.
 add_filter( 'wp_consent_api_registered_' . plugin_basename( __FILE__ ), '__return_true' );
@@ -80,6 +88,4 @@ if ( !function_exists( 'WidgetForEventbriteAPI\\run_wfea' ) ) {
     }
 
     run_wfea();
-} else {
-    $wfea_fs->set_basename( true, __FILE__ );
 }

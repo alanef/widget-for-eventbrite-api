@@ -246,10 +246,11 @@ class Eventbrite_Widget_Elementor_Helpers {
             $args['organization_id'] = sanitize_text_field( wp_unslash( $_POST['organizationID'] ) );
         }
         $events = $this->get_events_list( $args );
-        $events_options = wp_list_pluck( $events ?? array(), $option_type );
         $dropdown_options = array();
-        foreach ( $events_options as $event_option ) {
-            if ( !in_array( $event_option->id, $events_options ) ) {
+        // Online events have no venue, and not every event has an organizer, so skip those.
+        foreach ( ( is_array( $events ) ? $events : array() ) as $event ) {
+            $event_option = $event->{$option_type} ?? null;
+            if ( !empty( $event_option->id ) ) {
                 $dropdown_options[$event_option->id] = $event_option->name;
             }
         }
