@@ -4,18 +4,13 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitfddd21b009ffb25ea11ff73a82895a92
+class ComposerStaticInitd6bc6163e358902945f8ee1799e7c669
 {
     public static $files = array (
-        'ce89ac35a6c330c55f4710717db9ff78' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/functions.php',
         '8d50dc88e56bace65e1e72f6017983ed' => __DIR__ . '/..' . '/freemius/wordpress-sdk/start.php',
     );
 
     public static $prefixLengthsPsr4 = array (
-        'S' =>
-        array (
-            'Symfony\\Component\\Process\\' => 26,
-        ),
         'O' =>
         array (
             'OomphInc\\ComposerInstallersExtender\\' => 36,
@@ -32,10 +27,6 @@ class ComposerStaticInitfddd21b009ffb25ea11ff73a82895a92
     );
 
     public static $prefixDirsPsr4 = array (
-        'Symfony\\Component\\Process\\' =>
-        array (
-            0 => __DIR__ . '/..' . '/symfony/process',
-        ),
         'OomphInc\\ComposerInstallersExtender\\' =>
         array (
             0 => __DIR__ . '/..' . '/oomphinc/composer-installers-extender/src',
@@ -54,139 +45,7 @@ class ComposerStaticInitfddd21b009ffb25ea11ff73a82895a92
         ),
     );
 
-    public static $prefixesPsr0 = array (
-        'C' =>
-        array (
-            'ComponentInstaller' =>
-            array (
-                0 => __DIR__ . '/..' . '/robloach/component-installer/src',
-            ),
-        ),
-        'A' =>
-        array (
-            'Assetic' =>
-            array (
-                0 => __DIR__ . '/..' . '/kriswallsmith/assetic/src',
-            ),
-        ),
-    );
-
     public static $classMap = array (
-        'Assetic\\AssetManager' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/AssetManager.php',
-        'Assetic\\AssetWriter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/AssetWriter.php',
-        'Assetic\\Asset\\AssetCache' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Asset/AssetCache.php',
-        'Assetic\\Asset\\AssetCollection' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Asset/AssetCollection.php',
-        'Assetic\\Asset\\AssetCollectionInterface' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Asset/AssetCollectionInterface.php',
-        'Assetic\\Asset\\AssetInterface' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Asset/AssetInterface.php',
-        'Assetic\\Asset\\AssetReference' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Asset/AssetReference.php',
-        'Assetic\\Asset\\BaseAsset' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Asset/BaseAsset.php',
-        'Assetic\\Asset\\FileAsset' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Asset/FileAsset.php',
-        'Assetic\\Asset\\GlobAsset' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Asset/GlobAsset.php',
-        'Assetic\\Asset\\HttpAsset' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Asset/HttpAsset.php',
-        'Assetic\\Asset\\Iterator\\AssetCollectionFilterIterator' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Asset/Iterator/AssetCollectionFilterIterator.php',
-        'Assetic\\Asset\\Iterator\\AssetCollectionIterator' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Asset/Iterator/AssetCollectionIterator.php',
-        'Assetic\\Asset\\StringAsset' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Asset/StringAsset.php',
-        'Assetic\\Cache\\ApcCache' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Cache/ApcCache.php',
-        'Assetic\\Cache\\ArrayCache' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Cache/ArrayCache.php',
-        'Assetic\\Cache\\CacheInterface' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Cache/CacheInterface.php',
-        'Assetic\\Cache\\ConfigCache' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Cache/ConfigCache.php',
-        'Assetic\\Cache\\ExpiringCache' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Cache/ExpiringCache.php',
-        'Assetic\\Cache\\FilesystemCache' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Cache/FilesystemCache.php',
-        'Assetic\\Exception\\Exception' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Exception/Exception.php',
-        'Assetic\\Exception\\FilterException' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Exception/FilterException.php',
-        'Assetic\\Extension\\Twig\\AsseticExtension' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Extension/Twig/AsseticExtension.php',
-        'Assetic\\Extension\\Twig\\AsseticFilterFunction' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Extension/Twig/AsseticFilterFunction.php',
-        'Assetic\\Extension\\Twig\\AsseticFilterInvoker' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Extension/Twig/AsseticFilterInvoker.php',
-        'Assetic\\Extension\\Twig\\AsseticFilterNode' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Extension/Twig/AsseticFilterNode.php',
-        'Assetic\\Extension\\Twig\\AsseticNode' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Extension/Twig/AsseticNode.php',
-        'Assetic\\Extension\\Twig\\AsseticTokenParser' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Extension/Twig/AsseticTokenParser.php',
-        'Assetic\\Extension\\Twig\\TwigFormulaLoader' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Extension/Twig/TwigFormulaLoader.php',
-        'Assetic\\Extension\\Twig\\TwigResource' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Extension/Twig/TwigResource.php',
-        'Assetic\\Extension\\Twig\\ValueContainer' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Extension/Twig/ValueContainer.php',
-        'Assetic\\Factory\\AssetFactory' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Factory/AssetFactory.php',
-        'Assetic\\Factory\\LazyAssetManager' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Factory/LazyAssetManager.php',
-        'Assetic\\Factory\\Loader\\BasePhpFormulaLoader' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Factory/Loader/BasePhpFormulaLoader.php',
-        'Assetic\\Factory\\Loader\\CachedFormulaLoader' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Factory/Loader/CachedFormulaLoader.php',
-        'Assetic\\Factory\\Loader\\FormulaLoaderInterface' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Factory/Loader/FormulaLoaderInterface.php',
-        'Assetic\\Factory\\Loader\\FunctionCallsFormulaLoader' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Factory/Loader/FunctionCallsFormulaLoader.php',
-        'Assetic\\Factory\\Resource\\CoalescingDirectoryResource' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Factory/Resource/CoalescingDirectoryResource.php',
-        'Assetic\\Factory\\Resource\\DirectoryResource' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Factory/Resource/DirectoryResource.php',
-        'Assetic\\Factory\\Resource\\FileResource' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Factory/Resource/FileResource.php',
-        'Assetic\\Factory\\Resource\\IteratorResourceInterface' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Factory/Resource/IteratorResourceInterface.php',
-        'Assetic\\Factory\\Resource\\ResourceInterface' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Factory/Resource/ResourceInterface.php',
-        'Assetic\\Factory\\Worker\\CacheBustingWorker' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Factory/Worker/CacheBustingWorker.php',
-        'Assetic\\Factory\\Worker\\EnsureFilterWorker' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Factory/Worker/EnsureFilterWorker.php',
-        'Assetic\\Factory\\Worker\\WorkerInterface' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Factory/Worker/WorkerInterface.php',
-        'Assetic\\FilterManager' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/FilterManager.php',
-        'Assetic\\Filter\\AutoprefixerFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/AutoprefixerFilter.php',
-        'Assetic\\Filter\\BaseCssFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/BaseCssFilter.php',
-        'Assetic\\Filter\\BaseNodeFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/BaseNodeFilter.php',
-        'Assetic\\Filter\\BaseProcessFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/BaseProcessFilter.php',
-        'Assetic\\Filter\\CallablesFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/CallablesFilter.php',
-        'Assetic\\Filter\\CleanCssFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/CleanCssFilter.php',
-        'Assetic\\Filter\\CoffeeScriptFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/CoffeeScriptFilter.php',
-        'Assetic\\Filter\\CompassFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/CompassFilter.php',
-        'Assetic\\Filter\\CssCacheBustingFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/CssCacheBustingFilter.php',
-        'Assetic\\Filter\\CssEmbedFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/CssEmbedFilter.php',
-        'Assetic\\Filter\\CssImportFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/CssImportFilter.php',
-        'Assetic\\Filter\\CssMinFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/CssMinFilter.php',
-        'Assetic\\Filter\\CssRewriteFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/CssRewriteFilter.php',
-        'Assetic\\Filter\\DartFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/DartFilter.php',
-        'Assetic\\Filter\\DependencyExtractorInterface' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/DependencyExtractorInterface.php',
-        'Assetic\\Filter\\EmberPrecompileFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/EmberPrecompileFilter.php',
-        'Assetic\\Filter\\FilterCollection' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/FilterCollection.php',
-        'Assetic\\Filter\\FilterInterface' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/FilterInterface.php',
-        'Assetic\\Filter\\GoogleClosure\\BaseCompilerFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/GoogleClosure/BaseCompilerFilter.php',
-        'Assetic\\Filter\\GoogleClosure\\CompilerApiFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/GoogleClosure/CompilerApiFilter.php',
-        'Assetic\\Filter\\GoogleClosure\\CompilerJarFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/GoogleClosure/CompilerJarFilter.php',
-        'Assetic\\Filter\\GssFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/GssFilter.php',
-        'Assetic\\Filter\\HandlebarsFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/HandlebarsFilter.php',
-        'Assetic\\Filter\\HashableInterface' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/HashableInterface.php',
-        'Assetic\\Filter\\JSMinFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/JSMinFilter.php',
-        'Assetic\\Filter\\JSMinPlusFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/JSMinPlusFilter.php',
-        'Assetic\\Filter\\JSqueezeFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/JSqueezeFilter.php',
-        'Assetic\\Filter\\JpegoptimFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/JpegoptimFilter.php',
-        'Assetic\\Filter\\JpegtranFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/JpegtranFilter.php',
-        'Assetic\\Filter\\LessFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/LessFilter.php',
-        'Assetic\\Filter\\LessphpFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/LessphpFilter.php',
-        'Assetic\\Filter\\MinifyCssCompressorFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/MinifyCssCompressorFilter.php',
-        'Assetic\\Filter\\OptiPngFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/OptiPngFilter.php',
-        'Assetic\\Filter\\PackagerFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/PackagerFilter.php',
-        'Assetic\\Filter\\PackerFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/PackerFilter.php',
-        'Assetic\\Filter\\PhpCssEmbedFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/PhpCssEmbedFilter.php',
-        'Assetic\\Filter\\PngoutFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/PngoutFilter.php',
-        'Assetic\\Filter\\ReactJsxFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/ReactJsxFilter.php',
-        'Assetic\\Filter\\RooleFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/RooleFilter.php',
-        'Assetic\\Filter\\Sass\\BaseSassFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/Sass/BaseSassFilter.php',
-        'Assetic\\Filter\\Sass\\SassFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/Sass/SassFilter.php',
-        'Assetic\\Filter\\Sass\\ScssFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/Sass/ScssFilter.php',
-        'Assetic\\Filter\\SassphpFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/SassphpFilter.php',
-        'Assetic\\Filter\\ScssphpFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/ScssphpFilter.php',
-        'Assetic\\Filter\\SeparatorFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/SeparatorFilter.php',
-        'Assetic\\Filter\\SprocketsFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/SprocketsFilter.php',
-        'Assetic\\Filter\\StylusFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/StylusFilter.php',
-        'Assetic\\Filter\\TypeScriptFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/TypeScriptFilter.php',
-        'Assetic\\Filter\\UglifyCssFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/UglifyCssFilter.php',
-        'Assetic\\Filter\\UglifyJs2Filter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/UglifyJs2Filter.php',
-        'Assetic\\Filter\\UglifyJsFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/UglifyJsFilter.php',
-        'Assetic\\Filter\\Yui\\BaseCompressorFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/Yui/BaseCompressorFilter.php',
-        'Assetic\\Filter\\Yui\\CssCompressorFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/Yui/CssCompressorFilter.php',
-        'Assetic\\Filter\\Yui\\JsCompressorFilter' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Filter/Yui/JsCompressorFilter.php',
-        'Assetic\\Util\\CssUtils' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Util/CssUtils.php',
-        'Assetic\\Util\\FilesystemUtils' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Util/FilesystemUtils.php',
-        'Assetic\\Util\\LessUtils' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Util/LessUtils.php',
-        'Assetic\\Util\\SassUtils' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Util/SassUtils.php',
-        'Assetic\\Util\\TraversableString' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Util/TraversableString.php',
-        'Assetic\\Util\\VarUtils' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/Util/VarUtils.php',
-        'Assetic\\ValueSupplierInterface' => __DIR__ . '/..' . '/kriswallsmith/assetic/src/Assetic/ValueSupplierInterface.php',
-        'ComponentInstaller\\Installer' => __DIR__ . '/..' . '/robloach/component-installer/src/ComponentInstaller/Installer.php',
-        'ComponentInstaller\\Process\\BuildJsProcess' => __DIR__ . '/..' . '/robloach/component-installer/src/ComponentInstaller/Process/BuildJsProcess.php',
-        'ComponentInstaller\\Process\\CopyProcess' => __DIR__ . '/..' . '/robloach/component-installer/src/ComponentInstaller/Process/CopyProcess.php',
-        'ComponentInstaller\\Process\\Process' => __DIR__ . '/..' . '/robloach/component-installer/src/ComponentInstaller/Process/Process.php',
-        'ComponentInstaller\\Process\\ProcessInterface' => __DIR__ . '/..' . '/robloach/component-installer/src/ComponentInstaller/Process/ProcessInterface.php',
-        'ComponentInstaller\\Process\\RequireCssProcess' => __DIR__ . '/..' . '/robloach/component-installer/src/ComponentInstaller/Process/RequireCssProcess.php',
-        'ComponentInstaller\\Process\\RequireJsProcess' => __DIR__ . '/..' . '/robloach/component-installer/src/ComponentInstaller/Process/RequireJsProcess.php',
-        'ComponentInstaller\\Util\\Filesystem' => __DIR__ . '/..' . '/robloach/component-installer/src/ComponentInstaller/Util/Filesystem.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Composer\\Installers\\AglInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/AglInstaller.php',
         'Composer\\Installers\\AkauntingInstaller' => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers/AkauntingInstaller.php',
@@ -292,32 +151,14 @@ class ComposerStaticInitfddd21b009ffb25ea11ff73a82895a92
         'OomphInc\\ComposerInstallersExtender\\Installers\\CustomInstaller' => __DIR__ . '/..' . '/oomphinc/composer-installers-extender/src/Installers/CustomInstaller.php',
         'OomphInc\\ComposerInstallersExtender\\Installers\\Installer' => __DIR__ . '/..' . '/oomphinc/composer-installers-extender/src/Installers/Installer.php',
         'OomphInc\\ComposerInstallersExtender\\Plugin' => __DIR__ . '/..' . '/oomphinc/composer-installers-extender/src/Plugin.php',
-        'Symfony\\Component\\Process\\Exception\\ExceptionInterface' => __DIR__ . '/..' . '/symfony/process/Exception/ExceptionInterface.php',
-        'Symfony\\Component\\Process\\Exception\\InvalidArgumentException' => __DIR__ . '/..' . '/symfony/process/Exception/InvalidArgumentException.php',
-        'Symfony\\Component\\Process\\Exception\\LogicException' => __DIR__ . '/..' . '/symfony/process/Exception/LogicException.php',
-        'Symfony\\Component\\Process\\Exception\\ProcessFailedException' => __DIR__ . '/..' . '/symfony/process/Exception/ProcessFailedException.php',
-        'Symfony\\Component\\Process\\Exception\\ProcessTimedOutException' => __DIR__ . '/..' . '/symfony/process/Exception/ProcessTimedOutException.php',
-        'Symfony\\Component\\Process\\Exception\\RuntimeException' => __DIR__ . '/..' . '/symfony/process/Exception/RuntimeException.php',
-        'Symfony\\Component\\Process\\ExecutableFinder' => __DIR__ . '/..' . '/symfony/process/ExecutableFinder.php',
-        'Symfony\\Component\\Process\\InputStream' => __DIR__ . '/..' . '/symfony/process/InputStream.php',
-        'Symfony\\Component\\Process\\PhpExecutableFinder' => __DIR__ . '/..' . '/symfony/process/PhpExecutableFinder.php',
-        'Symfony\\Component\\Process\\PhpProcess' => __DIR__ . '/..' . '/symfony/process/PhpProcess.php',
-        'Symfony\\Component\\Process\\Pipes\\AbstractPipes' => __DIR__ . '/..' . '/symfony/process/Pipes/AbstractPipes.php',
-        'Symfony\\Component\\Process\\Pipes\\PipesInterface' => __DIR__ . '/..' . '/symfony/process/Pipes/PipesInterface.php',
-        'Symfony\\Component\\Process\\Pipes\\UnixPipes' => __DIR__ . '/..' . '/symfony/process/Pipes/UnixPipes.php',
-        'Symfony\\Component\\Process\\Pipes\\WindowsPipes' => __DIR__ . '/..' . '/symfony/process/Pipes/WindowsPipes.php',
-        'Symfony\\Component\\Process\\Process' => __DIR__ . '/..' . '/symfony/process/Process.php',
-        'Symfony\\Component\\Process\\ProcessBuilder' => __DIR__ . '/..' . '/symfony/process/ProcessBuilder.php',
-        'Symfony\\Component\\Process\\ProcessUtils' => __DIR__ . '/..' . '/symfony/process/ProcessUtils.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitfddd21b009ffb25ea11ff73a82895a92::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitfddd21b009ffb25ea11ff73a82895a92::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitfddd21b009ffb25ea11ff73a82895a92::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitfddd21b009ffb25ea11ff73a82895a92::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitd6bc6163e358902945f8ee1799e7c669::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitd6bc6163e358902945f8ee1799e7c669::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitd6bc6163e358902945f8ee1799e7c669::$classMap;
 
         }, null, ClassLoader::class);
     }

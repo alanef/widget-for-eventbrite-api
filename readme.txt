@@ -3,7 +3,7 @@ Contributors: fullworks
 Tags: eventbrite, widget, events, eventbrite widget, eventbrite shortcode
 Requires at least: 5.9
 Tested up to: 7.1
-Stable tag: 6.8.0-beta.3
+Stable tag: 6.8.0-beta.4
 Requires PHP: 7.4
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
@@ -88,7 +88,6 @@ Now the free version is used by many thousands of users and the Pro version is u
 == Screenshots ==
 1. Widget Layout
 2. Card Layout
-3. Eventbrite and EventKiln events in one list
 
 
 == Installation ==
@@ -143,7 +142,7 @@ Every theme is different so if is close to impossible to style that will work wi
 See also [the knowledge base articles here](https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/styling/)
 
 = Can I show events that aren't on Eventbrite? =
-Yes. Connect EventKiln under Settings, EventKiln, and its events show alongside your Eventbrite events. To show just one kind, use source="eventkiln" or source="eventbrite" on the shortcode, or Show Events From on the block or Elementor widget. [Find out about EventKiln](https://eventkiln.com/wordpress?utm_source=wporg&utm_medium=readme&utm_campaign=dee)
+Yes. Connect EventKiln under Settings, EventKiln, and its events show alongside your Eventbrite events. To show just one kind, use source="eventkiln" or source="eventbrite" on the shortcode, or Show Events From on the block or Elementor widget. [How to show EventKiln events](https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/usage/show-eventkiln-events/)
 
 = Where can I find full documentation? =
 There is a detailed [knowledge base here](https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress)
