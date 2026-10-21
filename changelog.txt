@@ -13,6 +13,7 @@
 * Fixed: the Outlook Calendar and Apple Calendar buttons in the details pop-up did nothing, as the pop-up removed their forms (Pro Only)
 * Fixed: the details pop-up ignored the list's settings, such as the excerpt length, and always used the defaults, so it had no Get Tickets button (Pro Only)
 * Fixed: with the popup option on, Get Tickets did nothing when Eventbrite's checkout wasn't set up on the page, for example on themes that load pages without a full page load (such as Waveme), or when the Eventbrite script was blocked. The button now links to the event on Eventbrite and opens the checkout pop-up only once it is ready (Pro Only)
+* Fixed: the details pop-up button (Read More / View details) was missing whenever Full content was on. The block turns Full content on by default, so in the One, Grid, Venue, Slide Show and Accordion layouts the block had no button while the equivalent shortcode did (Pro Only)
 * Fixed: in the block editor, Pro plan controls such as Show Availability appeared twice, and layouts and plans were added twice, because the Pro block filters were registered twice (since 6.5.0) (Pro Only)
 * Fixed: Show Availability set in the Display Eventbrite Events block was not saved, because the block attribute was misnamed. Existing blocks keep availability off (0), as the shortcode does (Pro Only)
 * Fixed: Read More on EventKiln events went to the ticket selector instead of the event page
