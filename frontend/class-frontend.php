@@ -397,10 +397,11 @@ class FrontEnd {
             $this->version,
             false
         );
-        wp_localize_script( $this->plugin_name, 'wfea_frontend', array(
+        $frontend_data = array(
             'ajaxurl' => admin_url( 'admin-ajax.php' ),
             'nonce'   => wp_create_nonce( 'wfea_modal_nonce' ),
-        ) );
+        );
+        wp_localize_script( $this->plugin_name, 'wfea_frontend', $frontend_data );
         if ( !WP_DEBUG ) {
             wp_add_inline_script( $this->plugin_name, 'console.debug = function() {};', 'before' );
         }
