@@ -70,6 +70,9 @@ class Freemius_Config {
             10,
             2
         );
+        // With tabs navigation Freemius adds its own Account, Contact Us and Pricing tabs to the Account
+        // page, so its built-in Account tab would show twice.
+        $wfea_fs->add_filter( 'hide_account_tabs', '__return_true' );
         // hide deactivation form
         $wfea_fs->add_filter( 'show_deactivation_feedback_form', function ( $bool ) {
             return false;

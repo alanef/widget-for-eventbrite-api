@@ -7,7 +7,6 @@
   "category": "widgets",
   "icon": "layout",
   "textdomain": "widget-for-eventbrite-api",
-  "script": "file:./premium__only/filters.js",
   "editorScript": "file:index.js",
   "script_handles": [
     "widget-for-eventbrite-api-eb-script",

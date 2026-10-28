@@ -30,6 +30,15 @@ class EventKiln_Source {
 
 	const CRON_HOOK = 'wfea_eventkiln_refresh';
 
+	/** One-off refresh, e.g. when a list first asks for past events. */
+	const REFRESH_NOW_HOOK = 'wfea_eventkiln_refresh_now';
+
+	/** When a list last asked for past events. Past events are fetched only while lists ask for them. */
+	const PAST_WANTED_OPTION = 'wfea_eventkiln_past_wanted';
+
+	/** Stop fetching past events when no list has asked for them for this long. */
+	const PAST_WANTED_FOR = WEEK_IN_SECONDS;
+
 	/** Cron schedule name; its interval follows the Eventbrite cache expiry. */
 	const CRON_SCHEDULE = 'wfea_eventkiln';
 
@@ -57,6 +66,7 @@ class EventKiln_Source {
 
 	public function hooks() {
 		add_action( self::CRON_HOOK, array( $this, 'refresh' ) );
+		add_action( self::REFRESH_NOW_HOOK, array( $this, 'refresh' ) );
 		add_filter( 'cron_schedules', array( $this, 'cron_schedules' ) );
 		add_action( 'init', array( $this, 'maintain_schedule' ) );
 		add_action( 'admin_notices', array( $this, 'admin_notice' ) );
@@ -186,13 +196,84 @@ class EventKiln_Source {
 			return new WP_Error( 'wfea-eventkiln-not-configured', esc_html__( 'EventKiln is not set up.', 'widget-for-eventbrite-api' ) );
 		}
 
-		$next   = add_query_arg(
+		// Cancelled events are kept so lists can show them as cancelled, as Eventbrite's are.
+		$now    = gmdate( 'Y-m-d\TH:i:s\Z' );
+		$events = $this->fetch_events(
+			$url,
+			$key,
 			array(
-				'status'     => 'published',
-				'visibility' => 'public',
-				'ends_after' => gmdate( 'Y-m-d\TH:i:s\Z' ),
+				'ends_after' => $now,
 				'sort'       => 'starts_at',
-				'per_page'   => 100,
+			)
+		);
+		if ( is_wp_error( $events ) ) {
+			return $events;
+		}
+		$past = null;
+		if ( $this->past_wanted() ) {
+			// Newest first, so the page limit drops the oldest.
+			$past = $this->fetch_events(
+				$url,
+				$key,
+				array(
+					'ends_before' => $now,
+					'sort'        => '-starts_at',
+				)
+			);
+			if ( is_wp_error( $past ) ) {
+				return $past;
+			}
+		}
+
+		$organisation = $this->get_organisation( $url, $key );
+		$org_name     = ( ! is_wp_error( $organisation ) && isset( $organisation['name'] ) ) ? $organisation['name'] : '';
+
+		$previous = get_option( self::CACHE_OPTION );
+		update_option(
+			self::CACHE_OPTION,
+			array(
+				'source'       => $url,
+				'fetched_at'   => time(),
+				'organisation' => $org_name,
+				'events'       => $events,
+				// Null when no list has asked for past events.
+				'past_events'  => $past,
+			),
+			false
+		);
+
+		// Purge page caches only when what visitors would see has actually changed.
+		$previous_past = ( is_array( $previous ) && isset( $previous['past_events'] ) ) ? $previous['past_events'] : null;
+		if ( ! is_array( $previous ) || ! isset( $previous['events'] ) || $previous['events'] !== $events || $previous_past !== $past || $previous['source'] !== $url ) {
+			Utilities::get_instance()->clear_all_caches_for_posts_with_shortcode();
+		}
+
+		$status                 = $this->get_status();
+		$status['last_success'] = time();
+		$status['last_error']   = '';
+		update_option( self::STATUS_OPTION, $status, false );
+
+		return true;
+	}
+
+	/**
+	 * Fetch every page of one events list.
+	 *
+	 * @param string $url  EventKiln address.
+	 * @param string $key  API key.
+	 * @param array  $args Query args added to the common ones.
+	 *
+	 * @return array|WP_Error
+	 */
+	private function fetch_events( $url, $key, $args ) {
+		$next   = add_query_arg(
+			array_merge(
+				array(
+					'status'     => 'published,cancelled',
+					'visibility' => 'public',
+					'per_page'   => 100,
+				),
+				$args
 			),
 			$url . '/api/v1/events'
 		);
@@ -216,32 +297,38 @@ class EventKiln_Source {
 			$pages ++;
 		}
 
-		$organisation = $this->get_organisation( $url, $key );
-		$org_name     = ( ! is_wp_error( $organisation ) && isset( $organisation['name'] ) ) ? $organisation['name'] : '';
+		return $events;
+	}
 
-		$previous = get_option( self::CACHE_OPTION );
-		update_option(
-			self::CACHE_OPTION,
-			array(
-				'source'       => $url,
-				'fetched_at'   => time(),
-				'organisation' => $org_name,
-				'events'       => $events,
-			),
-			false
-		);
+	/**
+	 * Whether a list has asked for past events recently enough to keep fetching them.
+	 */
+	private function past_wanted() {
+		return (int) get_option( self::PAST_WANTED_OPTION, 0 ) > time() - self::PAST_WANTED_FOR;
+	}
 
-		// Purge page caches only when what visitors would see has actually changed.
-		if ( ! is_array( $previous ) || ! isset( $previous['events'] ) || $previous['events'] !== $events || $previous['source'] !== $url ) {
-			Utilities::get_instance()->clear_all_caches_for_posts_with_shortcode();
+	/**
+	 * Whether a list's status filter can include events that have ended.
+	 */
+	private function asks_for_past( $query_vars ) {
+		$status = isset( $query_vars['status'] ) ? (string) $query_vars['status'] : '';
+
+		return 'all' === $status || false !== strpos( $status, 'ended' ) || false !== strpos( $status, 'completed' );
+	}
+
+	/**
+	 * Note that a list asked for past events, and fetch them now if they aren't in the cache.
+	 *
+	 * @param array|false $cache The cached copy.
+	 */
+	private function note_past_wanted( $cache ) {
+		// At most one write a day, as this runs on page views.
+		if ( (int) get_option( self::PAST_WANTED_OPTION, 0 ) < time() - DAY_IN_SECONDS ) {
+			update_option( self::PAST_WANTED_OPTION, time(), false );
 		}
-
-		$status                 = $this->get_status();
-		$status['last_success'] = time();
-		$status['last_error']   = '';
-		update_option( self::STATUS_OPTION, $status, false );
-
-		return true;
+		if ( is_array( $cache ) && ! isset( $cache['past_events'] ) && ! wp_next_scheduled( self::REFRESH_NOW_HOOK ) ) {
+			wp_schedule_single_event( time(), self::REFRESH_NOW_HOOK );
+		}
 	}
 
 	/**
@@ -251,6 +338,7 @@ class EventKiln_Source {
 		delete_option( self::CACHE_OPTION );
 		delete_option( self::STATUS_OPTION );
 		wp_clear_scheduled_hook( self::CRON_HOOK );
+		wp_clear_scheduled_hook( self::REFRESH_NOW_HOOK );
 	}
 
 	public function get_status() {
@@ -298,7 +386,10 @@ class EventKiln_Source {
 		}
 
 		$cache = get_option( self::CACHE_OPTION );
-		if ( ! is_array( $cache ) || empty( $cache['events'] ) || ! is_array( $cache['events'] ) ) {
+		if ( $this->asks_for_past( $query_vars ) ) {
+			$this->note_past_wanted( $cache );
+		}
+		if ( ! is_array( $cache ) || ! isset( $cache['events'] ) || ! is_array( $cache['events'] ) ) {
 			return array();
 		}
 		$settings = $this->get_settings();
@@ -306,9 +397,14 @@ class EventKiln_Source {
 			return array();
 		}
 
+		$all = $cache['events'];
+		if ( $this->asks_for_past( $query_vars ) && ! empty( $cache['past_events'] ) && is_array( $cache['past_events'] ) ) {
+			$all = array_merge( $all, $cache['past_events'] );
+		}
+
 		$organisation = isset( $cache['organisation'] ) ? $cache['organisation'] : '';
 		$events       = array();
-		foreach ( $cache['events'] as $raw ) {
+		foreach ( $all as $raw ) {
 			$event = $this->map_event( $raw, $query_vars, $organisation );
 			if ( false !== $event && $this->matches_query( $event, $query_vars ) ) {
 				$events[] = $event;
@@ -343,8 +439,14 @@ class EventKiln_Source {
 		$title       = isset( $raw['title'] ) ? (string) $raw['title'] : '';
 		$summary     = isset( $raw['summary'] ) ? (string) $raw['summary'] : '';
 		$description = isset( $raw['description'] ) ? (string) $raw['description'] : '';
-		// EventKiln descriptions are plain text with line breaks kept.
-		$description_html = wpautop( esc_html( $description ) );
+		// EventKiln sends description_html (bold, italics, lists, links) already cleaned, but it is
+		// still a third party's HTML, so keep it to what a post may contain. Older EventKiln only
+		// sends description, plain text with line breaks kept.
+		if ( isset( $raw['description_html'] ) && is_string( $raw['description_html'] ) && '' !== trim( $raw['description_html'] ) ) {
+			$description_html = wp_kses_post( $raw['description_html'] );
+		} else {
+			$description_html = wpautop( esc_html( $description ) );
+		}
 		$long             = ! empty( $query_vars['long_description'] );
 		$checkout_url     = isset( $raw['checkout_url'] ) ? (string) $raw['checkout_url'] : '';
 		$public_url       = isset( $raw['public_url'] ) ? (string) $raw['public_url'] : $checkout_url;
@@ -371,13 +473,9 @@ class EventKiln_Source {
 			'eb_published'           => isset( $raw['created_at'] ) ? $raw['created_at'] : '',
 			'eb_url'                 => $checkout_url,
 			'url'                    => apply_filters( 'wfea_eventkiln_event_url', $checkout_url, $raw ),
-			// EventKiln only returns events that haven't ended.
-			'status'                 => ( $start->getTimestamp() > time() ) ? 'live' : 'started',
+			'status'                 => $this->event_status( $raw, $start, $end ),
 			'public'                 => true,
-			'organizer'              => (object) array(
-				'id'   => '',
-				'name' => $organisation,
-			),
+			'organizer'              => $this->map_organiser( $raw, $organisation ),
 			'venue'                  => $this->map_venue( $raw ),
 			'category'               => empty( $raw['category']['id'] ) ? '' : (object) array(
 				'id'         => self::ID_PREFIX . (int) $raw['category']['id'],
@@ -433,6 +531,16 @@ class EventKiln_Source {
 		}
 
 		$event = array_merge( $event, $this->map_tickets( $raw, $external, $checkout_url ) );
+		if ( 'canceled' === $event['status'] ) {
+			// Nothing is on sale, and the Canceled button (Pro) reads the message code.
+			$event['event_sales_status']  = (object) array(
+				'sales_status' => 'unavailable',
+				'message_code' => 'event_cancelled',
+			);
+		}
+		if ( in_array( $event['status'], array( 'canceled', 'ended' ), true ) && is_object( $event['ticket_availability'] ) ) {
+			$event['ticket_availability']->has_available_tickets = false;
+		}
 
 		/**
 		 * Filter one EventKiln event after mapping, before it is merged with Eventbrite events.
@@ -443,11 +551,68 @@ class EventKiln_Source {
 		return apply_filters( 'wfea_eventkiln_event', (object) $event, $raw );
 	}
 
+	/**
+	 * Eventbrite's status for an EventKiln event: canceled, or live, started or ended by the time.
+	 * The cached copy can be up to a day old, so the time decides, not the list it came from.
+	 */
+	private function event_status( $raw, DateTimeImmutable $start, DateTimeImmutable $end ) {
+		if ( isset( $raw['status'] ) && 'cancelled' === $raw['status'] ) {
+			return 'canceled';
+		}
+		if ( $start->getTimestamp() > time() ) {
+			return 'live';
+		}
+
+		return ( $end->getTimestamp() > time() ) ? 'started' : 'ended';
+	}
+
 	private function date_object( DateTimeImmutable $date, DateTimeZone $tz ) {
 		return (object) array(
 			'timezone' => $tz->getName(),
 			'local'    => $date->setTimezone( $tz )->format( 'Y-m-d\TH:i:s' ),
 			'utc'      => $date->setTimezone( new DateTimeZone( 'UTC' ) )->format( 'Y-m-d\TH:i:s\Z' ),
+		);
+	}
+
+	/**
+	 * The event's organiser profile, in the shape of an Eventbrite organizer.
+	 *
+	 * EventKiln falls back to the organisation (id null) when the event has no profile. Older
+	 * EventKiln sends no organiser, so use the organisation name. Templates echo the name and
+	 * description as HTML, so both are made safe here.
+	 *
+	 * @param array  $raw          Event from the EventKiln API.
+	 * @param string $organisation Organisation name.
+	 *
+	 * @return object
+	 */
+	private function map_organiser( $raw, $organisation ) {
+		$org = ( isset( $raw['organiser'] ) && is_array( $raw['organiser'] ) && ! empty( $raw['organiser']['name'] ) ) ? $raw['organiser'] : array( 'name' => $organisation );
+
+		if ( ! empty( $org['description_html'] ) && is_string( $org['description_html'] ) ) {
+			$description = wp_kses_post( $org['description_html'] );
+		} elseif ( ! empty( $org['description'] ) && is_string( $org['description'] ) ) {
+			$description = wpautop( esc_html( $org['description'] ) );
+		} else {
+			$description = '';
+		}
+		$logo    = ( ! empty( $org['logo_url'] ) && is_string( $org['logo_url'] ) ) ? esc_url_raw( $org['logo_url'] ) : '';
+		$website = ( ! empty( $org['website'] ) && is_string( $org['website'] ) ) ? esc_url_raw( $org['website'] ) : '';
+
+		return (object) array(
+			'id'               => empty( $org['id'] ) ? '' : self::ID_PREFIX . (int) $org['id'],
+			'name'             => esc_html( (string) $org['name'] ),
+			'url'              => ( ! empty( $org['url'] ) && is_string( $org['url'] ) ) ? esc_url_raw( $org['url'] ) : '',
+			'website'          => $website,
+			'logo'             => '' === $logo ? '' : (object) array( 'url' => $logo ),
+			'description'      => (object) array(
+				'text' => $description,
+				'html' => $description,
+			),
+			'long_description' => (object) array(
+				'text' => '',
+				'html' => '',
+			),
 		);
 	}
 
@@ -619,6 +784,8 @@ class EventKiln_Source {
 	 */
 	private function matches_query( $event, $query_vars ) {
 		$status = isset( $query_vars['status'] ) && '' !== $query_vars['status'] ? $query_vars['status'] : 'live';
+		// Lists may spell it "cancelled", as DEE accepts for Eventbrite events.
+		$status = str_replace( 'cancelled', 'canceled', $status );
 		if ( 'all' !== $status && false === strpos( $status, $event->status ) ) {
 			return false;
 		}

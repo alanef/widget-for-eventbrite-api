@@ -40,6 +40,7 @@ class Deactivator {
          */
         global $wfea_fs;
         wp_clear_scheduled_hook( EventKiln_Source::CRON_HOOK );
+        wp_clear_scheduled_hook( EventKiln_Source::REFRESH_NOW_HOOK );
     }
 
 }

@@ -58,24 +58,10 @@ class Blocks {
     public function register_display_eventbrite() {
         add_filter( 'block_type_metadata', array($this, 'modify_block_attributes') );
         add_filter( 'rest_endpoints', array($this, 'add_rest_method') );
-        if ( $this->freemius->is_free_plan() ) {
-            // strip out extra script to remove not found errors
-            add_filter(
-                'register_block_type_args',
-                function ( $args, $name ) {
-                    if ( 'widget-for-eventbrite-api/display-' !== $name ) {
-                        return $args;
-                    }
-                    $args['script'] = null;
-                    return $args;
-                },
-                10,
-                2
-            );
-        }
         register_block_type( WIDGET_FOR_EVENTBRITE_API_PLUGIN_DIR . 'build/blocks/display-eventbrite-events', array(
             'render_callback' => array($this, 'render_block'),
         ) );
+        $this->register_editor_filters__premium_only( 'display-eventbrite-events', 'premium__only/filters' );
     }
 
     public function render_block( $atts, $content, $block ) {
@@ -116,9 +102,9 @@ class Blocks {
         $data = array(
             'current_plan'         => $this->freemius->get_plan_name(),
             'can_use_premium_code' => $this->freemius->can_use_premium_code(),
-            'is_plan_silver'       => $this->freemius->is_plan( 'silver' ),
-            'is_plan_gold'         => Utilities::is_legacy_gold_plan(),
-            'is_plan_platinum'     => $this->freemius->is_plan( 'platinum' ),
+            'is_plan_silver'       => Utilities::has_plan( 'silver' ),
+            'is_plan_gold'         => Utilities::has_plan( 'gold' ),
+            'is_plan_platinum'     => Utilities::has_plan( 'platinum' ),
         );
         wp_localize_script( 'widget-for-eventbrite-api-display-eventbrite-events-script', 'wfea_freemius', $data );
         $this->widget_helpers = new Eventbrite_Widget_Elementor_Helpers();

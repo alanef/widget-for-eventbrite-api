@@ -589,16 +589,16 @@ Additional shortcode options are available in the  paid for version<br><br>
             ?>
             <div class="wfea-ek-pitch">
                 <h3><?php 
-            esc_html_e( 'Sell tickets on your own website, with or without Eventbrite', 'widget-for-eventbrite-api' );
+            esc_html_e( 'Sell tickets on your own website', 'widget-for-eventbrite-api' );
             ?></h3>
                 <p><?php 
-            esc_html_e( 'EventKiln is ticketing from Fullworks, the team behind Display Eventbrite Events. Connect it below and your EventKiln events appear in the layouts and calendar you already use: next to your Eventbrite events, or on their own without an Eventbrite account.', 'widget-for-eventbrite-api' );
+            esc_html_e( 'EventKiln is ticketing from Fullworks, the team behind Display Eventbrite Events. Connect it below and your EventKiln events appear in the layouts and calendar you already use, next to your Eventbrite events.', 'widget-for-eventbrite-api' );
             ?></p>
                 <ul>
                     <li><strong><?php 
-            esc_html_e( 'Use it alongside Eventbrite, or without it.', 'widget-for-eventbrite-api' );
+            esc_html_e( 'One list, in date order.', 'widget-for-eventbrite-api' );
             ?></strong> <?php 
-            esc_html_e( 'Visitors see one list, in date order.', 'widget-for-eventbrite-api' );
+            esc_html_e( 'Visitors see Eventbrite and EventKiln events together.', 'widget-for-eventbrite-api' );
             ?></li>
                     <li><strong><?php 
             esc_html_e( 'Built for gigs and comedy nights.', 'widget-for-eventbrite-api' );
@@ -618,7 +618,7 @@ Additional shortcode options are available in the  paid for version<br><br>
                     <li><strong><?php 
             esc_html_e( 'Your money, your Stripe.', 'widget-for-eventbrite-api' );
             ?></strong> <?php 
-            esc_html_e( 'Payouts go straight to your own Stripe account. 2.5% + 30p per paid ticket in the UK (the fixed part varies by currency), and nothing on free tickets.', 'widget-for-eventbrite-api' );
+            esc_html_e( 'Payouts go straight to your own Stripe account. 2.5% + 30p per paid ticket in the UK (the fixed part varies by currency), and nothing on free tickets. Stripe\'s card fees are separate.', 'widget-for-eventbrite-api' );
             ?></li>
                     <li><strong><?php 
             esc_html_e( 'Starter plan is free,', 'widget-for-eventbrite-api' );
@@ -638,9 +638,9 @@ Additional shortcode options are available in the  paid for version<br><br>
                 </ul>
                 <p class="wfea-ek-actions">
                     <a class="button button-primary" href="<?php 
-            echo esc_url( $ek_link( '/request-access' ) );
+            echo esc_url( $ek_link( '/register' ) );
             ?>" target="_blank" rel="noopener"><?php 
-            esc_html_e( 'Request access', 'widget-for-eventbrite-api' );
+            esc_html_e( 'Create your free account', 'widget-for-eventbrite-api' );
             ?></a>
                     <a href="<?php 
             echo esc_url( $ek_link( '/wordpress' ) );
@@ -715,9 +715,9 @@ Additional shortcode options are available in the  paid for version<br><br>
             esc_html_e( 'No account yet?', 'widget-for-eventbrite-api' );
             ?>
                             <a href="<?php 
-            echo esc_url( $ek_link( '/request-access' ) );
+            echo esc_url( $ek_link( '/register' ) );
             ?>" target="_blank" rel="noopener"><?php 
-            esc_html_e( 'Request free access to EventKiln', 'widget-for-eventbrite-api' );
+            esc_html_e( 'Create your free account', 'widget-for-eventbrite-api' );
             ?></a>
 						<?php 
         }

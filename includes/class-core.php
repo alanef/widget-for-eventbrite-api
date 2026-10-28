@@ -167,6 +167,7 @@ class Core {
         add_action( 'enqueue_block_editor_assets', array($plugin_admin, 'enqueue_styles') );
         add_action( 'enqueue_block_editor_assets', array($plugin_admin, 'enqueue_scripts') );
         add_action( 'admin_notices', array($plugin_admin, 'display_admin_notice') );
+        add_action( 'admin_notices', array(Eventbrite_Manager::class, 'admin_notice') );
         add_action( 'admin_init', array($plugin_admin, 'set_options') );
         add_action( 'wp_ajax_wfea_dismiss_notice', array($plugin_admin, 'wfea_dismiss_notice') );
         add_filter( 'site_status_tests', array($plugin_admin, 'site_status_tests') );

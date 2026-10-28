@@ -207,7 +207,7 @@ class Eventbrite_Query extends WP_Query {
                 // Use full description (HTML stripped) with breaks between div elements
                 $wfea_full_text = ( isset( $wfea_event->long_description ) ? $wfea_event->long_description : $wfea_event->post_content );
                 // Add space after block element boundaries before stripping tags
-                $wfea_full_text = str_replace( array('</div>', '</p>'), array('</div> ', '</p> '), $wfea_full_text );
+                $wfea_full_text = str_replace( array('</div>', '</p>', '</li>'), array('</div> ', '</p> ', '</li> '), $wfea_full_text );
                 $wfea_full_text = wp_strip_all_tags( $wfea_full_text );
                 $this->api_results->events[$wfea_key]->wfea_excerpt_text = $wfea_full_text;
             } else {

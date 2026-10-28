@@ -24,7 +24,7 @@ if ( $data->utilities->get_element( 'booknow', $data->args ) ) {
 		wp_kses_post( $wfea_cta_text ),
 		( $data->utilities->get_element( 'newtab', $data->args ) ) ? 'target="_blank"' : '',
 		esc_attr( $data->utilities->get_event_title() ),
-		esc_attr( $data->utilities->get_on_source_label() )
+		esc_attr( $data->utilities->get_on_source_label( true ) )
 	);
 	?></div><?php
 }

@@ -3,12 +3,23 @@
 /** @noinspection ALL */
 namespace WidgetForEventbriteAPI\Includes;
 
+use WidgetForEventbriteAPI\Admin\Admin;
 use WidgetForEventbriteAPI\Admin\Admin_Settings;
 use WP_Error;
 use WidgetForEventbriteAPI\Includes\Widgets\Elementor\Eventbrite_Widget_Elementor_Helpers;
 defined( 'ABSPATH' ) || exit;
 class Eventbrite_Manager {
     const API_BASE = 'https://www.eventbriteapi.com/v3/';
+
+    /**
+     * Last failed call per API key, for the admin notice. Cleared when a call with that key succeeds.
+     */
+    const STATUS_OPTION = 'wfea_eventbrite_status';
+
+    /**
+     * How long to wait before trying Eventbrite again after a failed call.
+     */
+    const RETRY_DELAY = 2 * MINUTE_IN_SECONDS;
 
     /**
      * Class instance used by themes and plugins.
@@ -18,6 +29,11 @@ class Eventbrite_Manager {
     public static $instance;
 
     protected $token = false;
+
+    /**
+     * The key(s) the current call uses, for the status option.
+     */
+    private $status_token = false;
 
     /**
      * The class constructor.
@@ -38,6 +54,7 @@ class Eventbrite_Manager {
         if ( 'eventbrite' != $service ) {
             return;
         }
+        delete_option( self::STATUS_OPTION );
         // Get the list of registered transients.
         $transients = $this->get_wfea_transients();
         // Bail if we have no transients.
@@ -47,7 +64,7 @@ class Eventbrite_Manager {
         // Loop through all registered transients, deleting each one.
         foreach ( $transients as $transient ) {
             delete_transient( $transient );
-            delete_transient( $transient . ' _bak' );
+            delete_transient( $transient . '_bak' );
         }
     }
 
@@ -334,6 +351,10 @@ class Eventbrite_Manager {
         if ( isset( $params['page'] ) ) {
             unset($params['page']);
         }
+        // Sites that use only EventKiln have no Eventbrite key, so don't call Eventbrite or log a failure.
+        if ( empty( $params['token'] ) && '' === EventKiln_Source::default_eventbrite_key() ) {
+            return new WP_Error('wfea-no-api-key-set', esc_html__( 'No Eventbrite API key set, please set in settings', 'widget-for-eventbrite-api' ));
+        }
         // Return a cached result if we have one.
         // if environment variable WFEA_DEV_NOCACHE is defined and true, force API request
         if ( defined( 'WFEA_DEV_NOCACHE' ) && true === WFEA_DEV_NOCACHE ) {
@@ -348,7 +369,7 @@ class Eventbrite_Manager {
             if ( !empty( $cached ) ) {
                 if ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) {
                     error_log( print_r( array(
-                        'msg'  => 'Widget for Eventbite: Debug:  Cache hit',
+                        'msg'  => 'Widget for Eventbrite: Debug:  Cache hit',
                         'call' => array(
                             'endpoint' => $endpoint,
                             'params'   => $params,
@@ -369,7 +390,7 @@ class Eventbrite_Manager {
             } else {
                 if ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) {
                     error_log( print_r( array(
-                        'msg'  => 'Widget for Eventbite: Debug:  No Cache so will try refresh',
+                        'msg'  => 'Widget for Eventbrite: Debug:  No Cache so will try refresh',
                         'call' => array(
                             'endpoint' => $endpoint,
                             'params'   => $params,
@@ -400,8 +421,10 @@ class Eventbrite_Manager {
         }
         // Extend the HTTP timeout to account for Eventbrite API calls taking longer than ~5 seconds.
         add_filter( 'http_request_timeout', array($this, 'increase_timeout') );
-        // Make a fresh request.
-        if ( false !== $this->token ) {
+        $this->status_token = ( !empty( $params['token'] ) ? $params['token'] : $this->token );
+        // Make a fresh request. The settings hold an empty key on sites that use only EventKiln, and
+        // Eventbrite answers an empty token with "Authorization header format invalid".
+        if ( false !== $this->token && '' !== (string) $this->token ) {
             $request = $this->call( $endpoint, $params, $id );
         } else {
             $request = new WP_error('wfea-no-api-key-set', esc_html__( 'No Eventbrite API key set, please set in settings', 'widget-for-eventbrite-api' ));
@@ -438,10 +461,13 @@ class Eventbrite_Manager {
             set_transient( $transient_name, $request, apply_filters( 'wfea_eventbrite_cache_expiry', DAY_IN_SECONDS ) );
             // save a copy for a month incase EB is unavailable and useful to tell if data changes for cache clearing
             set_transient( $transient_name . '_bak', $request, MONTH_IN_SECONDS );
+            // when the copy was fetched, so a failure only serves it while it is recent enough
+            set_transient( $transient_name . '_bak_at', time(), MONTH_IN_SECONDS );
+            $this->record_success();
         } else {
             if ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) {
                 error_log( print_r( array(
-                    'msg'   => 'Widget for Eventbite: Debug: Call issue',
+                    'msg'   => 'Widget for Eventbrite: Debug: Call issue',
                     'call'  => array(
                         'endpoint' => $endpoint,
                         'params'   => $params,
@@ -450,28 +476,22 @@ class Eventbrite_Manager {
                     'error' => Utilities::get_instance()->get_api_error_string( $request ),
                 ), true ) );
             }
-            //  extend the transient on failure of API call
+            if ( 'wfea-no-api-key-set' !== $request->get_error_code() ) {
+                $this->record_failure( $request );
+            }
+            // Go stale, never blank: serve the last good copy for any failure (a timeout, an Eventbrite
+            // error or a revoked key) and try again shortly. The admin notice reports the failure.
             $transient_name = $this->get_transient_name( $endpoint, $params, $id );
             $transient_value = get_transient( $transient_name );
-            if ( $transient_value !== false ) {
-                set_transient( $transient_name, $transient_value, 2 * MINUTE_IN_SECONDS );
-                // we have a good cache even though API call failed so lets use that and extend the bakup
-                set_transient( $transient_name . '_bak', $transient_value, MONTH_IN_SECONDS );
-                return $transient_value;
+            if ( false === $transient_value ) {
+                $transient_value = $this->get_recent_backup( $transient_name );
             } else {
-                $transient_value = get_transient( $transient_name . '_bak' );
-                if ( $transient_value !== false ) {
-                    // we have a good backup cache even though API call failed so lets use that and extend the bakup
-                    set_transient( $transient_name, $transient_value, 2 * MINUTE_IN_SECONDS );
-                    // resave backup copy to extend the month incase EB continues to be unavailable
-                    set_transient( $transient_name . '_bak', $transient_value, MONTH_IN_SECONDS );
-                    $error_string = Utilities::get_instance()->get_api_error_string( $request );
-                    if ( preg_match( '/Operation timed out after/i', $error_string ) ) {
-                        error_log( '[' . gmdate( "F j, Y, g:i a e O" ) . '] ' . print_r( $error_string, true ) . ' attempt: using back up ' );
-                        // we only return  the backup IF  Eventbrite is down otherwise fall through to error of we will never find Token errors
-                        return $transient_value;
-                    }
-                }
+                $this->record_backup_in_use( (int) get_transient( $transient_name . '_bak_at' ) );
+            }
+            if ( false !== $transient_value ) {
+                set_transient( $transient_name, $transient_value, self::RETRY_DELAY );
+                error_log( '[' . gmdate( 'F j, Y, g:i a e O' ) . '] ' . Utilities::get_instance()->get_api_error_string( $request ) . ' attempt: using back up' );
+                return $transient_value;
             }
         }
         return $request;
@@ -486,6 +506,151 @@ class Eventbrite_Manager {
      *
      * @return mixed|null
      */
+    /**
+     * The backup copy of a call's result, if it is recent enough to show.
+     *
+     * The copy is not renewed on failure, so a site that can't reach Eventbrite stops showing it
+     * once it is older than the wfea_eventbrite_backup_max_age filter (default a week, and never less
+     * than two cache periods), rather than showing the same old events indefinitely.
+     *
+     * @param string $transient_name The call's transient name.
+     *
+     * @return mixed The copy, or false.
+     */
+    private function get_recent_backup( $transient_name ) {
+        $backup = get_transient( $transient_name . '_bak' );
+        if ( false === $backup ) {
+            return false;
+        }
+        $fetched_at = get_transient( $transient_name . '_bak_at' );
+        if ( false === $fetched_at ) {
+            // Saved before the fetch time was kept, so its age is unknown: allow it one more period from now.
+            $fetched_at = time();
+            set_transient( $transient_name . '_bak_at', $fetched_at, MONTH_IN_SECONDS );
+        }
+        $cache_expiry = (int) apply_filters( 'wfea_eventbrite_cache_expiry', DAY_IN_SECONDS );
+        $max_age = (int) apply_filters( 'wfea_eventbrite_backup_max_age', max( WEEK_IN_SECONDS, 2 * $cache_expiry ) );
+        if ( time() - (int) $fetched_at > $max_age ) {
+            return false;
+        }
+        $this->record_backup_in_use( (int) $fetched_at );
+        return $backup;
+    }
+
+    /**
+     * A key for the status option, so the API key itself is not stored a second time.
+     */
+    private function status_key() {
+        return md5( serialize( $this->status_token ) );
+    }
+
+    private function get_status() {
+        $status = get_option( self::STATUS_OPTION );
+        return ( is_array( $status ) ? $status : array() );
+    }
+
+    private function record_failure( $error ) {
+        $status = $this->get_status();
+        $key = $this->status_key();
+        $status[$key] = array(
+            'error'       => Utilities::get_instance()->get_api_error_string( $error ),
+            'at'          => time(),
+            'label'       => $this->token_label(),
+            'backup_from' => 0,
+        );
+        update_option( self::STATUS_OPTION, $status, false );
+    }
+
+    private function record_backup_in_use( $fetched_at ) {
+        if ( !$fetched_at ) {
+            return;
+        }
+        $status = $this->get_status();
+        $key = $this->status_key();
+        if ( isset( $status[$key] ) ) {
+            $status[$key]['backup_from'] = ( isset( $status[$key]['backup_from'] ) && $status[$key]['backup_from'] ? min( $status[$key]['backup_from'], $fetched_at ) : $fetched_at );
+            update_option( self::STATUS_OPTION, $status, false );
+        }
+    }
+
+    private function record_success() {
+        $status = $this->get_status();
+        $key = $this->status_key();
+        if ( isset( $status[$key] ) ) {
+            unset($status[$key]);
+            update_option( self::STATUS_OPTION, $status, false );
+        }
+    }
+
+    /**
+     * The settings label of the API key(s) in use, so the notice can name the failing key.
+     */
+    private function token_label() {
+        $options = get_option( 'widget-for-eventbrite-api-settings', array() );
+        $labels = array();
+        foreach ( (array) $this->status_token as $token ) {
+            $label = '';
+            if ( isset( $options['key'] ) && is_array( $options['key'] ) ) {
+                foreach ( $options['key'] as $index => $api_key ) {
+                    if ( is_array( $api_key ) && isset( $api_key['key'] ) && $api_key['key'] === $token ) {
+                        $label = ( !empty( $api_key['label'] ) ? $api_key['label'] : sprintf( 'API key %d', (int) $index + 1 ) );
+                    }
+                }
+            }
+            // Never show the key itself, only its last 4 characters if it has no label.
+            $labels[] = ( '' !== $label ? $label : '…' . substr( (string) $token, -4 ) );
+        }
+        return implode( ', ', $labels );
+    }
+
+    /**
+     * Tell admins when Eventbrite calls are failing, as visitors are shown saved events instead.
+     */
+    public static function admin_notice() {
+        if ( !Admin::can_display_admin_notice() ) {
+            return;
+        }
+        $status = get_option( self::STATUS_OPTION );
+        if ( !is_array( $status ) ) {
+            return;
+        }
+        $format = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );
+        foreach ( $status as $failure ) {
+            // A key removed from the settings never succeeds again, so stop reporting it after a month.
+            if ( empty( $failure['at'] ) || time() - $failure['at'] > MONTH_IN_SECONDS ) {
+                continue;
+            }
+            if ( !empty( $failure['backup_from'] ) ) {
+                $fallback = sprintf( 
+                    /* translators: %s: date and time */
+                    esc_html__( 'Visitors are being shown the events fetched on %s.', 'widget-for-eventbrite-api' ),
+                    esc_html( wp_date( $format, $failure['backup_from'] ) )
+                 );
+            } else {
+                $fallback = esc_html__( 'Lists using this key show no events until a call succeeds.', 'widget-for-eventbrite-api' );
+            }
+            printf(
+                '<div class="notice notice-warning"><p><strong>%1$s</strong> %2$s %3$s %4$s <a href="%5$s">%6$s</a></p></div>',
+                sprintf( 
+                    /* translators: %s: API key label */
+                    esc_html__( 'Display Eventbrite Events: Eventbrite events could not be refreshed for API key "%s".', 'widget-for-eventbrite-api' ),
+                    esc_html( $failure['label'] )
+                 ),
+                sprintf( 
+                    /* translators: 1: date and time, 2: error message */
+                    esc_html__( 'Last failure %1$s: %2$s.', 'widget-for-eventbrite-api' ),
+                    esc_html( wp_date( $format, $failure['at'] ) ),
+                    esc_html( rtrim( $failure['error'], '. ' ) )
+                 ),
+                $fallback,
+                // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above
+                esc_html__( 'This clears by itself once a call succeeds.', 'widget-for-eventbrite-api' ),
+                esc_url( admin_url( 'options-general.php?page=widget-for-eventbrite-api-settings' ) ),
+                esc_html__( 'Check the API key settings', 'widget-for-eventbrite-api' )
+            );
+        }
+    }
+
     private function call( $endpoint, $query_params = array(), $object_id = null ) {
         global $wfea_fs;
         $endpoint_map = array(

@@ -608,11 +608,18 @@ class Utilities {
 
     /**
      * Screen reader text between the button text and the event title: "on Eventbrite for".
+     * An EventKiln event with external checkout sends Book Now to the organiser's own ticket
+     * site, so that button says only "for".
+     *
+     * @param bool $booknow true for the Book Now button.
      *
      * @return string not escaped
      * @internal
      */
-    public function get_on_source_label() {
+    public function get_on_source_label( $booknow = false ) {
+        if ( $booknow && $this->is_eventkiln_event() && isset( $this->get_event()->eventkiln->checkout_mode ) && 'external' === $this->get_event()->eventkiln->checkout_mode ) {
+            return __( 'for', 'widget-for-eventbrite-api' );
+        }
         return ( $this->is_eventkiln_event() ? __( 'on EventKiln for', 'widget-for-eventbrite-api' ) : __( 'on Eventbrite for', 'widget-for-eventbrite-api' ) );
     }
 
@@ -1099,19 +1106,74 @@ class Utilities {
     }
 
     /**
-     * Helper function to check if user has legacy Gold plan (plan_id 7700)
-     * Gold plan was deleted but existing users should retain access
+     * Freemius plan IDs and the level of features each one gets: 1 silver (Starter), 2 gold
+     * (High Powered), 3 platinum (Professional). Checked by ID because Freemius names a deleted plan
+     * PLAN_NAME, so is_plan() can't place it. 3712 sold before High Powered (7700) and became it; 1882 was the first paid plan.
+     */
+    const PLAN_LEVELS = array(
+        14907 => 1,
+        1882  => 2,
+        3712  => 2,
+        7700  => 2,
+        14687 => 3,
+    );
+
+    const PLAN_NAMES = array(
+        'silver'   => 1,
+        'gold'     => 2,
+        'platinum' => 3,
+    );
+
+    /**
+     * The plan level of this site's trial or licence, from PLAN_LEVELS; 0 when it has neither.
+     * A plan missing from PLAN_LEVELS falls back to Freemius' own plan order.
+     *
+     * @return int
+     */
+    public static function plan_level() {
+        /** @var \Freemius $wfea_fs Freemius global object. */
+        global $wfea_fs;
+        if ( !isset( $wfea_fs ) ) {
+            return 0;
+        }
+        // A trial without a payment method has no licence, only the trial plan.
+        if ( $wfea_fs->is_trial() ) {
+            $trial = $wfea_fs->get_trial_plan();
+            $plan_id = ( is_object( $trial ) ? (int) $trial->id : 0 );
+        } else {
+            $license = $wfea_fs->_get_license();
+            $plan_id = ( $license && isset( $license->plan_id ) ? (int) $license->plan_id : 0 );
+        }
+        if ( isset( self::PLAN_LEVELS[$plan_id] ) ) {
+            return self::PLAN_LEVELS[$plan_id];
+        }
+        foreach ( array_reverse( self::PLAN_NAMES, true ) as $name => $level ) {
+            if ( $wfea_fs->is_plan_or_trial( $name ) ) {
+                return $level;
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * Whether this site has the features of a plan: 'silver', 'gold' or 'platinum'. Higher plans
+     * include the lower ones.
+     *
+     * @param string $plan Plan name.
+     *
+     * @return bool
+     */
+    public static function has_plan( $plan ) {
+        return isset( self::PLAN_NAMES[$plan] ) && self::plan_level() >= self::PLAN_NAMES[$plan];
+    }
+
+    /**
+     * Whether this site has the High Powered (gold) features, which Professional also has.
      *
      * @return bool
      */
     public static function is_legacy_gold_plan() {
-        /** @var \Freemius $wfea_fs Freemius global object. */
-        global $wfea_fs;
-        if ( !isset( $wfea_fs ) ) {
-            return false;
-        }
-        $license = $wfea_fs->_get_license();
-        return $license && isset( $license->plan_id ) && in_array( $license->plan_id, array(7700, 14687) );
+        return self::has_plan( 'gold' );
     }
 
 }
