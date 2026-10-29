@@ -61,7 +61,6 @@ class Blocks {
         register_block_type( WIDGET_FOR_EVENTBRITE_API_PLUGIN_DIR . 'build/blocks/display-eventbrite-events', array(
             'render_callback' => array($this, 'render_block'),
         ) );
-        $this->register_editor_filters__premium_only( 'display-eventbrite-events', 'premium__only/filters' );
     }
 
     public function render_block( $atts, $content, $block ) {
