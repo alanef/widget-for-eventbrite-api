@@ -1,4 +1,5 @@
-= Unreleased =
+= 6.9.0 =
+* Fixed: the free version from wordpress.org included some Pro price formatting code, left in by a misnamed function, and a Pro-only function that would have stopped the site if anything had called it. Neither is in the free version any more
 * Fixed: licences on the first paid plan (2017) and the older High Powered plan sold in 2018 and 2019 now get the High Powered features (the premium layouts, the popup and the other High Powered options in shortcodes, blocks and Elementor). Since that plan was retired they only had the basic Pro options
 * Fixed: free trials of Professional or High Powered taken without a payment method now get those plans' layouts and options; since 6.5.0 they only had the Starter ones. The block editor and Elementor now offer the same options for each plan as the shortcode
 * Fixed: when Eventbrite can't be reached or returns an error, including a revoked API key, visitors now always see the last events fetched instead of an error every couple of minutes, which a page cache could then keep showing

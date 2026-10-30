@@ -105,12 +105,18 @@ class Blocks {
             'is_plan_gold'         => Utilities::has_plan( 'gold' ),
             'is_plan_platinum'     => Utilities::has_plan( 'platinum' ),
         );
-        wp_localize_script( 'widget-for-eventbrite-api-display-eventbrite-events-script', 'wfea_freemius', $data );
         $this->widget_helpers = new Eventbrite_Widget_Elementor_Helpers();
         $controls_meta = $this->widget_helpers->get_controls_meta();
         $controls_meta['ajaxurl'] = admin_url( 'admin-ajax.php' );
         $controls_meta['nonce'] = wp_create_nonce( 'wfea-nonce' );
-        wp_localize_script( 'widget-for-eventbrite-api-display-eventbrite-events-script', 'wfea_controls_meta', $controls_meta );
+        // The block's index.js reads both, and it is the only one of these scripts the free build
+        // registers; without them it throws and the block never registers. filters.js (Pro) reads
+        // them too and may run first.
+        foreach ( array('editor-script', 'script') as $suffix ) {
+            $handle = 'widget-for-eventbrite-api-display-eventbrite-events-' . $suffix;
+            wp_localize_script( $handle, 'wfea_freemius', $data );
+            wp_localize_script( $handle, 'wfea_controls_meta', $controls_meta );
+        }
     }
 
     public function enqueue_block_assets() {

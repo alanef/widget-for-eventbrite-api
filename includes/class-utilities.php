@@ -1067,45 +1067,6 @@ class Utilities {
     }
 
     /**
-     * Formats display price when a price
-     * @filter wfea_price_display $price_display,$prices->minimum_ticket_price->major_value,$prices->maximum_ticket_price->major_value,$prices->minimum_ticket_price->currency
-     * @return string
-     * @internal
-     */
-    private function format_display_price__premum_only( $prices ) {
-        if ( null === $prices->maximum_ticket_price ) {
-            $prices->maximum_ticket_price = $prices->minimum_ticket_price;
-        }
-        if ( $prices->minimum_ticket_price->value == $prices->maximum_ticket_price->value ) {
-            $price_display = sprintf( '%1$s%2$s', $this->get_currency_symbol__premium_only( $prices->minimum_ticket_price->currency ), $prices->minimum_ticket_price->major_value );
-        } else {
-            $price_display = sprintf(
-                '%1$s%2$s - %1$s%3$s',
-                $this->get_currency_symbol__premium_only( $prices->minimum_ticket_price->currency ),
-                $prices->minimum_ticket_price->major_value,
-                $prices->maximum_ticket_price->major_value
-            );
-        }
-        /**
-         * Filters the formatted display price.
-         *
-         * @param string $price_display formated output price.
-         * @param number minimum_ticket_price lowest ticket price.
-         * @param number maximum_ticket_price higest ticket price.
-         * @param string currency currency code.
-         *
-         */
-        return wp_kses_post( apply_filters(
-            'wfea_price_display',
-            $price_display,
-            $prices->minimum_ticket_price->major_value,
-            $prices->maximum_ticket_price->major_value,
-            $prices->minimum_ticket_price->currency,
-            $this->get_event()
-        ) );
-    }
-
-    /**
      * Freemius plan IDs and the level of features each one gets: 1 silver (Starter), 2 gold
      * (High Powered), 3 platinum (Professional). Checked by ID because Freemius names a deleted plan
      * PLAN_NAME, so is_plan() can't place it. 3712 sold before High Powered (7700) and became it; 1882 was the first paid plan.

@@ -3,7 +3,7 @@ Contributors: fullworks
 Tags: eventbrite, widget, events, eventbrite widget, eventbrite shortcode
 Requires at least: 5.9
 Tested up to: 7.1
-Stable tag: 6.9.0-beta.2
+Stable tag: 6.9.0
 Requires PHP: 7.4
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
@@ -29,9 +29,6 @@ The plugin has 3 methods of displaying events:
 
 The WordPress Block and Elementor widget enable you to get a realistic display of the layouts and settings within the editor.
 
-= Not everything on Eventbrite? =
-Display Eventbrite Events can also show events from EventKiln, the ticketing service from Fullworks, the team behind this plugin. Your EventKiln events, including events whose tickets you sell elsewhere, appear in the same layouts and calendar, next to your Eventbrite events or on their own, with no Eventbrite account needed. [Find out about EventKiln](https://eventkiln.com/wordpress?utm_source=wporg&utm_medium=readme&utm_campaign=dee)
-
 The best part? Every time you add or update an Eventbrite listing, all the changes will appear on your WordPress website - no duplication of work or coding skills required.
 
 This plugin uses the Eventbrite API to read directly from Eventbrite servers creating an event feed for Eventbrite. Don't be put off by the words API, that just means the plugin is linked directly to Eventbrite data - no rekeying, no extra data to manage, simplifying and automating your event marketing.
@@ -50,6 +47,9 @@ I'm sure you will find this plugin the best way of showing Eventbrite events on 
 
 Want to learn more about the many options of the best Eventbrite plugin for WordPress? Check out the [Display Eventbrite Events demo page](https://fullworksplugins.com/products/widget-for-eventbrite/eventbrite-shortcode-demo/)
 
+= Not everything on Eventbrite? =
+Display Eventbrite Events can also show events from EventKiln, the ticketing service from Fullworks, the team behind this plugin. List free events, or sell tickets with the money going straight to your own Stripe account. EventKiln events appear in the same layouts and calendar as your Eventbrite events, or on their own. EventKiln has a free Starter plan. [Find out about EventKiln](https://eventkiln.com/wordpress?utm_source=wporg&utm_medium=readme&utm_campaign=dee)
+
 = PHP 8.5 compatible =
 Tested on PHP up to 8.5
 
@@ -58,8 +58,8 @@ Tested on PHP up to 8.5
 * Allow you to set title url.
 * Display thumbnails, with customizable size and alignment.
 * Exclude current event post
-* Read more option, with a link direct to the Eventbrite page.
-* Book now option with a link direct to the Eventbrite page.
+* Read more option, with a link direct to the event's page.
+* Book now option with a link direct to the event's ticket page.
 * Show EventKiln events alongside your Eventbrite events, or on their own
 * Decide if you want Eventbrite to open in a new tab, or not
 * Easy to customise CSS.
@@ -94,20 +94,20 @@ Now the free version is used by many thousands of users and the Pro version is u
 
 This section describes how to install and get going with the plugin
 
-Install and activate the plugin. Get and Eventbrite API key and add it. Place your shortcodes on pages or posts.
+Install and activate the plugin. Get an Eventbrite API key and add it. Place your shortcodes on pages or posts.
 [youtube https://youtu.be/XuV56mOz1Q8 ]
 
 = Basic Plugin Installation =
 **Through Dashboard**
 
-1. Log in to your WordPress admin panel and go to Plugins -> Add New
-1. Type widget for eventbrite api in the search box and click on search button.
-1. Find Widget for Eventbrite API plugin.
+1. Log in to your WordPress admin panel and go to Plugins -> Add New Plugin
+1. Search for Display Eventbrite Events.
+1. Find Display Eventbrite Events by Fullworks.
 1. Then click on Install Now after that activate the plugin.
 
 **Installing Via FTP**
 
-1. Download the plugin to your hardisk.
+1. Download the plugin to your hard disk.
 2. Unzip.
 3. Upload the **widget-for-eventbrite-api** folder into your plugins directory.
 4. Log in to your WordPress admin panel and click the Plugins menu.
@@ -128,7 +128,7 @@ https://fullworksplugins.com/products/widget-for-eventbrite/eventbrite-shortcode
 
 = How do I install and connect to Eventbrite? =
 Install and activate the plugin
-Get and Eventbrite API key and add it to the settings page and save.
+Get an Eventbrite API key and add it to the settings page and save.
 [youtube https://youtu.be/XuV56mOz1Q8 ]
 
 = How do I display the Events on my website? =
@@ -138,11 +138,14 @@ Also some page builders and other plugins allow you to set up widgets on pages.
 
 [all the free options are documented on this page, click to see](https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/usage/using-the-shortcode/#free)
 = I installed it and it looks ugly? =
-Every theme is different so if is close to impossible to style that will work with every theme. Normally a few simple tweaks to CSS will sort out issues like bullet points where you don't expect them, or font sizes.
+Every theme is different so it is close to impossible to style that will work with every theme. Normally a few simple tweaks to CSS will sort out issues like bullet points where you don't expect them, or font sizes.
 See also [the knowledge base articles here](https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/styling/)
 
 = Can I show events that aren't on Eventbrite? =
-Yes. Connect EventKiln under Settings, EventKiln, and its events show alongside your Eventbrite events. To show just one kind, use source="eventkiln" or source="eventbrite" on the shortcode, or Show Events From on the block or Elementor widget. [How to show EventKiln events](https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/usage/show-eventkiln-events/)
+Yes, if they're on EventKiln. Create a free EventKiln account, add your EventKiln API key on the plugin's Settings page, and its events show alongside your Eventbrite events. To show just one kind, use source="eventkiln" or source="eventbrite" on the shortcode, or Show Events From on the block or Elementor widget. [How to show EventKiln events](https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/usage/show-eventkiln-events/)
+
+= Is EventKiln free? =
+EventKiln has a free Starter plan, with no charge on free tickets. [EventKiln for WordPress sites](https://eventkiln.com/wordpress?utm_source=wporg&utm_medium=readme&utm_campaign=dee)
 
 = Where can I find full documentation? =
 There is a detailed [knowledge base here](https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress)
@@ -151,10 +154,10 @@ There is a detailed [knowledge base here](https://fullworksplugins.com/docs/disp
 Go to the WP Editor and search for Eventbrite, add the block and select the desired options.
 In Elementor add a new widget Eventbrite and adjust the options as required.
 You can use a shortcode, the simplest form is [wfea]. You need to connect to your Eventbrite account to enable it to read your events, how to do that is detailed in the next FAQ.
-. If anything is not clear, why not ask in the support forum for clarification.  If you need more personalised support, then you can sign up for the Pro version right from inside your WordPress admin panel.
+If anything is not clear, why not ask in the support forum for clarification.  If you need more personalised support, then you can sign up for the Pro version right from inside your WordPress admin panel.
 
 = How to set up a connection to Eventbrite? =
-You will need to obtain a personal OAuth key from your Eventbrite account and enter it in the settings page, this is fairly straight forward and [instructions are here](https://fullworksplugins.com/technical-documentation/widget-for-eventbrite-technical-installation/eventbrite-key/)
+Log in to Eventbrite and go to [https://www.eventbrite.com/platform/api-keys](https://www.eventbrite.com/platform/api-keys). Copy "Your private token", paste it into the plugin's Settings page and save. [Connect to Eventbrite](https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/installation-display-eventbrite-events-in-wordpress/connect-to-eventbrite/)
 
 = Does this work on multisite? =
 Yes.
@@ -178,13 +181,13 @@ Upgrade to get new awesome features and support. Upgrade directly from the WordP
 Additional features include:
 
 Up to a total of 80 options giving so many configuration and filtering choices.
-If you are not using the Block Editor or Elementor, you can use use the demo shortcode builder to explore the pro options, this works with your events. [See the shortcode builder here](https://fullworksplugins.com/products/widget-for-eventbrite/eventbrite-shortcode-demo/)
+If you are not using the Block Editor or Elementor, you can use the demo shortcode builder to explore the pro options, this works with your events. [See the shortcode builder here](https://fullworksplugins.com/products/widget-for-eventbrite/eventbrite-shortcode-demo/)
 Or review a full description of all options in the free and paid for plans. [Free and Premium plan detailed option here](https://fullworksplugins.com/docs/display-eventbrite-events-in-wordpress/usage/using-the-shortcode/)
 
 
 * filter events by Eventbrite collections
 * cookie consent aware embedded checkout - nothing loads from Eventbrite, and no Eventbrite advertising or social cookies are set, until your visitor has given consent through your cookie banner. Works with any consent plugin that supports the WP Consent API, such as Complianz, CookieYes or Cookiebot
-* choice of pre built shortcode templates tested on popular themes such as Divi, Astra, OceanpWP, Enfold, Genesis and WP themes
+* choice of pre built shortcode templates tested on popular themes such as Divi, Astra, OceanWP, Enfold, Genesis and WP themes
 * pre-built calendar page template with grid layout
 * pre-built calendar view in month list format, and custom periods
 * full width, venue, short date, card and grid layouts
@@ -206,7 +209,7 @@ Or review a full description of all options in the free and paid for plans. [Fre
 
 This plugin connects to the following services. No website visitor personal data is sent to either.
 
-**Eventbrite** - to fetch your events, using the Eventbrite API key you enter in the settings. Requests go from your server to www.eventbriteapi.com and include your API key, plus the organization, event and collection IDs being displayed. In the Pro plugin, the optional on-site checkout loads Eventbrite's checkout script from www.eventbrite.com in the visitor's browser. [Eventbrite API terms of use](https://www.eventbrite.com/platform/terms), [Eventbrite privacy policy](https://www.eventbrite.com/help/en-us/articles/460838/eventbrite-privacy-policy/).
+**Eventbrite** - to fetch your events, using the Eventbrite API key you enter in the settings. Requests go from your server to www.eventbriteapi.com and include your API key, plus the organization, event and collection IDs being displayed. In the Pro plugin, the optional on-site checkout loads Eventbrite's checkout script from www.eventbrite.com in the visitor's browser. [Eventbrite API terms of use](https://www.eventbrite.com/help/en-us/articles/833731/eventbrite-api-terms-of-use/), [Eventbrite privacy policy](https://www.eventbrite.com/help/en-us/articles/460838/eventbrite-privacy-policy/).
 
 **EventKiln (optional)** - only if you enter an EventKiln API key in the settings. Your server then fetches your organisation's published, public, upcoming events from EventKiln (https://eventkiln.com) once a day (as often as your Eventbrite events are refreshed), and when you save the settings. Each request includes your EventKiln API key. In the Pro plugin, the optional on-site checkout loads EventKiln's checkout script and checkout page from eventkiln.com in the visitor's browser; EventKiln says these set no cookies and use no browser storage. In the Pro plugin, if your EventKiln API key has the webhooks permission, your server also registers this website's webhook address with EventKiln so EventKiln can tell it when your events change; turn this off with the Instant updates setting. Nothing is sent to EventKiln until it is set up. EventKiln terms: https://eventkiln.com/terms - privacy policy: https://eventkiln.com/privacy
 
