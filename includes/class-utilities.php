@@ -300,8 +300,11 @@ class Utilities {
     public function get_api_reference_from_key( $key ) {
         $options = get_option( 'widget-for-eventbrite-api-settings', Admin_Settings::option_defaults( 'widget-for-eventbrite-api-settings' ) );
         $api_keys = $options['key'];
+        if ( !is_array( $api_keys ) ) {
+            return false;
+        }
         foreach ( $api_keys as $ref => $item ) {
-            if ( $item['key'] == $key ) {
+            if ( isset( $item['key'] ) && $item['key'] == $key ) {
                 return $ref;
                 // Returns the matched item as soon as it's found
             }

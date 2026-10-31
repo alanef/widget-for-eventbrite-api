@@ -372,7 +372,7 @@ class Eventbrite_Manager {
                         'msg'  => 'Widget for Eventbrite: Debug:  Cache hit',
                         'call' => array(
                             'endpoint' => $endpoint,
-                            'params'   => $params,
+                            'params'   => self::loggable_params( $params ),
                             'id'       => $id,
                         ),
                     ), true ) );
@@ -393,7 +393,7 @@ class Eventbrite_Manager {
                         'msg'  => 'Widget for Eventbrite: Debug:  No Cache so will try refresh',
                         'call' => array(
                             'endpoint' => $endpoint,
-                            'params'   => $params,
+                            'params'   => self::loggable_params( $params ),
                             'id'       => $id,
                         ),
                     ), true ) );
@@ -470,7 +470,7 @@ class Eventbrite_Manager {
                     'msg'   => 'Widget for Eventbrite: Debug: Call issue',
                     'call'  => array(
                         'endpoint' => $endpoint,
-                        'params'   => $params,
+                        'params'   => self::loggable_params( $params ),
                         'id'       => $id,
                     ),
                     'error' => Utilities::get_instance()->get_api_error_string( $request ),
@@ -841,6 +841,19 @@ class Eventbrite_Manager {
     }
 
     /**
+     * Request params safe to write to a debug log: the API token is masked to its last 4 characters.
+     *
+     * @param array $params Request params.
+     * @return array
+     */
+    protected static function loggable_params( $params ) {
+        if ( is_array( $params ) && !empty( $params['token'] ) ) {
+            $params['token'] = '****' . substr( (string) $params['token'], -4 );
+        }
+        return $params;
+    }
+
+    /**
      * Custom version of add_query_arg that preserves dot notation in parameter names
      * Safely adds query parameters to a URL without converting dots to underscores
      *
@@ -849,6 +862,8 @@ class Eventbrite_Manager {
      * @return string The modified URL with parameters added
      */
     protected function safe_add_query_arg( $params, $url ) {
+        // The token goes in the Authorization header only, never the URL, which ends up in errors and logs.
+        unset($params['token']);
         // If no parameters or empty URL, return the URL as is
         if ( empty( $params ) || empty( $url ) ) {
             return $url;

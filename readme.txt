@@ -3,7 +3,7 @@ Contributors: fullworks
 Tags: eventbrite, widget, events, eventbrite widget, eventbrite shortcode
 Requires at least: 5.9
 Tested up to: 7.1
-Stable tag: 6.9.0
+Stable tag: 6.9.1
 Requires PHP: 7.4
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
@@ -120,8 +120,7 @@ Copy the key - you don't need to do anything else
 
 = Add your shortcode, Block or Elementor Widget to a page or post =
 Explore the options inside the Block Editor or Elementor Widget.
-For the shortcode, as there are so many options we created the shortcode builder page on our site to make this easier to explore.
-https://fullworksplugins.com/products/widget-for-eventbrite/eventbrite-shortcode-demo/
+For the shortcode, as there are so many options we created the shortcode builder page on our site to make this easier to explore. [Open the shortcode builder](https://fullworksplugins.com/products/widget-for-eventbrite/eventbrite-shortcode-demo/)
 
 
 == Frequently Asked Questions ==
@@ -211,7 +210,7 @@ This plugin connects to the following services. No website visitor personal data
 
 **Eventbrite** - to fetch your events, using the Eventbrite API key you enter in the settings. Requests go from your server to www.eventbriteapi.com and include your API key, plus the organization, event and collection IDs being displayed. In the Pro plugin, the optional on-site checkout loads Eventbrite's checkout script from www.eventbrite.com in the visitor's browser. [Eventbrite API terms of use](https://www.eventbrite.com/help/en-us/articles/833731/eventbrite-api-terms-of-use/), [Eventbrite privacy policy](https://www.eventbrite.com/help/en-us/articles/460838/eventbrite-privacy-policy/).
 
-**EventKiln (optional)** - only if you enter an EventKiln API key in the settings. Your server then fetches your organisation's published, public, upcoming events from EventKiln (https://eventkiln.com) once a day (as often as your Eventbrite events are refreshed), and when you save the settings. Each request includes your EventKiln API key. In the Pro plugin, the optional on-site checkout loads EventKiln's checkout script and checkout page from eventkiln.com in the visitor's browser; EventKiln says these set no cookies and use no browser storage. In the Pro plugin, if your EventKiln API key has the webhooks permission, your server also registers this website's webhook address with EventKiln so EventKiln can tell it when your events change; turn this off with the Instant updates setting. Nothing is sent to EventKiln until it is set up. EventKiln terms: https://eventkiln.com/terms - privacy policy: https://eventkiln.com/privacy
+**EventKiln (optional)** - only if you enter an EventKiln API key in the settings. Your server then fetches your organisation's published, public, upcoming events from [EventKiln](https://eventkiln.com) once a day (as often as your Eventbrite events are refreshed), and when you save the settings. Each request includes your EventKiln API key. In the Pro plugin, the optional on-site checkout loads EventKiln's checkout script and checkout page from eventkiln.com in the visitor's browser; EventKiln says these set no cookies and use no browser storage. In the Pro plugin, if your EventKiln API key has the webhooks permission, your server also registers this website's webhook address with EventKiln so EventKiln can tell it when your events change; turn this off with the Instant updates setting. Nothing is sent to EventKiln until it is set up. [EventKiln terms](https://eventkiln.com/terms), [EventKiln privacy policy](https://eventkiln.com/privacy).
 
 == Privacy and GDPR ==
 

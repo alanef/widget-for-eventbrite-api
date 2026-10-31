@@ -1,3 +1,7 @@
+= 6.9.1 =
+* Security: improved security
+* Fixed: in the block editor and Elementor, licences on the first paid plan (2017) and the older High Powered plan, and Professional trials taken without a payment method, now get the High Powered options and premium layouts, as they already did in shortcodes
+
 = 6.9.0 =
 * Fixed: the free version from wordpress.org included some Pro price formatting code, left in by a misnamed function, and a Pro-only function that would have stopped the site if anything had called it. Neither is in the free version any more
 * Fixed: licences on the first paid plan (2017) and the older High Powered plan sold in 2018 and 2019 now get the High Powered features (the premium layouts, the popup and the other High Powered options in shortcodes, blocks and Elementor). Since that plan was retired they only had the basic Pro options
