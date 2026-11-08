@@ -60,7 +60,8 @@ class Shortcodes {
         $sc_atts = shortcode_atts( \WidgetForEventbriteAPI\FrontEnd\Frontend::default_args( $initial_atts ), $initial_atts, 'wfea' );
         $front_end = new Frontend($this->plugin_name, $this->version, $this->utilities);
         $atts = $front_end->sanitize_atts( $sc_atts );
-        return $front_end->do_query_template( $atts ) . $debug_message;
+        $key_notice = '';
+        return $key_notice . $front_end->do_query_template( $atts ) . $debug_message;
     }
 
     private function check_valid_att( $atts ) {

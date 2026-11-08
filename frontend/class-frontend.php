@@ -399,7 +399,6 @@ class FrontEnd {
         );
         $frontend_data = array(
             'ajaxurl' => admin_url( 'admin-ajax.php' ),
-            'nonce'   => wp_create_nonce( 'wfea_modal_nonce' ),
         );
         wp_localize_script( $this->plugin_name, 'wfea_frontend', $frontend_data );
         if ( !WP_DEBUG ) {
@@ -536,16 +535,17 @@ class FrontEnd {
         }
     }
 
+    /**
+     * Not hooked any more: get_long_description_html() cleans and wraps the description itself.
+     * Kept because it was public, so a site's code may call it.
+     *
+     * @param string $content description markup
+     * @param object $event   not used
+     *
+     * @return string
+     */
     public function wfea_the_content( $content, $event = null ) {
-        $strip = apply_filters( 'wfea_strip_eb_inline_style', true );
-        if ( true === $strip ) {
-            $content = preg_replace( '/(<[^>]+) style=".*?"/i', '$1', $content );
-        }
-        $class = ( apply_filters( 'wfea_strip_eb_inline_style', true ) ? 'local_style' : '' );
-        // add a container class to any iframe
-        $content = preg_replace( '/<iframe/i', '<div class="wfea_eb_content_iframe_container"><iframe', $content );
-        $content = preg_replace( '/<\\/iframe>/i', '</iframe></div>', $content );
-        return '<div class="wfea_eb_content ' . $class . '">' . $content . '</div>';
+        return $this->utilities->clean_description_html( $content );
     }
 
     private function atts_bool( $att ) {

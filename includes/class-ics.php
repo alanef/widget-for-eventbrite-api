@@ -79,6 +79,8 @@ class ICS {
 	const DT_FORMAT = 'Ymd\THis\Z';
 
 	protected $properties = array();
+	// All-day event: DTSTART and DTEND are written as dates (DTEND is the day after the last day).
+	protected $all_day = false;
 	private $available_properties = array(
 		'description',
 		'dtend',
@@ -98,7 +100,9 @@ class ICS {
 				$this->set($k, $v);
 			}
 		} else {
-			if (in_array($key, $this->available_properties)) {
+			if ('allday' === $key) {
+				$this->all_day = (bool) $val;
+			} elseif (in_array($key, $this->available_properties)) {
 				$this->properties[$key] = $this->sanitize_val($val, $key);
 			}
 		}
@@ -122,6 +126,10 @@ class ICS {
 		// Build ICS properties - add header
 		$props = array();
 		foreach($this->properties as $k => $v) {
+			if ($this->all_day && in_array($k, array('dtstart', 'dtend'), true)) {
+				$props[strtoupper($k) . ';VALUE=DATE'] = substr($v, 0, 8);
+				continue;
+			}
 			$props[strtoupper($k . ($k === 'url' ? ';VALUE=URI' : ''))] = $v;
 		}
 

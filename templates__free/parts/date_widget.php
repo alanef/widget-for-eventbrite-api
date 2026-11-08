@@ -6,5 +6,5 @@ defined( 'ABSPATH' ) || exit;
  */
 if ( $data->utilities->get_element( 'date', $data->args ) ) {
 		$wfea_date = $data->utilities->get_event_time($data->args);
-		printf( '<time class="eaw-time published" datetime="%1$s">%2$s</time>', esc_html( get_the_modified_date( 'c', $data->utilities->get_event() ) ), esc_html( $wfea_date ) );
+		printf( '<time class="eaw-time published" datetime="%1$s">%2$s</time>', esc_html( $data->utilities->is_time_tbc() ? $data->utilities->get_event_datetime_attr() : get_the_modified_date( 'c', $data->utilities->get_event() ) ), esc_html( $wfea_date ) );
 }

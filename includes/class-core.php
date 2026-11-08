@@ -219,12 +219,6 @@ class Core {
             9,
             2
         );
-        add_filter(
-            'wfea_the_content',
-            array($plugin_public, 'wfea_the_content'),
-            10,
-            2
-        );
         add_action( 'wp_enqueue_scripts', array($plugin_public, 'enqueue_styles') );
         add_action( 'wp_enqueue_scripts', array($plugin_public, 'enqueue_scripts') );
         // Prevent JS optimizers from deferring calendar scripts (runs late to override optimizer filters).

@@ -91,7 +91,7 @@ class Utilities {
     }
 
     public static function get_allowed_html() {
-        $html = wp_kses_allowed_html( 'post' );
+        $html = self::add_description_attributes( wp_kses_allowed_html( 'post' ) );
         return array_merge( $html, array(
             'svg'    => array(
                 'class'           => true,
@@ -289,12 +289,98 @@ class Utilities {
         return $error_string;
     }
 
+    /**
+     * Keep only class names in a space-separated style setting. The setting is printed into class
+     * attributes and passed inside a [wfea style="..."] shortcode, so a quote or a "]" in it could
+     * break out of either.
+     *
+     * @param string $style space-separated class names
+     *
+     * @return string
+     */
+    public static function sanitize_style_classes( $style ) {
+        if ( !is_string( $style ) ) {
+            return '';
+        }
+        $classes = array_filter( array_map( 'sanitize_html_class', preg_split( '/\\s+/', $style ) ) );
+        return implode( ' ', $classes );
+    }
+
+    /**
+     * sprintf() for format strings a site owner or a translation supplies. A bad placeholder (such as
+     * %3$s with two values, or a stray %) throws on PHP 8 and would stop the page, so return the
+     * fallback instead.
+     *
+     * @param string $format
+     * @param array  $values
+     * @param string $fallback
+     *
+     * @return string
+     */
+    public static function safe_sprintf( $format, $values, $fallback = '' ) {
+        try {
+            $output = vsprintf( (string) $format, $values );
+        } catch ( \Throwable $e ) {
+            $output = false;
+        }
+        return ( false === $output ? $fallback : $output );
+    }
+
     public static function map_api_index_to_key( $index, $api_keys = array() ) {
         if ( empty( $api_keys ) ) {
             $options = get_option( 'widget-for-eventbrite-api-settings', Admin_Settings::option_defaults( 'widget-for-eventbrite-api-settings' ) );
             $api_keys = $options['key'];
         }
         return ( !empty( $api_keys[$index]['key'] ) ? $api_keys[$index]['key'] : $index );
+    }
+
+    /**
+     * The status a list queries with, combining status with the status_* parts the same way
+     * Frontend::build_query() does.
+     *
+     * @param array $atts
+     *
+     * @return string
+     */
+    public static function effective_status( $atts ) {
+        $status = ( isset( $atts['status'] ) && is_scalar( $atts['status'] ) ? (string) $atts['status'] : 'live' );
+        if ( 'live' === $status ) {
+            if ( isset( $atts['status_live'] ) && false === $atts['status_live'] ) {
+                $status = '';
+            }
+            if ( isset( $atts['status_all'] ) && true === $atts['status_all'] ) {
+                $status = 'all';
+            } else {
+                foreach ( array('started', 'ended', 'canceled') as $part ) {
+                    if ( isset( $atts['status_' . $part] ) && true === $atts['status_' . $part] ) {
+                        $status .= $part;
+                    }
+                }
+            }
+        }
+        return str_replace( 'cancelled', 'canceled', strtolower( $status ) );
+    }
+
+    private static function is_true_setting( $value ) {
+        return in_array( $value, array(
+            true,
+            1,
+            '1',
+            'true'
+        ), true );
+    }
+
+    /**
+     * HMAC over the whole set of protected settings, in a fixed order, so none can be changed,
+     * added or dropped without breaking it.
+     *
+     * @param array $settings api_key, display_private, status
+     *
+     * @return string
+     */
+    private static function list_settings_signature( $settings ) {
+        $canonical = wp_json_encode( array($settings['api_key'], $settings['display_private'], $settings['status']) );
+        return hash_hmac( 'sha256', 'wfea-list-settings|' . $canonical, wp_salt( 'auth' ) );
     }
 
     public function get_api_reference_from_key( $key ) {
@@ -709,6 +795,9 @@ class Utilities {
      * @api
      */
     function get_event_time( $args = false, $exclude_date = false ) {
+        if ( $this->is_time_tbc() ) {
+            return $this->get_event_time_tbc( $args, $exclude_date );
+        }
         // Collect our formats from the admin.
         $date_format = apply_filters( 'wfea_combined_date_time_date_format', get_option( 'date_format' ) . ', ', $args );
         $time_format = apply_filters( 'wfea_combined_date_time_time_format', get_option( 'time_format' ), $args );
@@ -730,6 +819,38 @@ class Utilities {
             esc_html( $end_time ),
             ( empty( $end_time ) ? '' : apply_filters( 'wfea_event_time_separator', '-', $args ) )
         );
+        return apply_filters(
+            'wfea_event_time',
+            $event_time,
+            $this->get_event_start(),
+            $this->get_event_end(),
+            $args
+        );
+    }
+
+    /**
+     * get_event_time() for an event whose time is still to be confirmed: the date (and end date
+     * of a multi-day event, when end times are shown) followed by the label, never 00:00.
+     *
+     * @internal
+     */
+    private function get_event_time_tbc( $args, $exclude_date ) {
+        $label = $this->get_time_tbc_label();
+        if ( true === $exclude_date ) {
+            $event_time = esc_html( $label );
+        } else {
+            $date_format = get_option( 'date_format' );
+            $dates = mysql2date( $date_format, $this->get_event_start()->local );
+            if ( (false === $args || !empty( $args['show_end_time'] )) && $this->is_multiday_event() ) {
+                $dates .= ' ' . apply_filters( 'wfea_event_time_separator', '-', $args ) . ' ' . mysql2date( $date_format, $this->get_event_end()->local );
+            }
+            $event_time = sprintf( 
+                // translators: %1$s = event date or dates, %2$s = 'Time to be confirmed'
+                _x( '%1$s, %2$s', 'Event date when the time is to be confirmed', 'widget-for-eventbrite-api' ),
+                esc_html( $dates ),
+                esc_html( $label )
+             );
+        }
         return apply_filters(
             'wfea_event_time',
             $event_time,
@@ -763,6 +884,9 @@ class Utilities {
      * @internal
      */
     public function get_calendar_utc_times() {
+        if ( $this->is_time_tbc() ) {
+            return $this->get_tbc_dates( 'Ymd' );
+        }
         $event = $this->get_event();
         $start = ( !empty( $event->start->utc ) ? strtotime( $event->start->utc ) : false );
         if ( false === $start ) {
@@ -893,6 +1017,63 @@ class Utilities {
     }
 
     /**
+     * Whether the current event's time is still to be confirmed (EventKiln only). Its start and
+     * end are then the start and end of the day, kept for sorting, and no time should be shown.
+     *
+     * @return bool
+     * @api
+     */
+    public function is_time_tbc() {
+        $event = $this->get_event();
+        return is_object( $event ) && !empty( $event->time_tbc );
+    }
+
+    /**
+     * The label shown in place of the time when it is still to be confirmed.
+     *
+     * @return string
+     * @api
+     */
+    public function get_time_tbc_label() {
+        return apply_filters( 'wfea_time_tbc_label', __( 'Time to be confirmed', 'widget-for-eventbrite-api' ), $this->get_event() );
+    }
+
+    /**
+     * First day and the day after the last day of the current event, local, in $format: the
+     * all-day range calendars expect (their end date is exclusive).
+     *
+     * @return array start, end
+     * @internal
+     */
+    public function get_tbc_dates( $format ) {
+        $start = substr( (string) $this->get_event_start()->local, 0, 10 );
+        $end = substr( (string) $this->get_event_end()->local, 0, 10 );
+        $start = strtotime( $start . ' 00:00:00 UTC' );
+        $end = strtotime( $end . ' 00:00:00 UTC' );
+        if ( false === $start ) {
+            return array('', '');
+        }
+        if ( false === $end || $end < $start ) {
+            $end = $start;
+        }
+        return array(gmdate( $format, $start ), gmdate( $format, $end + DAY_IN_SECONDS ));
+    }
+
+    /**
+     * Value for a <time datetime=""> attribute for the current event's start: the full date and
+     * time, or the date alone when the time is to be confirmed.
+     *
+     * @return string
+     * @api
+     */
+    public function get_event_datetime_attr() {
+        if ( $this->is_time_tbc() ) {
+            return substr( (string) $this->get_event_start()->local, 0, 10 );
+        }
+        return get_the_date( 'c', $this->get_event() );
+    }
+
+    /**
      * check if a multiday event
      * @return bool
      * @internal
@@ -991,6 +1172,65 @@ class Utilities {
     }
 
     /**
+     * Clean and wrap an event description.
+     *
+     * @param string $content description markup from outside this site
+     *
+     * @return string
+     * @api
+     */
+    public function clean_description_html( $content ) {
+        // A description is text from outside this site, so kses is the last thing to touch it: any later
+        // rewrite could rebuild markup kses had cleaned. A site's own wfea_the_content filter runs after.
+        // wp_kses() would drop the tags of a script or style block and show the code inside as text.
+        $strip = apply_filters( 'wfea_strip_eb_inline_style', true );
+        $content = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', '', $content );
+        $content = wptexturize( $content );
+        $content = convert_smilies( $content );
+        $content = convert_chars( $content );
+        $content = str_replace( ']]>', ']]&gt;', $content );
+        // add a container class to any iframe
+        $content = preg_replace( '/<iframe/i', '<div class="wfea_eb_content_iframe_container"><iframe', $content );
+        $content = preg_replace( '/<\\/iframe>/i', '</iframe></div>', $content );
+        $allowed = self::add_description_attributes( wp_kses_allowed_html( 'post' ) );
+        if ( true === $strip ) {
+            foreach ( $allowed as $tag => $attributes ) {
+                if ( is_array( $attributes ) ) {
+                    unset($allowed[$tag]['style']);
+                }
+            }
+        }
+        return '<div class="wfea_eb_content ' . (( $strip ? 'local_style' : '' )) . '">' . wp_kses( $content, $allowed ) . '</div>';
+    }
+
+    /**
+     * What a description's images and videos keep on top of post content's allow-list. Not the
+     * iframe's allow attribute: its permission prompts for camera, microphone and location would
+     * show this site's name for a frame the description chose.
+     *
+     * @param array $allowed kses allow-list
+     *
+     * @return array
+     */
+    private static function add_description_attributes( $allowed ) {
+        if ( isset( $allowed['iframe'] ) ) {
+            $allowed['iframe'] += array(
+                'title'   => true,
+                'loading' => true,
+                'class'   => true,
+                'style'   => true,
+            );
+        }
+        if ( isset( $allowed['img'] ) ) {
+            $allowed['img'] += array(
+                'srcset' => true,
+                'sizes'  => true,
+            );
+        }
+        return $allowed;
+    }
+
+    /**
      * Template function to diaply content
      * @return mixed|null
      * @api
@@ -1004,10 +1244,7 @@ class Utilities {
         } else {
             $content = '';
         }
-        $content = wptexturize( $content );
-        $content = convert_smilies( $content );
-        $content = convert_chars( $content );
-        $content = str_replace( ']]>', ']]&gt;', $content );
+        $content = $this->clean_description_html( $content );
         $content = apply_filters( 'wfea_the_content', $content, $event );
         return $content;
     }
@@ -1033,10 +1270,10 @@ class Utilities {
         $wfea_event = $this->get_event();
         // Use new dedicated property if available
         if ( isset( $wfea_event->wfea_excerpt_text ) && !empty( $wfea_event->wfea_excerpt_text ) ) {
-            return $wfea_event->wfea_excerpt_text;
+            return wp_strip_all_tags( $wfea_event->wfea_excerpt_text );
         }
         // Fallback for backward compatibility
-        return ( isset( $wfea_event->summary ) ? $wfea_event->summary : '' );
+        return ( isset( $wfea_event->summary ) ? wp_strip_all_tags( $wfea_event->summary ) : '' );
     }
 
     /**

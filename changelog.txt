@@ -1,3 +1,20 @@
+= 6.9.2 =
+* Security: improved security
+* Changed: event descriptions and summaries are now cleaned before they are shown in lists, calendars and pop-ups. Formatting, links, images and embedded videos are kept; script and style blocks in a description are removed. Summaries are shown as plain text
+* Changed: if your site has its own wfea_the_content filter: the plugin no longer hooks that filter itself, and the description now reaches it already cleaned and wrapped in its container, at any priority. A callback below priority 10 used to get the description unwrapped, so check any that looks for or adds the wrapper. remove_all_filters( 'wfea_the_content' ) no longer removes the wrapper or the style stripping. What your callback returns is shown as it is, except in the details pop-up, where the whole pop-up is cleaned again just before it is sent, so anything not allowed there, such as an onclick, is removed
+* Changed: if your site turns off inline style stripping with the wfea_strip_eb_inline_style filter, inline styles in event descriptions are kept as Eventbrite sent them, so only turn it off if you trust the events you show
+* Changed: event descriptions now drop an embedded video's allow attribute. A video still plays and can go full screen, but some embed features that rely on allow, such as autoplay, may not work. To keep it, add allow to iframe through the wp_kses_allowed_html filter
+* Fixed: the cookie consent gate now holds back Eventbrite's script until the visitor consents on block theme calendar pages and on classic themes with Elementor active
+* Changed: on classic themes with Elementor active, if a wfea_consent_gate_enabled callback turns the gate off for particular shortcodes, Get Tickets now opens the Eventbrite page instead of the pop-up
+* Fixed: while the consent gate holds back the checkout, a calendar event now links to its Eventbrite page. It used to go nowhere
+* Fixed: some event titles no longer stop a calendar from drawing
+* Fixed: calendars with content="true" on Elementor pages no longer log a JavaScript error and fetch their events a second time
+* Added: administrators see a reminder above a list whose shortcode has an Eventbrite key typed into it, to save the key in Settings instead
+* Fixed: the location title heading had a broken class name
+* Fixed: a door-time label with a stray % no longer stops the page loading
+* Fixed: the event details pop-up no longer opens blank on cached pages
+* Fixed: on cached pages, the Outlook and Apple 'Add to Calendar' buttons no longer download an empty file
+* Added: events with the time to be confirmed show 'Time to be confirmed' instead of midnight (EventKiln source). Nothing else on the page claims midnight either: the date markup gives the date only, and the calendar and .ics show them as all-day events
 = 6.9.1 =
 * Security: improved security
 * Fixed: in the block editor and Elementor, licences on the first paid plan (2017) and the older High Powered plan, and Professional trials taken without a payment method, now get the High Powered options and premium layouts, as they already did in shortcodes

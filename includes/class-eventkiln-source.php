@@ -489,6 +489,9 @@ class EventKiln_Source {
 			'is_series_parent'       => false,
 			'series_dates'           => false,
 			'online_event'           => ! empty( $raw['is_online'] ),
+			// The organiser hasn't set a time: starts_at is 00:00 local and ends_at 23:59 local,
+			// kept so sorting still works, so the times must not be shown.
+			'time_tbc'               => ! empty( $raw['time_tbc'] ),
 			'tags'                   => array(),
 			'music_properties'       => $this->map_music_properties( $raw ),
 			'performances'           => $this->map_lineup( $raw ),

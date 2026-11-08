@@ -384,7 +384,11 @@ class Eventbrite_Widget_Elementor extends Widget_Base {
         ?>
         </div>
 		<?php 
-        echo wp_kses( ob_get_clean(), Utilities::get_allowed_html() );
+        // Not passed through kses: this is the shortcode's own output, already escaped where it is built,
+        // and the calendar's inline script carries JSON that kses rewrites into running code. The settings
+        // reach the shortcode through esc_attr and the style through sanitize_style_classes.
+        echo ob_get_clean();
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     }
 
     /**

@@ -599,7 +599,8 @@ class Eventbrite_Widget_Elementor_Helpers {
         }
         $add = ( isset( $params['style'] ) ? ' ' . $params['style'] : '' );
         $style .= $add;
-        return $style;
+        // It goes inside [wfea style="..."], so only class names: no quote or "]" can end it.
+        return Utilities::sanitize_style_classes( $style );
     }
 
     /**

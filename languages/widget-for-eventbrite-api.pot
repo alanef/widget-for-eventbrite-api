@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Display Eventbrite Events 6.9.1\n"
+"Project-Id-Version: Display Eventbrite Events 6.9.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/widget-for-eventbrite-api\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-30T12:50:36+00:00\n"
+"POT-Creation-Date: 2026-11-08T11:27:08+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: widget-for-eventbrite-api\n"
@@ -790,7 +790,7 @@ msgid "Register »"
 msgstr ""
 
 #: blocks/class-blocks.php:39
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:828
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:827
 msgid "Cancelled"
 msgstr ""
 
@@ -800,29 +800,29 @@ msgstr ""
 
 #: blocks/class-blocks.php:41
 #: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:459
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:848
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:847
 msgid "Ended"
 msgstr ""
 
 #: blocks/class-blocks.php:42
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:859
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:858
 msgid "Sales Ended"
 msgstr ""
 
 #: blocks/class-blocks.php:43
-#: includes/class-utilities.php:1615
+#: includes/class-utilities.php:1849
 msgid "Sold Out"
 msgstr ""
 
 #: blocks/class-blocks.php:44
-#: includes/class-utilities.php:1613
+#: includes/class-utilities.php:1847
 #: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:458
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:871
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:870
 msgid "Started"
 msgstr ""
 
 #: blocks/class-blocks.php:45
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:877
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:876
 msgid "Unavailable"
 msgstr ""
 
@@ -837,13 +837,17 @@ msgid "Min. Age: "
 msgstr ""
 
 #. translators: %1$s time (e.g.Show starts: 19:30)
+#. translators: %s is the show start time.
 #: frontend/class-frontend.php:158
+#: includes/class-utilities.php:771
 #, php-format
 msgid "Show: %s"
 msgstr ""
 
 #. translators: %1$s time (e.g. Doors open: 18:30) %2$s time (e.g.Show starts: 19:30)
+#. translators: %1$s is the door opening time, %2$s the show start time.
 #: frontend/class-frontend.php:161
+#: includes/class-utilities.php:782
 #, php-format
 msgid "Doors: %1$s | Show: %2$s"
 msgstr ""
@@ -854,7 +858,7 @@ msgid "Search events"
 msgstr ""
 
 #: frontend/class-frontend.php:188
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:904
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:903
 #: widgets/class-widget.php:112
 #: blocks/display-eventbrite-calendar/search-box.js:10
 msgid "Search"
@@ -872,56 +876,64 @@ msgstr ""
 msgid "API Key is invalid - this may happen when you change your Eventbrite login password - check plugin settings"
 msgstr ""
 
-#: frontend/class-frontend.php:346
-#: includes/class-utilities.php:2357
+#: frontend/class-frontend.php:356
+#: includes/class-utilities.php:2729
 msgid "Free"
 msgstr ""
 
-#: frontend/class-frontend.php:368
+#: frontend/class-frontend.php:378
 msgid "Selected LAYOUT=\""
 msgstr ""
 
-#: frontend/class-frontend.php:370
+#: frontend/class-frontend.php:380
 msgid "\" Not found in any paths. Your plan is "
 msgstr ""
 
-#: frontend/class-frontend.php:372
+#: frontend/class-frontend.php:382
 msgid " and includes these layouts "
 msgstr ""
 
-#: frontend/class-frontend.php:374
+#: frontend/class-frontend.php:384
 msgid " and any custom developed layouts you have made."
 msgstr ""
 
-#: frontend/class-frontend.php:375
+#: frontend/class-frontend.php:385
 msgid "Paths checked are:"
 msgstr ""
 
-#: frontend/class-frontend.php:636
-#: frontend/class-frontend.php:1036
+#: frontend/class-frontend.php:647
+#: frontend/class-frontend.php:1048
 msgid "*** Invalid regex used in your shortcode filter_title option *** "
 msgstr ""
 
-#: frontend/class-frontend.php:648
-#: frontend/class-frontend.php:1048
+#: frontend/class-frontend.php:659
+#: frontend/class-frontend.php:1060
 msgid "*** Invalid regex used in your shortcode filter_location option *** "
 msgstr ""
 
-#: frontend/class-frontend.php:686
-#: frontend/class-frontend.php:1086
+#: frontend/class-frontend.php:697
+#: frontend/class-frontend.php:1098
 msgid "*** Invalid Regular Expression (regex) used in your shortcode search option *** "
 msgstr ""
 
-#: frontend/class-frontend.php:1228
+#: frontend/class-frontend.php:1240
 msgid "--- DEBUG OUTPUT ---"
 msgstr ""
 
-#: frontend/class-frontend.php:1233
+#: frontend/class-frontend.php:1245
 msgid "Ignored filter_by_attrs conditions"
 msgstr ""
 
-#: frontend/class-frontend.php:1234
+#: frontend/class-frontend.php:1246
 msgid "These conditions could not be parsed and were ignored, so they excluded nothing. Check for curly quotes or a missing field:operator:value part."
+msgstr ""
+
+#: frontend/class-frontend.php:1296
+msgid "Sorry, the event details could not be loaded."
+msgstr ""
+
+#: frontend/class-frontend.php:1297
+msgid "Reload the page"
 msgstr ""
 
 #: includes/class-eventbrite-manager.php:179
@@ -972,49 +984,49 @@ msgid "EventKiln is not set up."
 msgstr ""
 
 #. translators: %s: error from WordPress HTTP API
-#: includes/class-eventkiln-source.php:879
+#: includes/class-eventkiln-source.php:882
 #: includes/class-eventkiln-webhooks__premium_only.php:458
 #, php-format
 msgid "EventKiln could not be reached: %s"
 msgstr ""
 
-#: includes/class-eventkiln-source.php:894
+#: includes/class-eventkiln-source.php:897
 msgid "EventKiln rejected the API key. It may have been revoked, or its creator may no longer be an admin."
 msgstr ""
 
-#: includes/class-eventkiln-source.php:897
+#: includes/class-eventkiln-source.php:900
 msgid "The EventKiln API key is not allowed to read events (it needs events:read), or the organisation is suspended."
 msgstr ""
 
-#: includes/class-eventkiln-source.php:900
+#: includes/class-eventkiln-source.php:903
 msgid "No EventKiln API was found at that address. Check the EventKiln site URL."
 msgstr ""
 
-#: includes/class-eventkiln-source.php:903
+#: includes/class-eventkiln-source.php:906
 msgid "EventKiln is rate limiting requests. DEE will try again later."
 msgstr ""
 
 #. translators: %d: HTTP status code
-#: includes/class-eventkiln-source.php:908
+#: includes/class-eventkiln-source.php:911
 #, php-format
 msgid "EventKiln returned an unexpected response (HTTP %d)."
 msgstr ""
 
 #. translators: %s: date and time
-#: includes/class-eventkiln-source.php:941
+#: includes/class-eventkiln-source.php:944
 #, php-format
 msgid "Visitors are being shown the EventKiln events fetched on %s."
 msgstr ""
 
-#: includes/class-eventkiln-source.php:945
+#: includes/class-eventkiln-source.php:948
 msgid "No EventKiln events can be shown until a fetch succeeds."
 msgstr ""
 
-#: includes/class-eventkiln-source.php:949
+#: includes/class-eventkiln-source.php:952
 msgid "Display Eventbrite Events: EventKiln events could not be refreshed."
 msgstr ""
 
-#: includes/class-eventkiln-source.php:953
+#: includes/class-eventkiln-source.php:956
 msgid "Check the EventKiln settings"
 msgstr ""
 
@@ -1096,116 +1108,127 @@ msgstr ""
 msgid "Error message"
 msgstr ""
 
-#: includes/class-utilities.php:925
+#: includes/class-utilities.php:1126
 msgid "for"
 msgstr ""
 
-#: includes/class-utilities.php:928
+#: includes/class-utilities.php:1129
 msgid "on EventKiln for"
 msgstr ""
 
-#: includes/class-utilities.php:928
+#: includes/class-utilities.php:1129
 msgid "on Eventbrite for"
 msgstr ""
 
 #. translators: placeholder is the event title
-#: includes/class-utilities.php:939
+#: includes/class-utilities.php:1140
 #, php-format
 msgid "EventKiln link to %1$s"
 msgstr ""
 
 #. translators: placeholder is the event title
-#: includes/class-utilities.php:939
+#: includes/class-utilities.php:1140
 #, php-format
 msgid "Eventbrite link to %1$s"
 msgstr ""
 
 #. translators: placeholders explained in text
 #. translators: placeholders are date time and separator
-#: includes/class-utilities.php:1034
+#: includes/class-utilities.php:1238
 #: includes/legacy-functions.php:94
 #, php-format
 msgctxt "Event date and time. %1$s = start time, %2$s = end time %3$s is a separator"
 msgid "%1$s %3$s %2$s"
 msgstr ""
 
-#: includes/class-utilities.php:1170
+#. translators: %1$s = event date or dates, %2$s = 'Time to be confirmed'
+#: includes/class-utilities.php:1265
+#, php-format
+msgctxt "Event date when the time is to be confirmed"
+msgid "%1$s, %2$s"
+msgstr ""
+
+#: includes/class-utilities.php:1404
 msgid "Webinar"
 msgstr ""
 
-#: includes/class-utilities.php:1176
+#: includes/class-utilities.php:1410
 msgid "To be announced"
 msgstr ""
 
-#: includes/class-utilities.php:1178
+#: includes/class-utilities.php:1412
 msgid "Error in location field requested - check your shortcode: "
 msgstr ""
 
-#: includes/class-utilities.php:1562
+#: includes/class-utilities.php:1796
 msgid "Mondays"
 msgstr ""
 
-#: includes/class-utilities.php:1563
+#: includes/class-utilities.php:1797
 msgid "Tuesdays"
 msgstr ""
 
-#: includes/class-utilities.php:1564
+#: includes/class-utilities.php:1798
 msgid "Wednesdays"
 msgstr ""
 
-#: includes/class-utilities.php:1565
+#: includes/class-utilities.php:1799
 msgid "Thursdays"
 msgstr ""
 
-#: includes/class-utilities.php:1566
+#: includes/class-utilities.php:1800
 msgid "Fridays"
 msgstr ""
 
-#: includes/class-utilities.php:1567
+#: includes/class-utilities.php:1801
 msgid "Saturdays"
 msgstr ""
 
-#: includes/class-utilities.php:1568
+#: includes/class-utilities.php:1802
 msgid "Sundays"
 msgstr ""
 
-#: includes/class-utilities.php:1617
+#: includes/class-utilities.php:1851
 msgid "Tickets Available"
 msgstr ""
 
 #. translators: %d: Number of tickets available
-#: includes/class-utilities.php:1623
+#: includes/class-utilities.php:1857
 #, php-format
 msgid "%d Ticket Available"
 msgid_plural "%d Tickets Available"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/class-utilities.php:1700
+#: includes/class-utilities.php:1934
 msgid "Online"
 msgstr ""
 
-#: includes/class-utilities.php:1973
+#: includes/class-utilities.php:2085
+msgid "Time to be confirmed"
+msgstr ""
+
+#: includes/class-utilities.php:2267
 msgid "« Previous"
 msgstr ""
 
-#: includes/class-utilities.php:1974
+#: includes/class-utilities.php:2268
 msgid "Next »"
 msgstr ""
 
-#: includes/class-utilities.php:2606
+#: includes/class-utilities.php:2978
 msgid "Donation"
 msgstr ""
 
-#: includes/class-utilities.php:2619
+#: includes/class-utilities.php:2991
 msgid "Your plan does not include this template"
 msgstr ""
 
-#: includes/class-utilities.php:2620
+#: includes/class-utilities.php:2992
 msgid "Upgrade your plan for access"
 msgstr ""
 
-#: includes/class-utilities.php:2622
+#: includes/class-utilities.php:2994
 msgid "Upgrade Link"
 msgstr ""
 
@@ -1701,177 +1724,177 @@ msgstr ""
 msgid "Venue Title"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:779
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:778
 msgid "Show Availability"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:785
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:784
 msgid "Prices"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:789
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:788
 msgid "Long Description Modal"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:800
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:799
 msgid "On-site Checkout via Popup"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:808
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:807
 msgid "Advanced filter"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:811
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:810
 msgid "This allows complex logic to filter on anything, for details on usage "
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:811
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:810
 msgid "Read more ( opens in new tab )"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:821
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:820
 msgid "Advanced sort"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:826
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:825
 msgid "Canceled Events button text"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:832
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:831
 msgid "Coming Soon Events button text"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:834
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:833
 msgid "Coming soon"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:838
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:837
 msgid "Link to Custom Page"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:846
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:845
 msgid "Past Events buttons text"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:852
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:851
 msgid "Postponed Events button text"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:857
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:856
 msgid "Sales Ended button text"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:863
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:862
 msgid "Sold Out button text"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:865
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:864
 msgid "Sold out"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:869
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:868
 msgid "Started Events button text"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:875
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:874
 msgid "Unavailable Events button text"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:891
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:890
 msgid "Pagination"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:918
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:917
 msgid "Pagination Position"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:922
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:921
 msgid "Top and Bottom"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:923
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:922
 msgid "Top"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:924
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:923
 msgid "Bottom"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:925
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:924
 msgid "None"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:932
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:931
 msgid "Search Box button text"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:937
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:936
 msgid "Search Box Text"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:951
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:950
 msgid "Show Events From"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:955
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:954
 msgid "Eventbrite and EventKiln"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:956
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:955
 msgid "Eventbrite only"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:957
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:956
 msgid "EventKiln only"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:976
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:975
 msgid "Widget"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:977
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:976
 msgid "Card"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:982
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:981
 #: blocks/display-eventbrite-events/premium__only/filters.js:74
 msgid "One"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:983
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:982
 #: blocks/display-eventbrite-events/premium__only/filters.js:82
 msgid "Grid"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:988
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:986
 #: blocks/display-eventbrite-events/premium__only/filters.js:100
 msgid "Short Date"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:989
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:987
 msgid "Accordion"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:990
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:988
 #: blocks/display-eventbrite-calendar/filters.js:65
 msgid "Calendar"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:991
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:989
 #: blocks/display-eventbrite-calendar/filters.js:73
 msgid "Calendar List"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:992
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:990
 msgid "Slideshow"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:993
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:991
 #: blocks/display-eventbrite-events/premium__only/filters.js:92
 msgid "Venue"
 msgstr ""
 
-#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:1032
+#: includes/widgets/elementor/class-eventbrite-widget-elementor-helpers.php:1030
 #: includes/widgets/elementor/class-eventbrite-widget-elementor.php:321
 msgid "Default"
 msgstr ""
@@ -2031,11 +2054,15 @@ msgstr ""
 msgid "Tickets at the Door button text"
 msgstr ""
 
-#: shortcodes/class-shortcodes.php:87
+#: shortcodes/class-shortcodes.php:104
+msgid "This shortcode contains an Eventbrite key. Remove api_key from the shortcode and use the key in Settings instead."
+msgstr ""
+
+#: shortcodes/class-shortcodes.php:114
 msgid "[Display Eventbrite Plugin] Selected attribute: ["
 msgstr ""
 
-#: shortcodes/class-shortcodes.php:89
+#: shortcodes/class-shortcodes.php:116
 msgid "] is not valid - maybe a typo or maybe not included in your plan, refer to documentation"
 msgstr ""
 
@@ -2061,38 +2088,38 @@ msgid "Add to Calendar"
 msgstr ""
 
 #: templates__premium_only/parts/add_to_cal_button.php:21
-#: templates__premium_only/parts/add_to_cal_button.php:31
+#: templates__premium_only/parts/add_to_cal_button.php:30
 msgid "Add this event to your Outlook Calendar"
 msgstr ""
 
 #: templates__premium_only/parts/add_to_cal_button.php:24
-#: templates__premium_only/parts/add_to_cal_button.php:33
+#: templates__premium_only/parts/add_to_cal_button.php:32
 msgid "Outlook Calendar"
 msgstr ""
 
-#: templates__premium_only/parts/add_to_cal_button.php:39
+#: templates__premium_only/parts/add_to_cal_button.php:38
 msgid "Add this event to your Google Calendar"
 msgstr ""
 
-#: templates__premium_only/parts/add_to_cal_button.php:43
+#: templates__premium_only/parts/add_to_cal_button.php:42
 msgid "Google Calendar"
 msgstr ""
 
-#: templates__premium_only/parts/add_to_cal_button.php:47
-#: templates__premium_only/parts/add_to_cal_button.php:57
+#: templates__premium_only/parts/add_to_cal_button.php:46
+#: templates__premium_only/parts/add_to_cal_button.php:55
 msgid "Add this event to your Apple Calendar"
 msgstr ""
 
-#: templates__premium_only/parts/add_to_cal_button.php:50
-#: templates__premium_only/parts/add_to_cal_button.php:59
+#: templates__premium_only/parts/add_to_cal_button.php:49
+#: templates__premium_only/parts/add_to_cal_button.php:57
 msgid "Apple Calendar"
 msgstr ""
 
-#: templates__premium_only/parts/add_to_cal_button.php:65
+#: templates__premium_only/parts/add_to_cal_button.php:63
 msgid "Add this event to your Yahoo Calendar"
 msgstr ""
 
-#: templates__premium_only/parts/add_to_cal_button.php:69
+#: templates__premium_only/parts/add_to_cal_button.php:67
 msgid "Yahoo Calendar"
 msgstr ""
 
@@ -2101,20 +2128,20 @@ msgid "Close Modal"
 msgstr ""
 
 #. translators: %s: venue address
-#: templates__premium_only/parts/full_modal_ajax_response.php:48
+#: templates__premium_only/parts/full_modal_ajax_response.php:52
 #, php-format
 msgid "Map of %s (opens in a new tab)"
 msgstr ""
 
-#: templates__premium_only/parts/full_modal_ajax_response.php:65
+#: templates__premium_only/parts/full_modal_ajax_response.php:69
 msgid "Accessibility"
 msgstr ""
 
-#: templates__premium_only/parts/full_modal_ajax_response.php:66
+#: templates__premium_only/parts/full_modal_ajax_response.php:70
 msgid "Getting there"
 msgstr ""
 
-#: templates__premium_only/parts/full_modal_ajax_response.php:95
+#: templates__premium_only/parts/full_modal_ajax_response.php:99
 msgid "Event Organizer"
 msgstr ""
 

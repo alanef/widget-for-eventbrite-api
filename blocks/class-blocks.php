@@ -75,8 +75,30 @@ class Blocks {
         }
         $front_end = new Frontend($this->plugin_name, $this->version, $this->utilities);
         $atts = $this->remove_non_eb_keys( $atts );
+        $atts = $this->sanitize_block_strings( $front_end, $atts );
         $output = $front_end->do_query_template( $atts, $content, $block );
         return '<div ' . get_block_wrapper_attributes() . '>' . $output . '</div>';
+    }
+
+    /**
+     * Block attributes reach the templates without the shortcode's sanitize_atts(). Run them through
+     * it and take back only the cleaned text values: booleans, numbers and the shortcode-only rules
+     * (such as the pop-up turning "read more" off) stay as the block has always had them, so saved
+     * blocks render as before.
+     *
+     * @param FrontEnd $front_end
+     * @param array    $atts block attributes after remove_non_eb_keys()
+     *
+     * @return array
+     */
+    private function sanitize_block_strings( $front_end, $atts ) {
+        $clean = $front_end->sanitize_atts( shortcode_atts( FrontEnd::default_args( $atts ), $atts, 'wfea' ) );
+        foreach ( $atts as $key => $value ) {
+            if ( is_string( $value ) && isset( $clean[$key] ) && is_string( $clean[$key] ) ) {
+                $atts[$key] = $clean[$key];
+            }
+        }
+        return $atts;
     }
 
     public function remove_non_eb_keys( $atts ) {

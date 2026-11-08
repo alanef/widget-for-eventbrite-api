@@ -187,6 +187,9 @@ class Eventbrite_Event {
 	// EventKiln-only details (id, public_url, checkout_url, embed_checkout_url, checkout_mode).
 	public $eventkiln;
 
+	// EventKiln only: true when the organiser hasn't set the time yet (start 00:00, end 23:59 local).
+	public $time_tbc = false;
+
 
 
 		/**
